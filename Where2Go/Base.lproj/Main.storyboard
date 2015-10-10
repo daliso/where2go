@@ -1,13 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hjQ-h1-rq8">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Tab Bar Controller-->
+        <scene sceneID="bfI-H8-UvZ">
+            <objects>
+                <tabBarController id="hjQ-h1-rq8" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="7Fv-Ct-Kzi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="ddh-fh-0nm" kind="relationship" relationship="viewControllers" id="2B6-4t-y6L"/>
+                        <segue destination="xZI-oM-1Qm" kind="relationship" relationship="viewControllers" id="INB-c0-15X"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e1a-1o-JXX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-636" y="605"/>
+        </scene>
+        <!--Explore Places To Visit-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ExplorePlacesViewController" customModule="Where2Go" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +34,153 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="xwV-Oa-l9g">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <animations/>
+                            </mapView>
+                        </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="xwV-Oa-l9g" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="4Lv-b9-dXo"/>
+                            <constraint firstAttribute="trailing" secondItem="xwV-Oa-l9g" secondAttribute="trailing" id="cu5-oX-jLY"/>
+                            <constraint firstItem="xwV-Oa-l9g" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="jah-l9-fxG"/>
+                            <constraint firstItem="xwV-Oa-l9g" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="lPt-Nv-REy"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Explore Places To Visit" id="tyh-Vt-LTo">
+                        <barButtonItem key="rightBarButtonItem" title="Go" id="jdb-ff-CMe">
+                            <connections>
+                                <segue destination="sdW-bg-3Oa" kind="show" id="fX7-ib-cij"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="exploreMapView" destination="xwV-Oa-l9g" id="4gk-Vz-S3e"/>
+                        <segue destination="sdW-bg-3Oa" kind="show" identifier="showPlaceDetailFromExplore" id="yo6-j4-uz7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="934" y="263"/>
+        </scene>
+        <!--Places Detail View Controller-->
+        <scene sceneID="m2O-tw-OBk">
+            <objects>
+                <viewController id="sdW-bg-3Oa" customClass="PlacesDetailViewController" customModule="Where2Go" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vnM-g8-hUI"/>
+                        <viewControllerLayoutGuide type="bottom" id="rwr-OD-Jd9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oDh-Jt-Qtt">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the Places Detail View Controller" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CFM-wI-pP8">
+                                <rect key="frame" x="149" y="289" width="303" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="CFM-wI-pP8" firstAttribute="centerX" secondItem="oDh-Jt-Qtt" secondAttribute="centerX" id="POe-hH-TVP"/>
+                            <constraint firstItem="CFM-wI-pP8" firstAttribute="centerY" secondItem="oDh-Jt-Qtt" secondAttribute="centerY" id="l1E-cw-Ofw"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cfl-bD-ZFf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1778" y="605"/>
+        </scene>
+        <!--My Itinerary-->
+        <scene sceneID="VE2-sd-UT8">
+            <objects>
+                <viewController id="aGv-oa-tSc" customClass="MyPlacesViewController" customModule="Where2Go" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gWg-Ar-0W0"/>
+                        <viewControllerLayoutGuide type="bottom" id="QrI-QB-Src"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uDa-Xm-rSt">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the My Places ViewController" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dDw-Tq-iXT">
+                                <rect key="frame" x="161" y="289" width="278" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="dDw-Tq-iXT" firstAttribute="centerY" secondItem="uDa-Xm-rSt" secondAttribute="centerY" id="90Z-HP-g0Y"/>
+                            <constraint firstItem="dDw-Tq-iXT" firstAttribute="centerX" secondItem="uDa-Xm-rSt" secondAttribute="centerX" id="vOi-JL-Xax"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="My Itinerary" id="yO7-9B-fWA">
+                        <barButtonItem key="rightBarButtonItem" title="Go" id="fz8-wj-7dd">
+                            <connections>
+                                <segue destination="sdW-bg-3Oa" kind="show" id="jZc-Xy-BQh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="sdW-bg-3Oa" kind="show" identifier="showPlaceDetailFromMyPlaces" id="gfF-Wa-RnX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1vM-AC-p46" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="934" y="973"/>
+        </scene>
+        <!--Explore Places-->
+        <scene sceneID="KeD-p3-yoI">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ddh-fh-0nm" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Explore Places" id="HSo-So-t3K"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="XO0-og-aRf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="jvG-qk-XUr"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EJX-Si-nJK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="122" y="263"/>
+        </scene>
+        <!--My Places-->
+        <scene sceneID="Q0h-np-hUF">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xZI-oM-1Qm" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My Places" id="hOL-ci-jER"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aoc-a9-Zt7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="aGv-oa-tSc" kind="relationship" relationship="rootViewController" id="7f9-qA-nXt"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K5m-Kc-yF2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="122" y="973"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="gfF-Wa-RnX"/>
+    </inferredMetricsTieBreakers>
 </document>

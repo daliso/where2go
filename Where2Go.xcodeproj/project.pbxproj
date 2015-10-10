@@ -8,13 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		695463861BC0490A009D9C02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463851BC0490A009D9C02 /* AppDelegate.swift */; };
-		695463881BC0490A009D9C02 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463871BC0490A009D9C02 /* ViewController.swift */; };
+		695463881BC0490A009D9C02 /* ExplorePlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463871BC0490A009D9C02 /* ExplorePlacesViewController.swift */; };
 		6954638B1BC0490A009D9C02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695463891BC0490A009D9C02 /* Main.storyboard */; };
 		6954638E1BC0490A009D9C02 /* Where2Go.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6954638C1BC0490A009D9C02 /* Where2Go.xcdatamodeld */; };
 		695463901BC0490A009D9C02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6954638F1BC0490A009D9C02 /* Assets.xcassets */; };
 		695463931BC0490A009D9C02 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695463911BC0490A009D9C02 /* LaunchScreen.storyboard */; };
 		6954639E1BC0490A009D9C02 /* Where2GoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6954639D1BC0490A009D9C02 /* Where2GoTests.swift */; };
 		695463A91BC0490A009D9C02 /* Where2GoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463A81BC0490A009D9C02 /* Where2GoUITests.swift */; };
+		695D711B1BC90BDA00541953 /* MyPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695D711A1BC90BDA00541953 /* MyPlacesViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		695D711D1BC90CD100541953 /* PlacesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695D711C1BC90CD100541953 /* PlacesDetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +39,7 @@
 /* Begin PBXFileReference section */
 		695463821BC0490A009D9C02 /* Where2Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Where2Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		695463851BC0490A009D9C02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		695463871BC0490A009D9C02 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		695463871BC0490A009D9C02 /* ExplorePlacesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePlacesViewController.swift; sourceTree = "<group>"; };
 		6954638A1BC0490A009D9C02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6954638D1BC0490A009D9C02 /* Where2Go.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Where2Go.xcdatamodel; sourceTree = "<group>"; };
 		6954638F1BC0490A009D9C02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +51,8 @@
 		695463A41BC0490A009D9C02 /* Where2GoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Where2GoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		695463A81BC0490A009D9C02 /* Where2GoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Where2GoUITests.swift; sourceTree = "<group>"; };
 		695463AA1BC0490A009D9C02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		695D711A1BC90BDA00541953 /* MyPlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesViewController.swift; sourceTree = "<group>"; };
+		695D711C1BC90CD100541953 /* PlacesDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,12 +104,11 @@
 			isa = PBXGroup;
 			children = (
 				695463851BC0490A009D9C02 /* AppDelegate.swift */,
-				695463871BC0490A009D9C02 /* ViewController.swift */,
 				695463891BC0490A009D9C02 /* Main.storyboard */,
-				6954638F1BC0490A009D9C02 /* Assets.xcassets */,
-				695463911BC0490A009D9C02 /* LaunchScreen.storyboard */,
-				695463941BC0490A009D9C02 /* Info.plist */,
-				6954638C1BC0490A009D9C02 /* Where2Go.xcdatamodeld */,
+				695D711E1BC911D000541953 /* Model */,
+				695D711F1BC911D600541953 /* View */,
+				695D71201BC911E200541953 /* Controller */,
+				695D71211BC911FF00541953 /* Supporting Files */,
 			);
 			path = Where2Go;
 			sourceTree = "<group>";
@@ -126,6 +129,41 @@
 				695463AA1BC0490A009D9C02 /* Info.plist */,
 			);
 			path = Where2GoUITests;
+			sourceTree = "<group>";
+		};
+		695D711E1BC911D000541953 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6954638C1BC0490A009D9C02 /* Where2Go.xcdatamodeld */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		695D711F1BC911D600541953 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		695D71201BC911E200541953 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				695463871BC0490A009D9C02 /* ExplorePlacesViewController.swift */,
+				695D711A1BC90BDA00541953 /* MyPlacesViewController.swift */,
+				695D711C1BC90CD100541953 /* PlacesDetailViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		695D71211BC911FF00541953 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6954638F1BC0490A009D9C02 /* Assets.xcassets */,
+				695463941BC0490A009D9C02 /* Info.plist */,
+				695463911BC0490A009D9C02 /* LaunchScreen.storyboard */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,8 +296,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				695463881BC0490A009D9C02 /* ViewController.swift in Sources */,
+				695463881BC0490A009D9C02 /* ExplorePlacesViewController.swift in Sources */,
 				6954638E1BC0490A009D9C02 /* Where2Go.xcdatamodeld in Sources */,
+				695D711D1BC90CD100541953 /* PlacesDetailViewController.swift in Sources */,
+				695D711B1BC90BDA00541953 /* MyPlacesViewController.swift in Sources */,
 				695463861BC0490A009D9C02 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,6 +525,7 @@
 				695463AF1BC0490A009D9C02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		695463B01BC0490A009D9C02 /* Build configuration list for PBXNativeTarget "Where2GoTests" */ = {
 			isa = XCConfigurationList;
@@ -493,6 +534,7 @@
 				695463B21BC0490A009D9C02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		695463B31BC0490A009D9C02 /* Build configuration list for PBXNativeTarget "Where2GoUITests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +543,7 @@
 				695463B51BC0490A009D9C02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

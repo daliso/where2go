@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ExplorePlacesViewController.swift
 //  Where2Go
 //
 //  Created by Daliso Zuze on 03/10/2015.
@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import MapKit
 
-class ViewController: UIViewController {
+class ExplorePlacesViewController: UIViewController {
     
     // making a small change to initiatilse GIT
+    @IBOutlet weak var exploreMapView: MKMapView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
