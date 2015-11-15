@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		692884521BF514D200BFC75A /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692884511BF514D200BFC75A /* CoreDataStackManager.swift */; };
+		692884541BF515C500BFC75A /* IJReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692884531BF515C500BFC75A /* IJReachability.swift */; };
 		695463861BC0490A009D9C02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463851BC0490A009D9C02 /* AppDelegate.swift */; };
 		695463881BC0490A009D9C02 /* ExplorePlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463871BC0490A009D9C02 /* ExplorePlacesViewController.swift */; };
 		6954638B1BC0490A009D9C02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695463891BC0490A009D9C02 /* Main.storyboard */; };
@@ -15,8 +17,8 @@
 		695463931BC0490A009D9C02 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695463911BC0490A009D9C02 /* LaunchScreen.storyboard */; };
 		6954639E1BC0490A009D9C02 /* Where2GoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6954639D1BC0490A009D9C02 /* Where2GoTests.swift */; };
 		695463A91BC0490A009D9C02 /* Where2GoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463A81BC0490A009D9C02 /* Where2GoUITests.swift */; };
-		695D711B1BC90BDA00541953 /* MyPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695D711A1BC90BDA00541953 /* MyPlacesViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		695D711D1BC90CD100541953 /* PlacesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695D711C1BC90CD100541953 /* PlacesDetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		695D711B1BC90BDA00541953 /* MyPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695D711A1BC90BDA00541953 /* MyPlacesViewController.swift */; };
+		695D711D1BC90CD100541953 /* PlacesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695D711C1BC90CD100541953 /* PlacesDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		692884511BF514D200BFC75A /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
+		692884531BF515C500BFC75A /* IJReachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IJReachability.swift; sourceTree = "<group>"; };
 		695463821BC0490A009D9C02 /* Where2Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Where2Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		695463851BC0490A009D9C02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		695463871BC0490A009D9C02 /* ExplorePlacesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePlacesViewController.swift; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 		695D711E1BC911D000541953 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				692884511BF514D200BFC75A /* CoreDataStackManager.swift */,
 				6954638C1BC0490A009D9C02 /* Where2Go.xcdatamodeld */,
 			);
 			name = Model;
@@ -159,6 +164,7 @@
 		695D71211BC911FF00541953 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				692884531BF515C500BFC75A /* IJReachability.swift */,
 				6954638F1BC0490A009D9C02 /* Assets.xcassets */,
 				695463941BC0490A009D9C02 /* Info.plist */,
 				695463911BC0490A009D9C02 /* LaunchScreen.storyboard */,
@@ -301,6 +307,8 @@
 				695D711D1BC90CD100541953 /* PlacesDetailViewController.swift in Sources */,
 				695D711B1BC90BDA00541953 /* MyPlacesViewController.swift in Sources */,
 				695463861BC0490A009D9C02 /* AppDelegate.swift in Sources */,
+				692884521BF514D200BFC75A /* CoreDataStackManager.swift in Sources */,
+				692884541BF515C500BFC75A /* IJReachability.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
