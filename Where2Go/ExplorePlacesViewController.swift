@@ -17,6 +17,15 @@ class ExplorePlacesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        // Lets see if I can connect to Foursquare here and print out some location objects...
+        
+        // instead I will see if I can create some dummy location objects and display them on the map...
+        
+        // so what does a location object need to look like
+        
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
