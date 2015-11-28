@@ -11,7 +11,7 @@
 		695463861BC0490A009D9C02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463851BC0490A009D9C02 /* AppDelegate.swift */; };
 		695463881BC0490A009D9C02 /* ExplorePlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463871BC0490A009D9C02 /* ExplorePlacesViewController.swift */; };
 		6954638B1BC0490A009D9C02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695463891BC0490A009D9C02 /* Main.storyboard */; };
-		6954638E1BC0490A009D9C02 /* Where2Go.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6954638C1BC0490A009D9C02 /* Where2Go.xcdatamodeld */; };
+		6954638E1BC0490A009D9C02 /* Where2GoModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6954638C1BC0490A009D9C02 /* Where2GoModel.xcdatamodeld */; };
 		695463901BC0490A009D9C02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6954638F1BC0490A009D9C02 /* Assets.xcassets */; };
 		695463931BC0490A009D9C02 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695463911BC0490A009D9C02 /* LaunchScreen.storyboard */; };
 		6954639E1BC0490A009D9C02 /* Where2GoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6954639D1BC0490A009D9C02 /* Where2GoTests.swift */; };
@@ -47,7 +47,7 @@
 		695463851BC0490A009D9C02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		695463871BC0490A009D9C02 /* ExplorePlacesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePlacesViewController.swift; sourceTree = "<group>"; };
 		6954638A1BC0490A009D9C02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		6954638D1BC0490A009D9C02 /* Where2Go.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Where2Go.xcdatamodel; sourceTree = "<group>"; };
+		6954638D1BC0490A009D9C02 /* Where2GoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Where2GoModel.xcdatamodel; sourceTree = "<group>"; };
 		6954638F1BC0490A009D9C02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		695463921BC0490A009D9C02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		695463941BC0490A009D9C02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -145,7 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				692884511BF514D200BFC75A /* CoreDataStackManager.swift */,
-				6954638C1BC0490A009D9C02 /* Where2Go.xcdatamodeld */,
+				6954638C1BC0490A009D9C02 /* Where2GoModel.xcdatamodeld */,
 				69CA62EB1C0A011200CBA1A4 /* FoursquareAPIClient+Constants.swift */,
 				69CA62EC1C0A011200CBA1A4 /* FoursquareAPIClient.swift */,
 				69CA62E71C09FC3800CBA1A4 /* W2GLocation.swift */,
@@ -313,7 +313,7 @@
 			files = (
 				695463881BC0490A009D9C02 /* ExplorePlacesViewController.swift in Sources */,
 				69CA62EE1C0A011200CBA1A4 /* FoursquareAPIClient.swift in Sources */,
-				6954638E1BC0490A009D9C02 /* Where2Go.xcdatamodeld in Sources */,
+				6954638E1BC0490A009D9C02 /* Where2GoModel.xcdatamodeld in Sources */,
 				695D711D1BC90CD100541953 /* PlacesDetailViewController.swift in Sources */,
 				695D711B1BC90BDA00541953 /* MyPlacesViewController.swift in Sources */,
 				69CA62ED1C0A011200CBA1A4 /* FoursquareAPIClient+Constants.swift in Sources */,
@@ -568,13 +568,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		6954638C1BC0490A009D9C02 /* Where2Go.xcdatamodeld */ = {
+		6954638C1BC0490A009D9C02 /* Where2GoModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				6954638D1BC0490A009D9C02 /* Where2Go.xcdatamodel */,
+				6954638D1BC0490A009D9C02 /* Where2GoModel.xcdatamodel */,
 			);
-			currentVersion = 6954638D1BC0490A009D9C02 /* Where2Go.xcdatamodel */;
-			path = Where2Go.xcdatamodeld;
+			currentVersion = 6954638D1BC0490A009D9C02 /* Where2GoModel.xcdatamodel */;
+			path = Where2GoModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
