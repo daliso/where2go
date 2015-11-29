@@ -17,19 +17,48 @@ class ExplorePlacesViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        /*
         let demoLocations = MKW2GLocation.MKW2GLocationsFromW2GLocations(
             W2GLocation.W2GLocationsFromResults(
                 createTestAPIResults()
             )
         )
-        
-        
+
         exploreMapView.addAnnotations(demoLocations)
-        
-        // FoursquareAPIClient.getNearbyLocations("Food", lat:51.0, lon:-0.22, radius:1000)
-        
+        */
         
         
+        FoursquareAPIClient.sharedInstance.getNearbyLocations("Food", lat: 51.5, lon: -0.22, radius: 2000) { (success, userDataDict, errorString) -> Void in
+            if success {
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    let items = userDataDict!["items"] as! [[String:AnyObject]]
+                    
+                    let w2glocations = items.map {
+                        (let item) -> W2GLocation in
+                        
+                        let venue = item["venue"] as! [String:AnyObject]
+                        let venueID = venue["id"] as! String
+                        let venueName = venue["name"] as! String
+                        let venueLocation = venue["location"] as! [String:AnyObject]
+                        let venueLat = venueLocation["lat"] as! Double
+                        let venueLon = venueLocation["lng"] as! Double
+                        
+                        let locationDict:[String:AnyObject] = [
+                            FoursquareAPIClient.JSONResponseKeys.venueID : venueID,
+                            FoursquareAPIClient.JSONResponseKeys.venueName : venueName,
+                            FoursquareAPIClient.JSONResponseKeys.Latitude : venueLat,
+                            FoursquareAPIClient.JSONResponseKeys.Longitude : venueLon
+                        ]
+                        return W2GLocation(dictionary: locationDict)
+                    }
+                    self.exploreMapView.addAnnotations(MKW2GLocation.MKW2GLocationsFromW2GLocations(w2glocations))
+                })
+                
+            } else{
+                print("shucks...")
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {

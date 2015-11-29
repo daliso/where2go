@@ -12,9 +12,7 @@ import Foundation
 
 extension FoursquareAPIClient {
     
-    
-    func getNearbyLocations(section:String, lat:Double, lon:Double, radius:Double) {
-        
+    func getNearbyLocations(section:String, lat:Double, lon:Double, radius:Double, completionHandler: (success: Bool, userDataDictionary: [String:AnyObject]?, errorString: String?) -> Void) -> Void {
         let methodArguments = [
             ParameterKeys.FoursquareClientID: Constants.FoursquareClientID,
             ParameterKeys.FoursquareClientSecret: Constants.FoursquareSecret,
@@ -30,29 +28,22 @@ extension FoursquareAPIClient {
         _ = taskForGETMethod(Methods.Explore, parameters: methodArguments, baseUrl: Constants.BaseURLSecure, dataOffSet: 0, headers: nil) { JSONResult, error in
             
             if let _ = error {
-                //completionHandler(success: false, userDataDictionary: nil, errorString: "There was an error getting photos from Flickr")
+                completionHandler(success: false, userDataDictionary: nil, errorString: "There was an error getting photos from Flickr")
             }
             else {
-                
-                print(JSONResult)
-                
-                /*
-                if let userDataDict = JSONResult.valueForKey("photos") as? NSDictionary {
-                    
-                    let numPages = userDataDict.valueForKey("pages")!.integerValue!
+                if let userDataDict = JSONResult.valueForKey("response")?.valueForKey("groups") as? [[String:AnyObject]] {
+                    completionHandler(success: true, userDataDictionary: userDataDict.first, errorString:nil)
 
-                    
                 }
                 else {
-                    
                     // need to check here if the JSON result contains some known property with an error message
-                    
-                    completionHandler(success: false, userDataDictionary: nil, errorString: "There was an error getting photos from Flickr, the JSON response did not contain a photos key")
+                    completionHandler(success: false, userDataDictionary: nil, errorString: "There was an error getting photos from Flickr, the JSON response did not contain a response key")
                 }
-                */
             }
         }
     }
+
+}
     
     
     /*
@@ -125,5 +116,3 @@ extension FoursquareAPIClient {
         return "\(bottom_left_lon),\(bottom_left_lat),\(top_right_lon),\(top_right_lat)"
     }
     */
-    
-}

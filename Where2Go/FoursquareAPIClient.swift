@@ -18,6 +18,8 @@ class FoursquareAPIClient : NSObject {
         super.init()
     }
     
+    static let sharedInstance = FoursquareAPIClient()
+    
     func taskForGETMethod(method: String, parameters: NSDictionary?, baseUrl: String?, dataOffSet: Int?, headers: NSDictionary?, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         // Set defaults for request configuration
@@ -31,7 +33,7 @@ class FoursquareAPIClient : NSObject {
         if let baseUrl = baseUrl {base = baseUrl }
         
         // Setup the request
-        let urlString = base + method + parameterString
+        let urlString = base + "/\(method)" + parameterString        
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
         
