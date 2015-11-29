@@ -11,30 +11,28 @@ extension FoursquareAPIClient {
     
     // MARK: - JSON Response Keys
     struct JSONResponseKeys {
-        
         // MARK: Venues
         static let venueID = "venueID"
         static let venueName = "venueName"
         static let Latitude = "latitude"
         static let Longitude = "longitude"
+        
+        static let StatusMessage = "stat"
     }
     
-    
-    /*
     // MARK: - Constants
     struct Constants {
-        
         // MARK: API Key
-        static let ParseAppID : String = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
-        static let ParseRestAPIKey : String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+        static let FoursquareClientID : String = "D41FV1BZ1MZ0U2H2AUREHU24HE3IILD3IGPCYXCIB1OWYG1E"
+        static let FoursquareSecret : String = "BTU2AV22ZBPNQODCOOXKZJEPNEFYAKFBHA4HCU4P5BXZWXZJ"
         
         // MARK: URLs
-        static let BaseURL : String = "http://www.udacity.com/api/"
-        static let BaseURLSecure : String = "https://www.udacity.com/api/"
-        
-        static let ParseBaseURLSecure : String = "https://api.parse.com/1/"
+        static let BaseURL : String = "http://api.foursquare.com/v2/"
+        static let BaseURLSecure : String = "https://api.foursquare.com/v2/"
         
     }
+    
+    /*
     
     // MARK: - Methods
     struct Methods {
@@ -59,30 +57,6 @@ extension FoursquareAPIClient {
         static let Longitude = "longitude"
         
         static let fbToken = "access_token"
-    }
-
-    // MARK: - JSON Response Keys
-    struct JSONResponseKeys {
-        // MARK: General
-        static let StatusMessage = "status_message"
-        
-        // MARK: Authorization
-        static let UserKey = "key"
-        static let SessionID = "id"
-        static let SessionDict = "session"
-        static let AccountDict = "account"
-
-        // MARK: StudentLocations
-        static let ObjectID = "objectId"
-        static let UniqueKey = "uniqueKey"
-        static let FirstName = "firstName"
-        static let LastName = "lastName"
-        static let MapString = "mapString"
-        static let MediaURL = "mediaURL"
-        static let Latitude = "latitude"
-        static let Longitude = "longitude"
-        static let CreatedAt = "createdAt"
-        static let UpdatedAt = "updatedAt"
     }
 
     */
