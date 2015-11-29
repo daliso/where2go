@@ -25,6 +25,11 @@ class ExplorePlacesViewController: UIViewController {
         
         
         exploreMapView.addAnnotations(demoLocations)
+        
+        // FoursquareAPIClient.getNearbyLocations("Food", lat:51.0, lon:-0.22, radius:1000)
+        
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
