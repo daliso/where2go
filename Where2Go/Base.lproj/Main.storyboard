@@ -50,6 +50,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Explore Places To Visit" id="tyh-Vt-LTo">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="6wB-01-fL6">
+                            <connections>
+                                <action selector="refreshVenues:" destination="BYZ-38-t0r" id="eCY-Mi-i8N"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Go" id="jdb-ff-CMe">
                             <connections>
                                 <segue destination="sdW-bg-3Oa" kind="show" id="fX7-ib-cij"/>

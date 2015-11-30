@@ -9,9 +9,12 @@
 import UIKit
 import MapKit
 
-class ExplorePlacesViewController: UIViewController {
+class ExplorePlacesViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var exploreMapView: MKMapView!
+    @IBAction func refreshVenues(sender: UIBarButtonItem) {
+        refreshVenues()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +30,25 @@ class ExplorePlacesViewController: UIViewController {
         exploreMapView.addAnnotations(demoLocations)
         */
         
+        exploreMapView.delegate = self
+        refreshVenues()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func refreshVenues(){
+        let lat = exploreMapView.region.center.latitude
+        let lon = exploreMapView.region.center.longitude
+        let radius = max(exploreMapView.region.span.latitudeDelta/2.0*110574.61, exploreMapView.region.span.longitudeDelta/2.0*111302.62)
         
-        FoursquareAPIClient.sharedInstance.getNearbyLocations("Food", lat: 51.5, lon: -0.22, radius: 2000) { (success, userDataDict, errorString) -> Void in
+        print("Lat = \(lat)")
+        print("Lon = \(lon)")
+        print("The raidus = \(radius)")
+        
+        FoursquareAPIClient.sharedInstance.getNearbyLocations("Food", lat:lat, lon:lon, radius: radius) { (success, userDataDict, errorString) -> Void in
             if success {
                 
                 dispatch_async(dispatch_get_main_queue(), {
@@ -52,6 +72,8 @@ class ExplorePlacesViewController: UIViewController {
                         ]
                         return W2GLocation(dictionary: locationDict)
                     }
+                    
+                    self.exploreMapView.removeAnnotations(self.exploreMapView.annotations)
                     self.exploreMapView.addAnnotations(MKW2GLocation.MKW2GLocationsFromW2GLocations(w2glocations))
                 })
                 
@@ -60,12 +82,10 @@ class ExplorePlacesViewController: UIViewController {
             }
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
+    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        refreshVenues()
+    }
     
     func createTestAPIResults() -> [[String: AnyObject]] {
         
