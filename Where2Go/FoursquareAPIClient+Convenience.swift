@@ -12,6 +12,13 @@ import Foundation
 
 extension FoursquareAPIClient {
     
+    func getVenueDetails(venueID: String, completionHandler: (success: Bool, userDataDictionary: [String:AnyObject]?, errorString: String?) -> Void){
+        // Fill in the code for extracting details for one particular venue
+        
+        
+    }
+    
+    
     func getNearbyLocations(section:String, lat:Double, lon:Double, radius:Double, completionHandler: (success: Bool, userDataDictionary: [String:AnyObject]?, errorString: String?) -> Void) -> Void {
         let methodArguments = [
             ParameterKeys.FoursquareClientID: Constants.FoursquareClientID,

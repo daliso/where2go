@@ -15,11 +15,13 @@ struct W2GLocation {
     var latitude:Float = 0.0
     var longitude:Float = 0.0
     
-    init(dictionary: [String : AnyObject]) {
-        venueID = dictionary[FoursquareAPIClient.JSONResponseKeys.venueID] as! String
-        venueName = dictionary[FoursquareAPIClient.JSONResponseKeys.venueName] as! String
-        latitude = dictionary[FoursquareAPIClient.JSONResponseKeys.Latitude] as! Float
-        longitude = dictionary[FoursquareAPIClient.JSONResponseKeys.Longitude] as! Float
+    init(dictionary: [String : AnyObject]?) {
+        if let _ = dictionary {
+            venueID = dictionary![FoursquareAPIClient.JSONResponseKeys.venueID] as! String
+            venueName = dictionary![FoursquareAPIClient.JSONResponseKeys.venueName] as! String
+            latitude = dictionary![FoursquareAPIClient.JSONResponseKeys.Latitude] as! Float
+            longitude = dictionary![FoursquareAPIClient.JSONResponseKeys.Longitude] as! Float
+        }
     }
     
     static func W2GLocationsFromResults(results: [[String : AnyObject]]) -> [W2GLocation] {
