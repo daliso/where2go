@@ -13,17 +13,16 @@ import CoreLocation
 class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var canGetLocation = false
+    var userLocation:CLLocationCoordinate2D!
     var locationManager: CLLocationManager!
     
     var zoomedIn:MKCoordinateRegion {
         get {
             let regionRadius: CLLocationDistance = 2000
-            return MKCoordinateRegionMakeWithDistance(exploreMapView.userLocation.coordinate, regionRadius, regionRadius)
+            return MKCoordinateRegionMakeWithDistance(userLocation, regionRadius, regionRadius)
         }
     }
 
-    
-    
     @IBOutlet weak var exploreMapView: MKMapView!
     @IBAction func refreshVenues(sender: UIBarButtonItem) {
         refreshVenues()
@@ -63,18 +62,19 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         if (status == .AuthorizedWhenInUse) {
             exploreMapView.showsUserLocation = true
             canGetLocation = true
-            print("can get location")
+            print("Authorized to get user location")
             manager.startUpdatingLocation()
         }
         else {
             exploreMapView.showsUserLocation = false
             canGetLocation = false
-            print("cannot get location")
+            print("Not authorized to get user location")
         }
     }
     
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         print("did update location to: \(newLocation)")
+        userLocation = newLocation.coordinate
         exploreMapView.setRegion(zoomedIn, animated: true)
         manager.stopUpdatingLocation()
     }
@@ -83,11 +83,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         let lat = exploreMapView.region.center.latitude
         let lon = exploreMapView.region.center.longitude
         let radius = max(exploreMapView.region.span.latitudeDelta/2.0*110574.61, exploreMapView.region.span.longitudeDelta/2.0*111302.62)
-        
-        print("Lat = \(lat)")
-        print("Lon = \(lon)")
-        print("The raidus = \(radius)")
-        
+   
         FoursquareAPIClient.sharedInstance.getNearbyLocations("Food", lat:lat, lon:lon, radius: radius) { (success, userDataDict, errorString) -> Void in
             if success {
                 
@@ -118,7 +114,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
                 })
                 
             } else{
-                print("shucks...")
+                print("shucks...there was an error: \(errorString)")
             }
         }
     }

@@ -39,15 +39,42 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <animations/>
                             </mapView>
+                            <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l0H-Xh-Acu">
+                                <rect key="frame" x="0.0" y="64" width="600" height="47"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="47" id="WXM-Eb-Deh"/>
+                                </constraints>
+                            </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="K5G-DD-a5u">
+                                <rect key="frame" x="174" y="72" width="253" height="29"/>
+                                <animations/>
+                                <segments>
+                                    <segment title="Eating"/>
+                                    <segment title="Tourist Attractions"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="xwV-Oa-l9g" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="4Lv-b9-dXo"/>
+                            <constraint firstItem="l0H-Xh-Acu" firstAttribute="trailing" secondItem="xwV-Oa-l9g" secondAttribute="trailing" id="4jX-zV-Uai"/>
+                            <constraint firstItem="K5G-DD-a5u" firstAttribute="centerX" secondItem="xwV-Oa-l9g" secondAttribute="centerX" id="6J0-Im-dYW"/>
+                            <constraint firstItem="K5G-DD-a5u" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="HPL-Pp-mBb"/>
+                            <constraint firstItem="l0H-Xh-Acu" firstAttribute="top" secondItem="xwV-Oa-l9g" secondAttribute="top" id="S8f-b7-cfR"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="l0H-Xh-Acu" secondAttribute="bottom" constant="440" id="Ynm-qz-a2r"/>
                             <constraint firstAttribute="trailing" secondItem="xwV-Oa-l9g" secondAttribute="trailing" id="cu5-oX-jLY"/>
                             <constraint firstItem="xwV-Oa-l9g" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="jah-l9-fxG"/>
                             <constraint firstItem="xwV-Oa-l9g" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="lPt-Nv-REy"/>
+                            <constraint firstItem="l0H-Xh-Acu" firstAttribute="leading" secondItem="xwV-Oa-l9g" secondAttribute="leading" id="nOH-Yd-7Dr"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Ynm-qz-a2r"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Explore Places To Visit" id="tyh-Vt-LTo">
                         <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="6wB-01-fL6">
