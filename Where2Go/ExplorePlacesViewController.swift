@@ -11,6 +11,9 @@ import MapKit
 
 class ExplorePlacesViewController: UIViewController, MKMapViewDelegate {
     
+    
+    // make the model the set off w2glocations, didset creates the mk versions and refreshes the view
+    
     @IBOutlet weak var exploreMapView: MKMapView!
     @IBAction func refreshVenues(sender: UIBarButtonItem) {
         refreshVenues()
@@ -85,6 +88,10 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate {
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         refreshVenues()
+    }
+    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        print("callout tapped: \((view.annotation as! MKW2GLocation).w2gLocation.venueName)")
     }
     
     func createTestAPIResults() -> [[String: AnyObject]] {

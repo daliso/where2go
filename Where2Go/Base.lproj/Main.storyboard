@@ -100,9 +100,55 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cfl-bD-ZFf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1778" y="605"/>
+            <point key="canvasLocation" x="1774" y="263"/>
         </scene>
-        <!--My Itinerary-->
+        <!--View Controller-->
+        <scene sceneID="CPP-8z-xBd">
+            <objects>
+                <viewController id="wyJ-2X-NYz" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="EvI-9n-smc"/>
+                        <viewControllerLayoutGuide type="bottom" id="g8V-em-k3R"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="CrD-Ew-zJJ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the Trip Details View Controller" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uoq-f2-EuZ">
+                                <rect key="frame" x="155" y="289" width="291" height="21"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="291" id="qlM-Bp-WBb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="qlM-Bp-WBb"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Uoq-f2-EuZ" firstAttribute="centerY" secondItem="CrD-Ew-zJJ" secondAttribute="centerY" id="8vs-1L-GaN"/>
+                            <constraint firstItem="Uoq-f2-EuZ" firstAttribute="top" secondItem="EvI-9n-smc" secondAttribute="bottom" constant="269" id="RDm-Wk-YP4"/>
+                            <constraint firstItem="Uoq-f2-EuZ" firstAttribute="centerX" secondItem="CrD-Ew-zJJ" secondAttribute="centerX" id="vYF-OQ-d37"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="RDm-Wk-YP4"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="coF-EI-ilM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1774" y="973"/>
+        </scene>
+        <!--My Trips-->
         <scene sceneID="VE2-sd-UT8">
             <objects>
                 <viewController id="aGv-oa-tSc" customClass="MyPlacesViewController" customModule="Where2Go" customModuleProvider="target" sceneMemberID="viewController">
@@ -114,31 +160,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the My Places ViewController" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dDw-Tq-iXT">
-                                <rect key="frame" x="161" y="289" width="278" height="21"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WKD-c2-FYy">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="dDw-Tq-iXT" firstAttribute="centerY" secondItem="uDa-Xm-rSt" secondAttribute="centerY" id="90Z-HP-g0Y"/>
-                            <constraint firstItem="dDw-Tq-iXT" firstAttribute="centerX" secondItem="uDa-Xm-rSt" secondAttribute="centerX" id="vOi-JL-Xax"/>
+                            <constraint firstAttribute="trailing" secondItem="WKD-c2-FYy" secondAttribute="trailing" id="DDx-2b-A27"/>
+                            <constraint firstItem="WKD-c2-FYy" firstAttribute="top" secondItem="uDa-Xm-rSt" secondAttribute="top" id="FqL-fm-dJh"/>
+                            <constraint firstItem="WKD-c2-FYy" firstAttribute="top" secondItem="gWg-Ar-0W0" secondAttribute="bottom" id="Fx8-RD-zoC"/>
+                            <constraint firstItem="WKD-c2-FYy" firstAttribute="bottom" secondItem="QrI-QB-Src" secondAttribute="top" id="Jke-JK-Z3e"/>
+                            <constraint firstAttribute="trailing" secondItem="WKD-c2-FYy" secondAttribute="trailing" id="NGa-Oh-BgE"/>
+                            <constraint firstItem="WKD-c2-FYy" firstAttribute="leading" secondItem="uDa-Xm-rSt" secondAttribute="leading" id="VkD-Zo-5tM"/>
+                            <constraint firstItem="WKD-c2-FYy" firstAttribute="bottom" secondItem="QrI-QB-Src" secondAttribute="top" id="ZkV-xM-T14"/>
+                            <constraint firstItem="WKD-c2-FYy" firstAttribute="leading" secondItem="uDa-Xm-rSt" secondAttribute="leading" id="qet-WO-jYO"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="DDx-2b-A27"/>
+                                <exclude reference="Fx8-RD-zoC"/>
+                                <exclude reference="Jke-JK-Z3e"/>
+                                <exclude reference="VkD-Zo-5tM"/>
+                            </mask>
+                        </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="My Itinerary" id="yO7-9B-fWA">
+                    <navigationItem key="navigationItem" title="My Trips" id="yO7-9B-fWA">
                         <barButtonItem key="rightBarButtonItem" title="Go" id="fz8-wj-7dd">
                             <connections>
-                                <segue destination="sdW-bg-3Oa" kind="show" id="jZc-Xy-BQh"/>
+                                <segue destination="wyJ-2X-NYz" kind="show" id="Oqc-5J-UFr"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <segue destination="sdW-bg-3Oa" kind="show" identifier="showPlaceDetailFromMyPlaces" id="gfF-Wa-RnX"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1vM-AC-p46" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -164,11 +219,11 @@
             </objects>
             <point key="canvasLocation" x="122" y="263"/>
         </scene>
-        <!--My Places-->
+        <!--My Trips-->
         <scene sceneID="Q0h-np-hUF">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xZI-oM-1Qm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="My Places" id="hOL-ci-jER"/>
+                    <tabBarItem key="tabBarItem" title="My Trips" id="hOL-ci-jER"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="aoc-a9-Zt7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -186,6 +241,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yo6-j4-uz7"/>
+        <segue reference="fX7-ib-cij"/>
     </inferredMetricsTieBreakers>
 </document>

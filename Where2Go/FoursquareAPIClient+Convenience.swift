@@ -15,7 +15,6 @@ extension FoursquareAPIClient {
     func getVenueDetails(venueID: String, completionHandler: (success: Bool, userDataDictionary: [String:AnyObject]?, errorString: String?) -> Void){
         // Fill in the code for extracting details for one particular venue
         
-        
     }
     
     
@@ -35,7 +34,7 @@ extension FoursquareAPIClient {
         _ = taskForGETMethod(Methods.Explore, parameters: methodArguments, baseUrl: Constants.BaseURLSecure, dataOffSet: 0, headers: nil) { JSONResult, error in
             
             if let _ = error {
-                completionHandler(success: false, userDataDictionary: nil, errorString: "There was an error getting photos from Flickr")
+                completionHandler(success: false, userDataDictionary: nil, errorString: "There was an error getting photos from Flickr: \(error?.userInfo)")
             }
             else {
                 if let userDataDict = JSONResult.valueForKey("response")?.valueForKey("groups") as? [[String:AnyObject]] {
