@@ -8,15 +8,26 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
-class ExplorePlacesViewController: UIViewController, MKMapViewDelegate {
+class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
+    var canGetLocation = false
+    var locationManager: CLLocationManager!
     
-    // make the model the set off w2glocations, didset creates the mk versions and refreshes the view
+    var zoomedIn:MKCoordinateRegion {
+        get {
+            let regionRadius: CLLocationDistance = 2000
+            return MKCoordinateRegionMakeWithDistance(exploreMapView.userLocation.coordinate, regionRadius, regionRadius)
+        }
+    }
+
+    
     
     @IBOutlet weak var exploreMapView: MKMapView!
     @IBAction func refreshVenues(sender: UIBarButtonItem) {
         refreshVenues()
+        // print (exploreMapView.userLocation.coordinate)
     }
 
     override func viewDidLoad() {
@@ -33,13 +44,39 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate {
         exploreMapView.addAnnotations(demoLocations)
         */
         
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        
         exploreMapView.delegate = self
+
         refreshVenues()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        
+        if (status == .AuthorizedWhenInUse) {
+            exploreMapView.showsUserLocation = true
+            canGetLocation = true
+            print("can get location")
+            manager.startUpdatingLocation()
+        }
+        else {
+            exploreMapView.showsUserLocation = false
+            canGetLocation = false
+            print("cannot get location")
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+        print("did update location to: \(newLocation)")
+        exploreMapView.setRegion(zoomedIn, animated: true)
+        manager.stopUpdatingLocation()
     }
     
     func refreshVenues(){

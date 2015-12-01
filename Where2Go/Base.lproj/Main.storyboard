@@ -82,30 +82,67 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the Places Detail View Controller" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CFM-wI-pP8">
-                                <rect key="frame" x="149" y="289" width="303" height="21"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FLJ-af-5pQ">
+                                <rect key="frame" x="0.0" y="64" width="600" height="145"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Name of the Venue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hNx-fI-Vn0">
+                                <rect key="frame" x="162" y="120" width="276" height="32.5"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kOG-GZ-dfa">
+                                <rect key="frame" x="0.0" y="209" width="600" height="342"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="343" id="uD5-9P-EXd"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="uD5-9P-EXd"/>
+                                    </mask>
+                                </variation>
+                            </tableView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="CFM-wI-pP8" firstAttribute="centerX" secondItem="oDh-Jt-Qtt" secondAttribute="centerX" id="POe-hH-TVP"/>
-                            <constraint firstItem="CFM-wI-pP8" firstAttribute="centerY" secondItem="oDh-Jt-Qtt" secondAttribute="centerY" id="l1E-cw-Ofw"/>
+                            <constraint firstItem="kOG-GZ-dfa" firstAttribute="top" secondItem="FLJ-af-5pQ" secondAttribute="bottom" id="4qE-zp-Xbc"/>
+                            <constraint firstItem="hNx-fI-Vn0" firstAttribute="top" secondItem="vnM-g8-hUI" secondAttribute="bottom" constant="56" id="5ck-SN-CQe"/>
+                            <constraint firstItem="kOG-GZ-dfa" firstAttribute="leading" secondItem="FLJ-af-5pQ" secondAttribute="leading" id="6TT-Cd-3Ge"/>
+                            <constraint firstItem="kOG-GZ-dfa" firstAttribute="top" secondItem="hNx-fI-Vn0" secondAttribute="bottom" constant="55" id="AtL-2j-rq4"/>
+                            <constraint firstItem="kOG-GZ-dfa" firstAttribute="trailing" secondItem="FLJ-af-5pQ" secondAttribute="trailing" id="LxZ-4k-cFP"/>
+                            <constraint firstItem="hNx-fI-Vn0" firstAttribute="centerY" secondItem="FLJ-af-5pQ" secondAttribute="centerY" id="QEF-lt-x8G"/>
+                            <constraint firstItem="rwr-OD-Jd9" firstAttribute="top" secondItem="FLJ-af-5pQ" secondAttribute="bottom" constant="342" id="Qx8-Tq-Q15"/>
+                            <constraint firstItem="FLJ-af-5pQ" firstAttribute="top" secondItem="vnM-g8-hUI" secondAttribute="bottom" id="Vjb-pa-sFi"/>
+                            <constraint firstItem="hNx-fI-Vn0" firstAttribute="centerX" secondItem="FLJ-af-5pQ" secondAttribute="centerX" id="cOx-P2-t7J"/>
+                            <constraint firstItem="FLJ-af-5pQ" firstAttribute="leading" secondItem="oDh-Jt-Qtt" secondAttribute="leading" id="t8Q-7V-Z5k"/>
+                            <constraint firstItem="kOG-GZ-dfa" firstAttribute="bottom" secondItem="rwr-OD-Jd9" secondAttribute="top" id="yQv-bo-Ncx"/>
+                            <constraint firstAttribute="trailing" secondItem="FLJ-af-5pQ" secondAttribute="trailing" id="z1T-1I-bPo"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="5ck-SN-CQe"/>
+                                <exclude reference="AtL-2j-rq4"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="placeDetailTable" destination="kOG-GZ-dfa" id="Qbh-wz-oZX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cfl-bD-ZFf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1774" y="263"/>
         </scene>
-        <!--View Controller-->
+        <!--Trip Details View Controller-->
         <scene sceneID="CPP-8z-xBd">
             <objects>
-                <viewController id="wyJ-2X-NYz" sceneMemberID="viewController">
+                <viewController id="wyJ-2X-NYz" customClass="TripDetailsViewController" customModule="Where2Go" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EvI-9n-smc"/>
                         <viewControllerLayoutGuide type="bottom" id="g8V-em-k3R"/>
@@ -121,7 +158,7 @@
                                     <constraint firstAttribute="width" constant="291" id="qlM-Bp-WBb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -194,6 +231,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="myTripsTable" destination="WKD-c2-FYy" id="Pi6-xT-M1F"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1vM-AC-p46" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -18,6 +18,7 @@
 		695463A91BC0490A009D9C02 /* Where2GoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463A81BC0490A009D9C02 /* Where2GoUITests.swift */; };
 		695D711B1BC90BDA00541953 /* MyPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695D711A1BC90BDA00541953 /* MyPlacesViewController.swift */; };
 		695D711D1BC90CD100541953 /* PlacesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695D711C1BC90CD100541953 /* PlacesDetailViewController.swift */; };
+		695F54A81C0E22F400E6B6BA /* TripDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695F54A71C0E22F400E6B6BA /* TripDetailsViewController.swift */; };
 		696D43551C0D91F5006B5A81 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696D43541C0D91F5006B5A81 /* Reach.swift */; };
 		69BBB9021C0CD8AF00C34D51 /* W2GLocationDetailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BBB9011C0CD8AF00C34D51 /* W2GLocationDetailed.swift */; };
 		69BBB9041C0CDF0400C34D51 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BBB9031C0CDF0400C34D51 /* Photo.swift */; };
@@ -64,6 +65,7 @@
 		695463AA1BC0490A009D9C02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		695D711A1BC90BDA00541953 /* MyPlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesViewController.swift; sourceTree = "<group>"; };
 		695D711C1BC90CD100541953 /* PlacesDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesDetailViewController.swift; sourceTree = "<group>"; };
+		695F54A71C0E22F400E6B6BA /* TripDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripDetailsViewController.swift; sourceTree = "<group>"; };
 		696D43541C0D91F5006B5A81 /* Reach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
 		69BBB9011C0CD8AF00C34D51 /* W2GLocationDetailed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W2GLocationDetailed.swift; sourceTree = "<group>"; };
 		69BBB9031C0CDF0400C34D51 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				695463871BC0490A009D9C02 /* ExplorePlacesViewController.swift */,
 				695D711A1BC90BDA00541953 /* MyPlacesViewController.swift */,
 				695D711C1BC90CD100541953 /* PlacesDetailViewController.swift */,
+				695F54A71C0E22F400E6B6BA /* TripDetailsViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				695463861BC0490A009D9C02 /* AppDelegate.swift in Sources */,
 				69CA62EA1C09FC3800CBA1A4 /* MKW2GLocation.swift in Sources */,
 				692884521BF514D200BFC75A /* CoreDataStackManager.swift in Sources */,
+				695F54A81C0E22F400E6B6BA /* TripDetailsViewController.swift in Sources */,
 				69CA62E91C09FC3800CBA1A4 /* W2GLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

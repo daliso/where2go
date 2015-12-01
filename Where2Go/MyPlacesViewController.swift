@@ -8,12 +8,17 @@
 
 import UIKit
 
-class MyPlacesViewController: UIViewController {
+class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
 
+    @IBOutlet weak var myTripsTable: UITableView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        
+        myTripsTable.delegate = self
+        myTripsTable.dataSource = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,7 +26,41 @@ class MyPlacesViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = "I am cell: \(indexPath.section) , \(indexPath.row)"
+        return cell
+    }
 
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+            case 0: return 5
+            case 1: return 5
+            case 2: return 5
+            case 3: return 5
+            case 4: return 5
+        default: return 4
+        }
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 5
+    }
+    
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "This is a section header"
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        let height:CGFloat = 60
+        return height
+    }
+    
+    
     /*
     // MARK: - Navigation
 
