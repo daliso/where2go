@@ -12,14 +12,30 @@ import CoreLocation
 
 class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     var canGetLocation = false
     var userLocation:CLLocationCoordinate2D!
     var locationManager: CLLocationManager!
+    var placesCategory:String = "Food" {
+        didSet{
+            refreshVenues()
+        }
+    }
     
     var zoomedIn:MKCoordinateRegion {
         get {
             let regionRadius: CLLocationDistance = 2000
             return MKCoordinateRegionMakeWithDistance(userLocation, regionRadius, regionRadius)
+        }
+    }
+    
+    
+    @IBAction func categoryControl(sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            placesCategory = "Food"
+        }
+        else if sender.selectedSegmentIndex == 1 {
+            placesCategory = "Arts & Entertainment"
         }
     }
 
@@ -80,11 +96,13 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     }
     
     func refreshVenues(){
+        spinner.startAnimating()
+        exploreMapView.alpha = CGFloat(0.5)
         let lat = exploreMapView.region.center.latitude
         let lon = exploreMapView.region.center.longitude
         let radius = max(exploreMapView.region.span.latitudeDelta/2.0*110574.61, exploreMapView.region.span.longitudeDelta/2.0*111302.62)
    
-        FoursquareAPIClient.sharedInstance.getNearbyLocations("Food", lat:lat, lon:lon, radius: radius) { (success, userDataDict, errorString) -> Void in
+        FoursquareAPIClient.sharedInstance.getNearbyLocations(placesCategory, lat:lat, lon:lon, radius: radius) { (success, userDataDict, errorString) -> Void in
             if success {
                 
                 dispatch_async(dispatch_get_main_queue(), {
@@ -116,6 +134,11 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
             } else{
                 print("shucks...there was an error: \(errorString)")
             }
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.spinner.stopAnimating()
+                self.exploreMapView.alpha = CGFloat(1.0)
+            })
         }
     }
     

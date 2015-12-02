@@ -48,13 +48,20 @@
                                 </constraints>
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="K5G-DD-a5u">
-                                <rect key="frame" x="174" y="72" width="253" height="29"/>
+                                <rect key="frame" x="200" y="72" width="201" height="29"/>
                                 <animations/>
                                 <segments>
                                     <segment title="Eating"/>
-                                    <segment title="Tourist Attractions"/>
+                                    <segment title="Entertainment"/>
                                 </segments>
+                                <connections>
+                                    <action selector="categoryControl:" destination="BYZ-38-t0r" eventType="valueChanged" id="9rH-v4-h4L"/>
+                                </connections>
                             </segmentedControl>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="MMD-T8-Yrs">
+                                <rect key="frame" x="290" y="298" width="20" height="20"/>
+                                <animations/>
+                            </activityIndicatorView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -63,9 +70,11 @@
                             <constraint firstItem="l0H-Xh-Acu" firstAttribute="trailing" secondItem="xwV-Oa-l9g" secondAttribute="trailing" id="4jX-zV-Uai"/>
                             <constraint firstItem="K5G-DD-a5u" firstAttribute="centerX" secondItem="xwV-Oa-l9g" secondAttribute="centerX" id="6J0-Im-dYW"/>
                             <constraint firstItem="K5G-DD-a5u" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="HPL-Pp-mBb"/>
+                            <constraint firstItem="MMD-T8-Yrs" firstAttribute="centerX" secondItem="K5G-DD-a5u" secondAttribute="centerX" id="Qsp-09-OYM"/>
                             <constraint firstItem="l0H-Xh-Acu" firstAttribute="top" secondItem="xwV-Oa-l9g" secondAttribute="top" id="S8f-b7-cfR"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="l0H-Xh-Acu" secondAttribute="bottom" constant="440" id="Ynm-qz-a2r"/>
                             <constraint firstAttribute="trailing" secondItem="xwV-Oa-l9g" secondAttribute="trailing" id="cu5-oX-jLY"/>
+                            <constraint firstItem="MMD-T8-Yrs" firstAttribute="centerY" secondItem="xwV-Oa-l9g" secondAttribute="centerY" id="fmB-Fs-Y1S"/>
                             <constraint firstItem="xwV-Oa-l9g" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="jah-l9-fxG"/>
                             <constraint firstItem="xwV-Oa-l9g" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="lPt-Nv-REy"/>
                             <constraint firstItem="l0H-Xh-Acu" firstAttribute="leading" secondItem="xwV-Oa-l9g" secondAttribute="leading" id="nOH-Yd-7Dr"/>
@@ -90,6 +99,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="exploreMapView" destination="xwV-Oa-l9g" id="4gk-Vz-S3e"/>
+                        <outlet property="spinner" destination="MMD-T8-Yrs" id="Z0l-oV-H8a"/>
                         <segue destination="sdW-bg-3Oa" kind="show" identifier="showPlaceDetailFromExplore" id="yo6-j4-uz7"/>
                     </connections>
                 </viewController>
