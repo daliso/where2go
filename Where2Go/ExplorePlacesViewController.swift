@@ -12,6 +12,7 @@ import CoreLocation
 
 class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
+    @IBOutlet weak var noConnectionView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     var canGetLocation = false
     var connectionStatus:ReachabilityStatus = Reach().connectionStatus() {
@@ -75,6 +76,16 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         exploreMapView.delegate = self
 
         refreshVenues()
+        
+        print("The Y coord is \(noConnectionView.frame.origin.y)")
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        print("view did appear called")
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        print("view will appear called")
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,30 +97,23 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         switch connectionStatus {
         case .Unknown, .Offline:
             print("Not connected")
-        case .Online(.WWAN):
+            UIView.animateWithDuration(0.2,
+            delay: 0.0,
+            options: UIViewAnimationOptions.CurveEaseInOut,
+            animations: {self.noConnectionView.frame.origin.y = 0},
+            completion:nil)
+        case .Online(.WWAN), .Online(.WiFi):
             print("Connected via WWAN")
-        case .Online(.WiFi):
-            print("Connected via WiFi")
+            UIView.animateWithDuration(0.3,
+            delay: 0.0,
+            usingSpringWithDamping: CGFloat(2.0),
+            initialSpringVelocity: CGFloat(2.0),
+            options: UIViewAnimationOptions.CurveEaseInOut,
+            animations: {self.noConnectionView.frame.origin.y = -47},
+            completion:nil)
         }
     }
-    
-//    if editingPins {
-//    
-//    UIView.animateWithDuration(0.2,
-//    delay: 0.0,
-//    options: UIViewAnimationOptions.CurveEaseInOut,
-//    animations: {self.view.frame.origin.y -= 74},
-//    completion:nil)
-//    }
-//    else {
-//    UIView.animateWithDuration(0.3,
-//    delay: 0.0,
-//    usingSpringWithDamping: CGFloat(2.0),
-//    initialSpringVelocity: CGFloat(2.0),
-//    options: UIViewAnimationOptions.CurveEaseInOut,
-//    animations: {self.view.frame.origin.y += 74},
-//    completion:nil)
-//    }
+
     
     func networkStatusChanged(notification: NSNotification) {
         //let userInfo = notification.userInfo

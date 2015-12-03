@@ -20,7 +20,7 @@ class FoursquareAPIClient : NSObject {
     
     static let sharedInstance = FoursquareAPIClient()
     
-    func taskForGETMethod(method: String, parameters: NSDictionary?, baseUrl: String?, dataOffSet: Int?, headers: NSDictionary?, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForGETMethod(method: String, parameters: NSDictionary?, baseUrl: String?, dataOffSet: Int?, headers: NSDictionary?, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask? {
         
         // Set defaults for request configuration
         var parameterString = ""
