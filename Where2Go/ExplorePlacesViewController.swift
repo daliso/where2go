@@ -14,6 +14,12 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     var canGetLocation = false
+    var connectionStatus:ReachabilityStatus = Reach().connectionStatus() {
+        didSet {
+            print("update the UI here to show or hide the notification")
+            updateConnectionStatusView()
+        }
+    }
     var userLocation:CLLocationCoordinate2D!
     var locationManager: CLLocationManager!
     var placesCategory:String = "Food" {
@@ -59,6 +65,9 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         exploreMapView.addAnnotations(demoLocations)
         */
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("networkStatusChanged:"), name: ReachabilityStatusChangedNotification, object: nil)
+        Reach().monitorReachabilityChanges()
+        
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -73,8 +82,42 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         // Dispose of any resources that can be recreated.
     }
     
+    func updateConnectionStatusView(){
+        switch connectionStatus {
+        case .Unknown, .Offline:
+            print("Not connected")
+        case .Online(.WWAN):
+            print("Connected via WWAN")
+        case .Online(.WiFi):
+            print("Connected via WiFi")
+        }
+    }
+    
+//    if editingPins {
+//    
+//    UIView.animateWithDuration(0.2,
+//    delay: 0.0,
+//    options: UIViewAnimationOptions.CurveEaseInOut,
+//    animations: {self.view.frame.origin.y -= 74},
+//    completion:nil)
+//    }
+//    else {
+//    UIView.animateWithDuration(0.3,
+//    delay: 0.0,
+//    usingSpringWithDamping: CGFloat(2.0),
+//    initialSpringVelocity: CGFloat(2.0),
+//    options: UIViewAnimationOptions.CurveEaseInOut,
+//    animations: {self.view.frame.origin.y += 74},
+//    completion:nil)
+//    }
+    
+    func networkStatusChanged(notification: NSNotification) {
+        //let userInfo = notification.userInfo
+        //print(userInfo)
+        connectionStatus = Reach().connectionStatus()
+    }
+    
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        
         if (status == .AuthorizedWhenInUse) {
             exploreMapView.showsUserLocation = true
             canGetLocation = true
@@ -132,7 +175,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
                 })
                 
             } else{
-                print("shucks...there was an error: \(errorString)")
+                print("shucks..")
             }
             
             dispatch_async(dispatch_get_main_queue(), {
