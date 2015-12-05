@@ -58,11 +58,11 @@
                                     <action selector="categoryControl:" destination="BYZ-38-t0r" eventType="valueChanged" id="9rH-v4-h4L"/>
                                 </connections>
                             </segmentedControl>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TvH-Xf-3Pc">
-                                <rect key="frame" x="0.0" y="-37" width="600" height="47"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TvH-Xf-3Pc">
+                                <rect key="frame" x="0.0" y="-47" width="600" height="47"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No network connection. Please check your setting" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lns-cv-M4J">
-                                        <rect key="frame" x="169" y="17" width="263" height="13.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="No network connection. Please check your settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lns-cv-M4J">
+                                        <rect key="frame" x="166" y="17" width="269" height="13.5"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -75,7 +75,6 @@
                                     <constraint firstItem="Lns-cv-M4J" firstAttribute="centerX" secondItem="TvH-Xf-3Pc" secondAttribute="centerX" id="gnk-lg-acg"/>
                                     <constraint firstItem="Lns-cv-M4J" firstAttribute="centerY" secondItem="TvH-Xf-3Pc" secondAttribute="centerY" id="k1r-VV-rbu"/>
                                     <constraint firstAttribute="height" constant="47" id="oh6-ad-EkZ"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="47" id="uN2-hv-6rx"/>
                                 </constraints>
                             </view>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="MMD-T8-Yrs">
@@ -86,7 +85,6 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="TvH-Xf-3Pc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-37" id="2Tv-26-TGL"/>
                             <constraint firstItem="xwV-Oa-l9g" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="4Lv-b9-dXo"/>
                             <constraint firstItem="l0H-Xh-Acu" firstAttribute="trailing" secondItem="xwV-Oa-l9g" secondAttribute="trailing" id="4jX-zV-Uai"/>
                             <constraint firstItem="K5G-DD-a5u" firstAttribute="centerX" secondItem="xwV-Oa-l9g" secondAttribute="centerX" id="6J0-Im-dYW"/>
@@ -123,7 +121,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="exploreMapView" destination="xwV-Oa-l9g" id="4gk-Vz-S3e"/>
+                        <outlet property="exploreMapView" destination="xwV-Oa-l9g" id="y2t-hS-o7C"/>
                         <outlet property="noConnectionView" destination="TvH-Xf-3Pc" id="WjY-cX-1GP"/>
                         <outlet property="spinner" destination="MMD-T8-Yrs" id="Z0l-oV-H8a"/>
                         <segue destination="sdW-bg-3Oa" kind="show" identifier="showPlaceDetailFromExplore" id="yo6-j4-uz7"/>
@@ -189,8 +187,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="5ck-SN-CQe"/>
                                 <exclude reference="AtL-2j-rq4"/>
+                                <exclude reference="5ck-SN-CQe"/>
                             </mask>
                         </variation>
                     </view>

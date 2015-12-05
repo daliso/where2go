@@ -12,12 +12,13 @@ import CoreLocation
 
 class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
+    // MARK: Outlets
     @IBOutlet weak var noConnectionView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
     var canGetLocation = false
     var connectionStatus:ReachabilityStatus = Reach().connectionStatus() {
         didSet {
-            print("update the UI here to show or hide the notification")
             updateConnectionStatusView()
         }
     }
@@ -28,6 +29,16 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
             refreshVenues()
         }
     }
+
+    lazy var connectionNoticeContraints1:NSLayoutConstraint = NSLayoutConstraint(item: self.exploreMapView, attribute:
+        NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.noConnectionView,
+        attribute: NSLayoutAttribute.Bottom, multiplier: 1.0,
+        constant: 0)
+    
+    lazy var connectionNoticeContraints2:NSLayoutConstraint = NSLayoutConstraint(item: self.exploreMapView, attribute:
+        NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.noConnectionView,
+        attribute: NSLayoutAttribute.Bottom, multiplier: 1.0,
+        constant: -47)
     
     var zoomedIn:MKCoordinateRegion {
         get {
@@ -47,6 +58,8 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     }
 
     @IBOutlet weak var exploreMapView: MKMapView!
+    
+    
     @IBAction func refreshVenues(sender: UIBarButtonItem) {
         refreshVenues()
         // print (exploreMapView.userLocation.coordinate)
@@ -65,7 +78,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
 
         exploreMapView.addAnnotations(demoLocations)
         */
-        
+       
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("networkStatusChanged:"), name: ReachabilityStatusChangedNotification, object: nil)
         Reach().monitorReachabilityChanges()
         
@@ -76,8 +89,6 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         exploreMapView.delegate = self
 
         refreshVenues()
-        
-        print("The Y coord is \(noConnectionView.frame.origin.y)")
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -96,14 +107,23 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     func updateConnectionStatusView(){
         switch connectionStatus {
         case .Unknown, .Offline:
-            print("Not connected")
+            print("Connection Status: Not connected")
             UIView.animateWithDuration(0.2,
             delay: 0.0,
             options: UIViewAnimationOptions.CurveEaseInOut,
             animations: {self.noConnectionView.frame.origin.y = 0},
             completion:nil)
+            
+//            let connectionNoticeContraints = NSLayoutConstraint(item: exploreMapView, attribute:
+//                NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: noConnectionView,
+//                attribute: NSLayoutAttribute.Bottom, multiplier: 1.0,
+//                constant: -47)
+            
+            view.removeConstraint(connectionNoticeContraints1)
+            view.addConstraint(connectionNoticeContraints2)
+            
         case .Online(.WWAN), .Online(.WiFi):
-            print("Connected via WWAN")
+            print("Connection Status: Connected via WWAN")
             UIView.animateWithDuration(0.3,
             delay: 0.0,
             usingSpringWithDamping: CGFloat(2.0),
@@ -111,6 +131,10 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
             options: UIViewAnimationOptions.CurveEaseInOut,
             animations: {self.noConnectionView.frame.origin.y = -47},
             completion:nil)
+            
+            
+            view.removeConstraint(connectionNoticeContraints2)
+            view.addConstraint(connectionNoticeContraints1)
         }
     }
 
