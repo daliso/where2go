@@ -43,7 +43,21 @@ extension FoursquareAPIClient {
                 }
                 else {
                     if let userDataDict = JSONResult.valueForKey("response")?.valueForKey("groups") as? [[String:AnyObject]] {
-                        completionHandler(success: true, userDataDictionary: userDataDict.first, errorString:nil)
+                        
+                        let code = JSONResult.valueForKey("meta")!.valueForKey("code") as! Int
+                        if code == 200 {
+                            completionHandler(success: true, userDataDictionary: userDataDict.first, errorString:nil)
+                        }
+                        else  if (code - 400) >= 0 && (code - 400) <= 100 {
+                            let errorType = JSONResult.valueForKey("meta")!.valueForKey("errorType") as! String
+                            let errorDetail = JSONResult.valueForKey("meta")!.valueForKey("errorDetail") as! String
+                            let errorMessage = "\(errorType) : \(errorDetail)"
+                            
+                            completionHandler(success: false, userDataDictionary: nil, errorString: errorMessage)
+                        }
+                        else {
+                            completionHandler(success: false, userDataDictionary: nil, errorString: "There was a problem with the response from Foursquare")
+                        }
                     }
                     else {
                         // need to check here if the JSON result contains some known property with an error message

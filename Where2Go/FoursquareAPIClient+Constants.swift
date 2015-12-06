@@ -17,7 +17,7 @@ extension FoursquareAPIClient {
         static let Latitude = "latitude"
         static let Longitude = "longitude"
         
-        static let StatusMessage = "stat"
+        static let StatusMessage = "meta"
     }
     
     // MARK: - Constants

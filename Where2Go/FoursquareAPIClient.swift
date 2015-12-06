@@ -107,11 +107,13 @@ class FoursquareAPIClient : NSObject {
         do {
             let parsedResult = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as? [String : AnyObject]
             
-            if let errorMessage = parsedResult![FoursquareAPIClient.JSONResponseKeys.StatusMessage] as? String {
-                
-                let userInfo = [NSLocalizedDescriptionKey : errorMessage]
-                
-                theError =  NSError(domain: "Foursquare API Error", code: 1, userInfo: userInfo)
+            if let meta = parsedResult![FoursquareAPIClient.JSONResponseKeys.StatusMessage] as? [String:AnyObject] {
+                if let errorType = meta["errorType"] {
+                    let errorDetail = meta["errorDetail"]
+                    let errorMessage = "\(errorType) : \(errorDetail)"
+                    let userInfo = [NSLocalizedDescriptionKey : errorMessage]
+                    theError =  NSError(domain: "Foursquare API Error", code: 1, userInfo: userInfo)
+                }
             }
             
         } catch {
