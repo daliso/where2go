@@ -98,7 +98,6 @@ class FoursquareAPIClient : NSObject {
         
     }
     
-    
     /* Helper: Given a response with error, see if a status_message is returned, otherwise return the previous error */
     class func errorForData(data: NSData?, response: NSURLResponse?, error: NSError) -> NSError {
         
@@ -117,14 +116,12 @@ class FoursquareAPIClient : NSObject {
             }
             
         } catch {
-            
-            
+            print("An error occured in errorForData: \(error)")
         }
         
         return theError
         
     }
-    
     
     // MARK: - Shared Image Cache
     struct Caches {
