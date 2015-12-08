@@ -114,11 +114,6 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
             animations: {self.noConnectionView.frame.origin.y = 0},
             completion:nil)
             
-//            let connectionNoticeContraints = NSLayoutConstraint(item: exploreMapView, attribute:
-//                NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: noConnectionView,
-//                attribute: NSLayoutAttribute.Bottom, multiplier: 1.0,
-//                constant: -47)
-            
             view.removeConstraint(connectionNoticeContraints1)
             view.addConstraint(connectionNoticeContraints2)
             

@@ -11,18 +11,42 @@ import CoreData
 
 struct W2GLocationDetailed {
     
-    var w2gLocation = W2GLocation(dictionary: nil)
-    
+    var name:String
     var phoneNumber: String?
     var address:[String]?
+    var openingHours:[String:String]?
     var websiteAddress:String?
     var coverPhoto:Photo?
-    var photos:[Photo]?
+    var userPhotos:[Photo]?
     var userTips:[String]?
-    var openingHours:[[String:String]]?
+    var rating:Double?
+    // var reviews:[Review]
     
-    init(location: W2GLocation, dictionary: [String : AnyObject]) {
-        w2gLocation = location
+    init(dictionary: [String : AnyObject]){
+        name = dictionary[""] as! String
+        phoneNumber = dictionary[""] as! String
+        address = dictionary[""] as! [String]
+        openingHours = dictionary[""] as! [String:String]
+        websiteAddress = dictionary[""] as! String
+        coverPhoto = dictionary[""] as! Photo
+        userPhotos = dictionary[""] as! [Photo]
+        rating = dictionary[""] as! Double
+        
+    }
+    
+    
+    static func W2GLocationsDetailedFromResults(results: [[String : AnyObject]]) -> [W2GLocationDetailed] {
+        var w2gLocationsDetailed = [W2GLocationDetailed]()
+        for result in results {
+            w2gLocationsDetailed.append(W2GLocationDetailed(dictionary: result))
+        }
+        return w2gLocationsDetailed
     }
 
 }
+
+
+/*
+name, photo, reviews, reviewer photos
+
+*/
