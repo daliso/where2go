@@ -24,16 +24,14 @@ struct W2GLocationDetailed {
     
     init(dictionary: [String : AnyObject]){
         name = dictionary[""] as! String
-        phoneNumber = dictionary[""] as! String
-        address = dictionary[""] as! [String]
-        openingHours = dictionary[""] as! [String:String]
-        websiteAddress = dictionary[""] as! String
-        coverPhoto = dictionary[""] as! Photo
-        userPhotos = dictionary[""] as! [Photo]
-        rating = dictionary[""] as! Double
-        
+        phoneNumber = dictionary[""] as? String
+        address = dictionary[""] as? [String]
+        openingHours = dictionary[""] as? [String:String]
+        websiteAddress = dictionary[""] as? String
+        coverPhoto = dictionary[""] as? Photo
+        userPhotos = dictionary[""] as? [Photo]
+        rating = dictionary[""] as? Double
     }
-    
     
     static func W2GLocationsDetailedFromResults(results: [[String : AnyObject]]) -> [W2GLocationDetailed] {
         var w2gLocationsDetailed = [W2GLocationDetailed]()
@@ -42,11 +40,4 @@ struct W2GLocationDetailed {
         }
         return w2gLocationsDetailed
     }
-
 }
-
-
-/*
-name, photo, reviews, reviewer photos
-
-*/
