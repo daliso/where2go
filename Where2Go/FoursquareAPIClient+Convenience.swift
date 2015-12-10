@@ -38,15 +38,13 @@ extension FoursquareAPIClient {
                         if code == 200 {
                             
                             let venueName = venueDict[FoursquareAPIClient.JSONResponseKeys.venueName] as! String
-                            let venuePhoneNumber = (venueDict[FoursquareAPIClient.JSONResponseKeys.contact] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.formattedPhone] as! String
-                            let venueAddress = (venueDict[FoursquareAPIClient.JSONResponseKeys.location] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.formattedAddress] as! [String]
+                            let venuePhoneNumber = (venueDict[FoursquareAPIClient.JSONResponseKeys.contact] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.formattedPhone] as? String ?? ""
+                            let venueAddress = (venueDict[FoursquareAPIClient.JSONResponseKeys.location] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.formattedAddress] as? [String] ?? ["No address information"]
                             
-                            let venueWebsiteAddress = venueDict[FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress] as! String
-                            let venueRating = venueDict[FoursquareAPIClient.JSONResponseKeys.venueRating] as! Double
+                            let venueWebsiteAddress = venueDict[FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress] as? String ?? ""
+                            let venueRating = venueDict[FoursquareAPIClient.JSONResponseKeys.venueRating] as? Double ?? 0.0
                             
                           //  let venueOpeningHours = (venueDict[FoursquareAPIClient.JSONResponseKeys.hours] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.timeframes] as! [[String:AnyObject]]
-                            
-                            
                             
                             
                          //   let venueCoverPhoto =

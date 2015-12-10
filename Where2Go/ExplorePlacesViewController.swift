@@ -29,6 +29,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
             refreshVenues()
         }
     }
+    var selectedLocation:W2GLocation? = nil
 
     lazy var connectionNoticeContraints1:NSLayoutConstraint = NSLayoutConstraint(item: self.exploreMapView, attribute:
         NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.noConnectionView,
@@ -68,16 +69,6 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        /*
-        let demoLocations = MKW2GLocation.MKW2GLocationsFromW2GLocations(
-            W2GLocation.W2GLocationsFromResults(
-                createTestAPIResults()
-            )
-        )
-
-        exploreMapView.addAnnotations(demoLocations)
-        */
        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("networkStatusChanged:"), name: ReachabilityStatusChangedNotification, object: nil)
         Reach().monitorReachabilityChanges()
@@ -212,44 +203,45 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         refreshVenues()
     }
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("callout tapped: \((view.annotation as! MKW2GLocation).w2gLocation.venueName)")
+//    
+//    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+//        selectedLocation = (view.annotation! as! W2GLocation)
+//        performSegueWithIdentifier(Constants.segueToPlacesDetailViewController, sender: nil)
+//    }
+//    
+    
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        var view = mapView.dequeueReusableAnnotationViewWithIdentifier(Constants.AnnotationViewReuseIdentifier)
+        
+        if view == nil {
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.AnnotationViewReuseIdentifier)
+            view!.canShowCallout = true
+        } else {
+            view!.annotation = annotation
+        }
+        
+        view!.leftCalloutAccessoryView = nil
+        view!.rightCalloutAccessoryView = UIButton(type: UIButtonType.DetailDisclosure)
+        return view
     }
     
-    func createTestAPIResults() -> [[String: AnyObject]] {
-        
-        var testResults = [[String: AnyObject]]()
-        
-        testResults.append(
-            [
-                FoursquareAPIClient.JSONResponseKeys.venueID : "4b23b0a5f964a520175824e3",
-                FoursquareAPIClient.JSONResponseKeys.venueName : "YO! Sushi",
-                FoursquareAPIClient.JSONResponseKeys.Latitude : 51.50692612,
-                FoursquareAPIClient.JSONResponseKeys.Longitude : -0.22103548
-            ]
-        )
-        
-        testResults.append(
-            [
-                FoursquareAPIClient.JSONResponseKeys.venueID : "5172f248e4b09adb685ea45f",
-                FoursquareAPIClient.JSONResponseKeys.venueName : "Mr Sushi",
-                FoursquareAPIClient.JSONResponseKeys.Latitude : 51.50312037114186,
-                FoursquareAPIClient.JSONResponseKeys.Longitude : -0.2237503036553875
-            ]
-        )
-        
-        testResults.append(
-            [
-                FoursquareAPIClient.JSONResponseKeys.venueID : "55412714498eba342dfd063f",
-                FoursquareAPIClient.JSONResponseKeys.venueName : "Sticks N Sushi",
-                FoursquareAPIClient.JSONResponseKeys.Latitude : 51.50603657743944,
-                FoursquareAPIClient.JSONResponseKeys.Longitude : -0.018242708075009856
-            ]
-        )
-        
-        return testResults
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        selectedLocation = (view.annotation! as! MKW2GLocation).w2gLocation
+        performSegueWithIdentifier(Constants.segueToPlacesDetailViewController, sender: nil)
     }
-
-
+    
+        
+    
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let vc = segue.destinationViewController as! PlacesDetailViewController
+        vc.venueID = selectedLocation!.venueID
+    }
+    
+    private struct Constants {
+        static let segueToPlacesDetailViewController = "showPlaceDetailFromExplore"
+        static let AnnotationViewReuseIdentifier = "locationPin"
+    }
 }
 
