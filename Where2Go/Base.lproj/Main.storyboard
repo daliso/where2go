@@ -194,6 +194,7 @@
                     </view>
                     <connections>
                         <outlet property="placeDetailTable" destination="kOG-GZ-dfa" id="Qbh-wz-oZX"/>
+                        <outlet property="venueNameLabel" destination="hNx-fI-Vn0" id="paA-kW-Crh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cfl-bD-ZFf" userLabel="First Responder" sceneMemberID="firstResponder"/>

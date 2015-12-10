@@ -11,6 +11,9 @@ import UIKit
 class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var placeDetailTable: UITableView!
+    @IBOutlet weak var venueNameLabel: UILabel!
+    
+    var venueID:String = "49ecf7f1f964a520ba671fe3"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +21,22 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         placeDetailTable.delegate = self
         placeDetailTable.dataSource = self
         
+        FoursquareAPIClient.sharedInstance.getVenueDetails(venueID) { (success, locationDetails, errorString) -> Void in
+            if success {
+                // refreshUI using the locationdetails
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.refreshUI(locationDetails!)
+                })
+            }
+            else {
+                // display an error
+                print("An error occured: \(errorString!)")
+            }
+        }
+    }
+    
+    func refreshUI(locationDetails:W2GLocationDetailed){
+        venueNameLabel.text = locationDetails.name
     }
 
     override func didReceiveMemoryWarning() {

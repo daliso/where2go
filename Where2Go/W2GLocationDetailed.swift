@@ -14,23 +14,23 @@ struct W2GLocationDetailed {
     var name:String
     var phoneNumber: String?
     var address:[String]?
-    var openingHours:[String:String]?
+   // var openingHours:[String]?
     var websiteAddress:String?
-    var coverPhoto:Photo?
-    var userPhotos:[Photo]?
+   // var coverPhoto:Photo?
+   // var userPhotos:[Photo]?
     var userTips:[String]?
     var rating:Double?
     // var reviews:[Review]
     
     init(dictionary: [String : AnyObject]){
-        name = dictionary[""] as! String
-        phoneNumber = dictionary[""] as? String
-        address = dictionary[""] as? [String]
-        openingHours = dictionary[""] as? [String:String]
-        websiteAddress = dictionary[""] as? String
-        coverPhoto = dictionary[""] as? Photo
-        userPhotos = dictionary[""] as? [Photo]
-        rating = dictionary[""] as? Double
+        name = dictionary[FoursquareAPIClient.JSONResponseKeys.venueName] as! String
+        phoneNumber = dictionary[FoursquareAPIClient.JSONResponseKeys.formattedPhone] as? String
+        address = dictionary[FoursquareAPIClient.JSONResponseKeys.formattedAddress] as? [String]
+    //    openingHours = dictionary[""] as? [String]
+        websiteAddress = dictionary[FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress] as? String
+    //    coverPhoto = dictionary[""] as? Photo
+    //    userPhotos = dictionary[""] as? [Photo]
+        rating = dictionary[FoursquareAPIClient.JSONResponseKeys.venueRating] as? Double
     }
     
     static func W2GLocationsDetailedFromResults(results: [[String : AnyObject]]) -> [W2GLocationDetailed] {

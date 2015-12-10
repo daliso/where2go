@@ -13,9 +13,16 @@ extension FoursquareAPIClient {
     struct JSONResponseKeys {
         // MARK: Venues
         static let venueID = "venueID"
-        static let venueName = "venueName"
+        static let venueName = "name"
         static let Latitude = "latitude"
         static let Longitude = "longitude"
+        static let contact = "contact"
+        static let formattedPhone = "formattedPhone"
+        static let location = "location"
+        static let formattedAddress = "formattedAddress"
+        static let venueWebsiteAddress = "url"
+        static let venueRating = "rating"
+
         
         static let StatusMessage = "meta"
     }

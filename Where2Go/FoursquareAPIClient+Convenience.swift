@@ -32,11 +32,41 @@ extension FoursquareAPIClient {
                     completionHandler(success: false, locationDetails: nil, errorString: "There was an error getting the location details from Foursquare: \(error?.userInfo)")
                 }
                 else {
-                    if let userDataDict = JSONResult.valueForKey("response")?.valueForKey("groups") as? [[String:AnyObject]] {
+                    if let venueDict = JSONResult.valueForKey("response")?.valueForKey("venue") as? [String:AnyObject] {
                         
                         let code = JSONResult.valueForKey("meta")!.valueForKey("code") as! Int
                         if code == 200 {
-                            completionHandler(success: true, locationDetails: nil, errorString:nil)
+                            
+                            let venueName = venueDict[FoursquareAPIClient.JSONResponseKeys.venueName] as! String
+                            let venuePhoneNumber = (venueDict[FoursquareAPIClient.JSONResponseKeys.contact] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.formattedPhone] as! String
+                            let venueAddress = (venueDict[FoursquareAPIClient.JSONResponseKeys.location] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.formattedAddress] as! [String]
+                            
+                            let venueWebsiteAddress = venueDict[FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress] as! String
+                            let venueRating = venueDict[FoursquareAPIClient.JSONResponseKeys.venueRating] as! Double
+                            
+                          //  let venueOpeningHours = (venueDict[FoursquareAPIClient.JSONResponseKeys.hours] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.timeframes] as! [[String:AnyObject]]
+                            
+                            
+                            
+                            
+                         //   let venueCoverPhoto =
+                         //   let venueUserPhotos =
+                            
+                            let locationDetails:[String:AnyObject] = [
+                                FoursquareAPIClient.JSONResponseKeys.venueName:venueName,
+                                FoursquareAPIClient.JSONResponseKeys.formattedPhone : venuePhoneNumber,
+                                FoursquareAPIClient.JSONResponseKeys.formattedAddress : venueAddress,
+                               // FoursquareAPIClient.JSONResponseKeys.venueOpeningHours : venueOpeningHours,
+                                FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress : venueWebsiteAddress,
+                               // FoursquareAPIClient.JSONResponseKeys.venueCoverPhoto : venueCoverPhoto,
+                               // FoursquareAPIClient.JSONResponseKeys.venueUserPhotos : venueUserPhotos,
+                                FoursquareAPIClient.JSONResponseKeys.venueRating : venueRating
+                            ]
+                            
+                            
+                            let w2gLocationDetailed = W2GLocationDetailed(dictionary: locationDetails)
+                            
+                            completionHandler(success: true, locationDetails: w2gLocationDetailed, errorString:nil)
                         }
                         else  if (code - 400) >= 0 && (code - 400) <= 100 {
                             let errorType = JSONResult.valueForKey("meta")!.valueForKey("errorType") as! String
@@ -51,7 +81,8 @@ extension FoursquareAPIClient {
                     }
                     else {
                         // need to check here if the JSON result contains some known property with an error message
-                        completionHandler(success: false, locationDetails: nil, errorString: "There was an error getting photos from Flickr, the JSON response did not contain a response key")
+                        print(JSONResult)
+                        completionHandler(success: false, locationDetails: nil, errorString: "There was an error getting venue details from Foursquare, the JSON response did not contain a response key")
                     }
                 }
             }
@@ -102,7 +133,7 @@ extension FoursquareAPIClient {
                     }
                     else {
                         // need to check here if the JSON result contains some known property with an error message
-                        completionHandler(success: false, userDataDictionary: nil, errorString: "There was an error getting photos from Flickr, the JSON response did not contain a response key")
+                        completionHandler(success: false, userDataDictionary: nil, errorString: "There was an error getting nearby locations from Foursquare, the JSON response did not contain a response key")
                     }
                 }
             }
