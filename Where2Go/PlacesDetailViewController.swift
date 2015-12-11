@@ -12,6 +12,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
 
     @IBOutlet weak var placeDetailTable: UITableView!
     @IBOutlet weak var venueNameLabel: UILabel!
+    @IBOutlet weak var coverPhotoImageView: URLImageView!
     
     var venueID:String = "49ecf7f1f964a520ba671fe3"
     
@@ -37,6 +38,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     
     func refreshUI(locationDetails:W2GLocationDetailed){
         venueNameLabel.text = locationDetails.name
+        coverPhotoImageView.imageURL = locationDetails.coverPhoto!
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,12 +72,19 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "This is a section header"
+        switch section {
+        case 0: return "Contact Details"
+        case 1: return "Opening Hours"
+        case 2: return "Rating"
+        case 3: return "Photos"
+        case 4: return "Reviews"
+        default: return "Your Planned Trips"
+        }
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        let height:CGFloat = 60
+        let height:CGFloat = 30
         return height
     }
     

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		691ED7711C1AC7F900A53C7D /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691ED7701C1AC7F800A53C7D /* URLImageView.swift */; };
 		692884521BF514D200BFC75A /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692884511BF514D200BFC75A /* CoreDataStackManager.swift */; };
 		695463861BC0490A009D9C02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463851BC0490A009D9C02 /* AppDelegate.swift */; };
 		695463881BC0490A009D9C02 /* ExplorePlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463871BC0490A009D9C02 /* ExplorePlacesViewController.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		691ED7701C1AC7F800A53C7D /* URLImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
 		692884511BF514D200BFC75A /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		695463821BC0490A009D9C02 /* Where2Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Where2Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		695463851BC0490A009D9C02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 		695D711F1BC911D600541953 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				691ED7701C1AC7F800A53C7D /* URLImageView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				695D711D1BC90CD100541953 /* PlacesDetailViewController.swift in Sources */,
 				695D711B1BC90BDA00541953 /* MyPlacesViewController.swift in Sources */,
 				696D43551C0D91F5006B5A81 /* Reach.swift in Sources */,
+				691ED7711C1AC7F900A53C7D /* URLImageView.swift in Sources */,
 				69CA62ED1C0A011200CBA1A4 /* FoursquareAPIClient+Constants.swift in Sources */,
 				69CA62F21C0A117500CBA1A4 /* ImageCache.swift in Sources */,
 				69CA62F01C0A116800CBA1A4 /* FoursquareAPIClient+Convenience.swift in Sources */,

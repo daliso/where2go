@@ -22,7 +22,9 @@ extension FoursquareAPIClient {
         static let formattedAddress = "formattedAddress"
         static let venueWebsiteAddress = "url"
         static let venueRating = "rating"
-
+        static let bestPhoto = "bestPhoto"
+        static let bestPhotoPrefix = "prefix"
+        static let bestPhotoSuffix = "suffix"
         
         static let StatusMessage = "meta"
     }

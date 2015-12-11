@@ -62,6 +62,26 @@ class FoursquareAPIClient : NSObject {
         return task
     }
     
+    func taskForImage(filePath: String, completionHandler: (imageData: NSData?, error: String?) ->  Void) -> NSURLSessionTask {
+        
+        let url = NSURL(string: filePath)!
+        
+        let request = NSURLRequest(URL: url)
+        
+        let task = session.dataTaskWithRequest(request) {data, response, downloadError in
+            
+            if let error = downloadError {
+                completionHandler(imageData: nil, error: error.description)
+            } else {
+                completionHandler(imageData: data, error: nil)
+            }
+        }
+        
+        task.resume()
+        
+        return task
+    }
+    
     /* Helper function: Given a dictionary of parameters, convert to a string for a url */
     class func escapedParameters(parameters: NSDictionary) -> String {
         

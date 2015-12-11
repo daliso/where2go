@@ -47,8 +47,12 @@ extension FoursquareAPIClient {
                           //  let venueOpeningHours = (venueDict[FoursquareAPIClient.JSONResponseKeys.hours] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.timeframes] as! [[String:AnyObject]]
                             
                             
-                         //   let venueCoverPhoto =
-                         //   let venueUserPhotos =
+                            var venueCoverPhoto = ""
+                            
+                            if let bestPhoto = venueDict[FoursquareAPIClient.JSONResponseKeys.bestPhoto] as? [String:AnyObject] {
+                                venueCoverPhoto = "\(bestPhoto[FoursquareAPIClient.JSONResponseKeys.bestPhotoPrefix]!)original\(bestPhoto[FoursquareAPIClient.JSONResponseKeys.bestPhotoSuffix]!)"
+                            }
+                           
                             
                             let locationDetails:[String:AnyObject] = [
                                 FoursquareAPIClient.JSONResponseKeys.venueName:venueName,
@@ -56,7 +60,7 @@ extension FoursquareAPIClient {
                                 FoursquareAPIClient.JSONResponseKeys.formattedAddress : venueAddress,
                                // FoursquareAPIClient.JSONResponseKeys.venueOpeningHours : venueOpeningHours,
                                 FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress : venueWebsiteAddress,
-                               // FoursquareAPIClient.JSONResponseKeys.venueCoverPhoto : venueCoverPhoto,
+                                FoursquareAPIClient.JSONResponseKeys.bestPhoto : venueCoverPhoto,
                                // FoursquareAPIClient.JSONResponseKeys.venueUserPhotos : venueUserPhotos,
                                 FoursquareAPIClient.JSONResponseKeys.venueRating : venueRating
                             ]
