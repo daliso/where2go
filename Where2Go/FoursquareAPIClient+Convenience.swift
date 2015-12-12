@@ -44,7 +44,26 @@ extension FoursquareAPIClient {
                             let venueWebsiteAddress = venueDict[FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress] as? String ?? ""
                             let venueRating = venueDict[FoursquareAPIClient.JSONResponseKeys.venueRating] as? Double ?? 0.0
                             
-                          //  let venueOpeningHours = (venueDict[FoursquareAPIClient.JSONResponseKeys.hours] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.timeframes] as! [[String:AnyObject]]
+                            
+                            var openHoursData = [String]()
+
+                            if let hours = venueDict[FoursquareAPIClient.JSONResponseKeys.hours] as? [String:AnyObject] {
+                                
+                                let venueOpeningHours = hours[FoursquareAPIClient.JSONResponseKeys.timeframes] as! [[String:AnyObject]]
+                                
+                                for timeframe in venueOpeningHours {
+                                    let days = timeframe["days"] as! String
+                                    openHoursData.append("\(days):")
+                                    
+                                    let openTimesPerDay = timeframe["open"] as! [[String:AnyObject]]
+                                    for openTime in openTimesPerDay {
+                                        openHoursData.append(openTime["renderedTime"] as! String)
+                                    }
+                                }
+
+                            }
+                            
+
                             
                             
                             var venueCoverPhoto = ""
@@ -58,7 +77,7 @@ extension FoursquareAPIClient {
                                 FoursquareAPIClient.JSONResponseKeys.venueName:venueName,
                                 FoursquareAPIClient.JSONResponseKeys.formattedPhone : venuePhoneNumber,
                                 FoursquareAPIClient.JSONResponseKeys.formattedAddress : venueAddress,
-                               // FoursquareAPIClient.JSONResponseKeys.venueOpeningHours : venueOpeningHours,
+                                FoursquareAPIClient.JSONResponseKeys.hours : openHoursData,
                                 FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress : venueWebsiteAddress,
                                 FoursquareAPIClient.JSONResponseKeys.bestPhoto : venueCoverPhoto,
                                // FoursquareAPIClient.JSONResponseKeys.venueUserPhotos : venueUserPhotos,

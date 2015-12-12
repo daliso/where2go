@@ -25,6 +25,8 @@ extension FoursquareAPIClient {
         static let bestPhoto = "bestPhoto"
         static let bestPhotoPrefix = "prefix"
         static let bestPhotoSuffix = "suffix"
+        static let hours = "hours"
+        static let timeframes = "timeframes"
         
         static let StatusMessage = "meta"
     }

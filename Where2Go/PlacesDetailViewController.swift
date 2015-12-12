@@ -13,8 +13,10 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     @IBOutlet weak var placeDetailTable: UITableView!
     @IBOutlet weak var venueNameLabel: UILabel!
     @IBOutlet weak var coverPhotoImageView: URLImageView!
+    var tableData:[[String]]? = nil
     
     var venueID:String = "49ecf7f1f964a520ba671fe3"
+    var locationDetails:W2GLocationDetailed? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +40,21 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     
     func refreshUI(locationDetails:W2GLocationDetailed){
         venueNameLabel.text = locationDetails.name
+        self.locationDetails = locationDetails
+
         coverPhotoImageView.imageURL = locationDetails.coverPhoto!
+        
+        tableData = [[String]]()
+        tableData!.insert(["\(locationDetails.rating!) / 10" ?? "No rating found"], atIndex: 0)
+        tableData!.insert(["Tel: \(locationDetails.phoneNumber!)" ?? "No phone number found"], atIndex: 1)
+        for addressLine in locationDetails.address! {
+            tableData![1].append(addressLine)
+        }
+        tableData![1].append(locationDetails.websiteAddress!)
+ 
+        tableData!.insert(locationDetails.openingHours!, atIndex: 2)
+    
+        placeDetailTable.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,35 +66,47 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = "I am cell: \(indexPath.section) , \(indexPath.row)"
+        
+        if indexPath.section < 3 {
+            cell.textLabel?.text = tableData?[indexPath.section][indexPath.row] ?? ""
+        }
+        else {
+            cell.textLabel?.text = "I am cell: \(indexPath.section) , \(indexPath.row)"
+        }
+        
         return cell
     }
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         switch section {
-        case 0: return 5
-        case 1: return 5
-        case 2: return 5
+        case 0:
+            return 1
+        case 1: return tableData?[1].count ?? 0
+        case 2: return tableData?[2].count ?? 0
         case 3: return 5
         case 4: return 5
+        case 5: return 5
         default: return 4
         }
+       
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 5
+        return 6
     }
     
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0: return "Contact Details"
-        case 1: return "Opening Hours"
-        case 2: return "Rating"
+        case 0: return "Rating"
+        case 1: return "Contact Details"
+        case 2: return "Opening Hours"
         case 3: return "Photos"
         case 4: return "Reviews"
-        default: return "Your Planned Trips"
+        case 5: return "Your Planned Trips"
+        default: return "section"
         }
     }
     

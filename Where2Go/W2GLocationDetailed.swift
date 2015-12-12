@@ -14,7 +14,7 @@ struct W2GLocationDetailed {
     var name:String
     var phoneNumber: String?
     var address:[String]?
-   // var openingHours:[String]?
+    var openingHours:[String]?
     var websiteAddress:String?
     var coverPhoto:String?
    // var userPhotos:[Photo]?
@@ -26,7 +26,7 @@ struct W2GLocationDetailed {
         name = dictionary[FoursquareAPIClient.JSONResponseKeys.venueName] as! String
         phoneNumber = dictionary[FoursquareAPIClient.JSONResponseKeys.formattedPhone] as? String
         address = dictionary[FoursquareAPIClient.JSONResponseKeys.formattedAddress] as? [String]
-        //    openingHours = dictionary[""] as? [String]
+        openingHours = dictionary[FoursquareAPIClient.JSONResponseKeys.hours] as? [String]
         websiteAddress = dictionary[FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress] as? String
         coverPhoto = dictionary[FoursquareAPIClient.JSONResponseKeys.bestPhoto] as? String
         //    userPhotos = dictionary[""] as? [Photo]
