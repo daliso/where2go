@@ -231,6 +231,16 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         performSegueWithIdentifier(Constants.segueToPlacesDetailViewController, sender: nil)
     }
     
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        switch connectionStatus {
+        case .Unknown, .Offline:
+            return false
+            
+        case .Online(.WWAN), .Online(.WiFi):
+            return true
+        }
+    }
+    
         
     
     

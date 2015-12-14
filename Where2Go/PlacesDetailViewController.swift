@@ -36,6 +36,24 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
                 print("An error occured: \(errorString!)")
             }
         }
+
+        
+        let addTripButton : UIBarButtonItem = UIBarButtonItem(title: "Add Trip", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("addTripButtonPressed:"))
+        self.navigationItem.rightBarButtonItem = addTripButton
+        
+        /*
+        
+        // Putting the buttons in the right place
+        let pinBtn : UIBarButtonItem = UIBarButtonItem(image: pinImg,  style: UIBarButtonItemStyle.Plain, target: self, action: Selector("pinBtnPressed:"))
+        let refreshBtn = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: Selector("refreshBtnPressed:"))
+        
+        let buttons : NSArray = [refreshBtn,pinBtn]
+        self.navigationItem.rightBarButtonItems = buttons as? [UIBarButtonItem]
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("logoutBtnPressed:"))
+        
+        */
+        
+        
     }
     
     func refreshUI(locationDetails:W2GLocationDetailed){
@@ -85,16 +103,14 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
             return 1
         case 1: return tableData?[1].count ?? 0
         case 2: return tableData?[2].count ?? 0
-        case 3: return 5
-        case 4: return 5
-        case 5: return 5
-        default: return 4
+        case 3: return 0
+        default: return 0
         }
        
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 6
+        return 4
     }
     
     
@@ -103,9 +119,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         case 0: return "Rating"
         case 1: return "Contact Details"
         case 2: return "Opening Hours"
-        case 3: return "Photos"
-        case 4: return "Reviews"
-        case 5: return "Your Planned Trips"
+        case 3: return "Your Planned Trips"
         default: return "section"
         }
     }
