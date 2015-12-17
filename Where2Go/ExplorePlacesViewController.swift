@@ -157,7 +157,12 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         exploreMapView.alpha = CGFloat(0.5)
         let lat = exploreMapView.region.center.latitude
         let lon = exploreMapView.region.center.longitude
-        let radius = max(exploreMapView.region.span.latitudeDelta/2.0*110574.61, exploreMapView.region.span.longitudeDelta/2.0*111302.62)
+        
+        let width = exploreMapView.region.span.latitudeDelta/2.0*110574.61
+        let height = exploreMapView.region.span.longitudeDelta/2.0*111302.62
+        let radius = sqrt(pow(width,2.0)+pow(height,2.0))
+        
+        //let radius = max(exploreMapView.region.span.latitudeDelta/2.0*110574.61, exploreMapView.region.span.longitudeDelta/2.0*111302.62)
    
         FoursquareAPIClient.sharedInstance.getNearbyLocations(placesCategory, lat:lat, lon:lon, radius: radius) { (success, userDataDict, errorString) -> Void in
             if success {
@@ -212,6 +217,11 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if (annotation.isEqual(mapView.userLocation)){
+            return nil
+        }
+        
         var view = mapView.dequeueReusableAnnotationViewWithIdentifier(Constants.AnnotationViewReuseIdentifier)
         
         if view == nil {

@@ -204,6 +204,7 @@
                         <outlet property="coverPhotoImageView" destination="FLJ-af-5pQ" id="89x-ht-lNU"/>
                         <outlet property="placeDetailTable" destination="kOG-GZ-dfa" id="Qbh-wz-oZX"/>
                         <outlet property="venueNameLabel" destination="hNx-fI-Vn0" id="paA-kW-Crh"/>
+                        <segue destination="wyJ-2X-NYz" kind="presentation" identifier="showTripDetailFromPlacesDetail" id="L9E-XJ-P0b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cfl-bD-ZFf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -353,5 +354,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="yo6-j4-uz7"/>
+        <segue reference="L9E-XJ-P0b"/>
     </inferredMetricsTieBreakers>
 </document>

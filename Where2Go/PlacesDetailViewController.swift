@@ -36,24 +36,14 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
                 print("An error occured: \(errorString!)")
             }
         }
-
         
         let addTripButton : UIBarButtonItem = UIBarButtonItem(title: "Add Trip", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("addTripButtonPressed:"))
         self.navigationItem.rightBarButtonItem = addTripButton
         
-        /*
-        
-        // Putting the buttons in the right place
-        let pinBtn : UIBarButtonItem = UIBarButtonItem(image: pinImg,  style: UIBarButtonItemStyle.Plain, target: self, action: Selector("pinBtnPressed:"))
-        let refreshBtn = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: Selector("refreshBtnPressed:"))
-        
-        let buttons : NSArray = [refreshBtn,pinBtn]
-        self.navigationItem.rightBarButtonItems = buttons as? [UIBarButtonItem]
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("logoutBtnPressed:"))
-        
-        */
-        
-        
+    }
+    
+    func addTripButtonPressed(sender: AnyObject){
+        performSegueWithIdentifier("showTripDetailFromPlacesDetail", sender: self)
     }
     
     func refreshUI(locationDetails:W2GLocationDetailed){
@@ -83,6 +73,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         let cell = UITableViewCell()
         
         if indexPath.section < 3 {
@@ -126,10 +117,54 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        let height:CGFloat = 30
+        let height:CGFloat = 40
         return height
     }
     
+    func isValidURL(theURL: String) -> Bool {
+        return containsMatch("^(https?:\\/\\/)([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w\\.-]*)*\\/?$", inString: theURL)
+    }
+    
+    func containsMatch(pattern: String, inString string: String) -> Bool {
+        
+        var regex = NSRegularExpression()
+        
+        do {
+            regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
+        }
+        catch {}
+        
+        let range = NSMakeRange(0, string.characters.count)
+        return regex.firstMatchInString(string, options: NSMatchingOptions(rawValue: UInt(0)), range: range) != nil
+    }
+    
+    
+    // MARK: TableView Deletage Methods
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        
+        let textInCell = tableData?[indexPath.section][indexPath.row] ?? ""
+        print (textInCell.substringFromIndex(textInCell.startIndex.advancedBy(min(textInCell.characters.count,5))))
+
+        
+        if isValidURL(textInCell) {
+            
+         //   print("The selected row is not a valid URL")
+         //   print (textInCell.substringFromIndex(textInCell.startIndex.advancedBy(4)))
+            if let theURL = NSURL(string:textInCell) {
+                UIApplication.sharedApplication().openURL(theURL)
+            }
+        }
+        else if let theURL = NSURL(string: "tel://\(textInCell.substringFromIndex(textInCell.startIndex.advancedBy(min(textInCell.characters.count,5))))") {
+            UIApplication.sharedApplication().openURL(theURL)
+        }
+        else {
+            print("There was a problem with the URL for this location")
+        }
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+    }
     
     /*
     // MARK: - Navigation
