@@ -144,18 +144,19 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         
         
         let textInCell = tableData?[indexPath.section][indexPath.row] ?? ""
-        print (textInCell.substringFromIndex(textInCell.startIndex.advancedBy(min(textInCell.characters.count,5))))
+        let textInCellNospaces = textInCell.stringByReplacingOccurrencesOfString(" ", withString: "")
+        print (textInCellNospaces.substringFromIndex(textInCellNospaces.startIndex.advancedBy(min(textInCellNospaces.characters.count,4))))
 
         
-        if isValidURL(textInCell) {
+        if isValidURL(textInCellNospaces) {
             
          //   print("The selected row is not a valid URL")
          //   print (textInCell.substringFromIndex(textInCell.startIndex.advancedBy(4)))
-            if let theURL = NSURL(string:textInCell) {
+            if let theURL = NSURL(string:textInCellNospaces) {
                 UIApplication.sharedApplication().openURL(theURL)
             }
         }
-        else if let theURL = NSURL(string: "tel://\(textInCell.substringFromIndex(textInCell.startIndex.advancedBy(min(textInCell.characters.count,5))))") {
+        else if let theURL = NSURL(string: "tel://\(textInCellNospaces.substringFromIndex(textInCellNospaces.startIndex.advancedBy(min(textInCellNospaces.characters.count,4))))") {
             UIApplication.sharedApplication().openURL(theURL)
         }
         else {
