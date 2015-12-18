@@ -156,9 +156,9 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
                 UIApplication.sharedApplication().openURL(theURL)
             }
         }
-        else if let theURL = NSURL(string: "tel://\(textInCellNospaces.substringFromIndex(textInCellNospaces.startIndex.advancedBy(min(textInCellNospaces.characters.count,4))))") {
-            UIApplication.sharedApplication().openURL(theURL)
-        }
+//        else if let theURL = NSURL(string: "tel://\(textInCellNospaces.substringFromIndex(textInCellNospaces.startIndex.advancedBy(min(textInCellNospaces.characters.count,4))))") {
+//            UIApplication.sharedApplication().openURL(theURL)
+//        }
         else {
             print("There was a problem with the URL for this location")
         }
