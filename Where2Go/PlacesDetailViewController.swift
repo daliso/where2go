@@ -53,8 +53,8 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         coverPhotoImageView.imageURL = locationDetails.coverPhoto!
         
         tableData = [[String]]()
-        tableData!.insert(["\(locationDetails.rating!) / 10" ?? "No rating found"], atIndex: 0)
-        tableData!.insert(["Tel: \(locationDetails.phoneNumber!)" ?? "No phone number found"], atIndex: 1)
+        tableData!.insert(["\(locationDetails.rating!) / 10"], atIndex: 0)
+        tableData!.insert(["Tel: \(locationDetails.phoneNumber!)"], atIndex: 1)
         for addressLine in locationDetails.address! {
             tableData![1].append(addressLine)
         }
@@ -125,6 +125,10 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         return containsMatch("^(https?:\\/\\/)([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w\\.-]*)*\\/?$", inString: theURL)
     }
     
+    func isValidPhoneNumber(theURL: String) -> Bool {
+        return containsMatch("^\\+?[0-9]{10,}$", inString: theURL)
+    }
+    
     func containsMatch(pattern: String, inString string: String) -> Bool {
         
         var regex = NSRegularExpression()
@@ -142,29 +146,33 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     // MARK: TableView Deletage Methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        
-        let textInCell = tableData?[indexPath.section][indexPath.row] ?? ""
-        let textInCellNospaces = textInCell.stringByReplacingOccurrencesOfString(" ", withString: "")
-        print (textInCellNospaces.substringFromIndex(textInCellNospaces.startIndex.advancedBy(min(textInCellNospaces.characters.count,4))))
-
-        
-        if isValidURL(textInCellNospaces) {
+        if (indexPath.section == 1 && indexPath.row == 0){
+            print("The cell with the phone number has been tapped")
             
-         //   print("The selected row is not a valid URL")
-         //   print (textInCell.substringFromIndex(textInCell.startIndex.advancedBy(4)))
-            if let theURL = NSURL(string:textInCellNospaces) {
-                UIApplication.sharedApplication().openURL(theURL)
+            let textInCell = tableData?[indexPath.section][indexPath.row] ?? ""
+            let textInCellNospaces = textInCell.stringByReplacingOccurrencesOfString(" ", withString: "")
+            let textInCellNospacesTrimmed = textInCellNospaces.substringFromIndex(textInCellNospaces.startIndex.advancedBy(min(textInCellNospaces.characters.count,4)))
+            
+            if isValidPhoneNumber(textInCellNospacesTrimmed) {
+                if let theURL = NSURL(string: "tel://\(textInCellNospacesTrimmed)") {
+                    UIApplication.sharedApplication().openURL(theURL)
+                }
+            }
+            
+        } else if (indexPath.section == 1 && indexPath.row == tableData![1].count-1) {
+            
+            let textInCell = tableData?[indexPath.section][indexPath.row] ?? ""
+            let textInCellNospaces = textInCell.stringByReplacingOccurrencesOfString(" ", withString: "")
+            
+            if isValidURL(textInCellNospaces) {
+                if let theURL = NSURL(string:textInCellNospaces) {
+                    UIApplication.sharedApplication().openURL(theURL)
+                }
             }
         }
-//        else if let theURL = NSURL(string: "tel://\(textInCellNospaces.substringFromIndex(textInCellNospaces.startIndex.advancedBy(min(textInCellNospaces.characters.count,4))))") {
-//            UIApplication.sharedApplication().openURL(theURL)
-//        }
-        else {
-            print("There was a problem with the URL for this location")
-        }
-        
+
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
+
     }
     
     /*
