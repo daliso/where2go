@@ -231,33 +231,92 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the Trip Details View Controller" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uoq-f2-EuZ">
-                                <rect key="frame" x="155" y="289" width="291" height="21"/>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9En-cb-0CU">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <items>
+                                    <navigationItem title="Add Trip" id="mgA-kq-UU2">
+                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="H7z-WG-nGM">
+                                            <connections>
+                                                <action selector="cancelButtonPressed:" destination="wyJ-2X-NYz" id="hvw-QA-Nnb"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Save" id="Dbu-IK-8BC"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="tUN-30-SVL">
+                                <rect key="frame" x="0.0" y="64" width="600" height="179"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="291" id="qlM-Bp-WBb"/>
+                                    <constraint firstAttribute="height" constant="179" id="qQA-Lr-x9T"/>
+                                    <constraint firstAttribute="height" constant="179" id="rcb-8u-szh"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
+                                <date key="date" timeIntervalSinceReferenceDate="472239281.768538">
+                                    <!--2015-12-19 17:34:41 +0000-->
+                                </date>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="qlM-Bp-WBb"/>
+                                        <exclude reference="qQA-Lr-x9T"/>
                                     </mask>
                                 </variation>
+                            </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trip Notes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EG6-8w-Fmy">
+                                <rect key="frame" x="20" y="251" width="560" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="8Lz-6X-SLf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LhQ-De-3cQ">
+                                <rect key="frame" x="20" y="292" width="560" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="59q-rD-BKW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Uoq-f2-EuZ" firstAttribute="centerY" secondItem="CrD-Ew-zJJ" secondAttribute="centerY" id="8vs-1L-GaN"/>
-                            <constraint firstItem="Uoq-f2-EuZ" firstAttribute="top" secondItem="EvI-9n-smc" secondAttribute="bottom" constant="269" id="RDm-Wk-YP4"/>
-                            <constraint firstItem="Uoq-f2-EuZ" firstAttribute="centerX" secondItem="CrD-Ew-zJJ" secondAttribute="centerX" id="vYF-OQ-d37"/>
+                            <constraint firstAttribute="trailing" secondItem="9En-cb-0CU" secondAttribute="trailing" id="24U-xg-MFy"/>
+                            <constraint firstItem="tUN-30-SVL" firstAttribute="trailing" secondItem="9En-cb-0CU" secondAttribute="trailing" id="3sf-ep-H7l"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tUN-30-SVL" secondAttribute="trailing" constant="-20" id="60h-48-bcu"/>
+                            <constraint firstItem="LhQ-De-3cQ" firstAttribute="leading" secondItem="EG6-8w-Fmy" secondAttribute="leading" id="98j-br-Qwg"/>
+                            <constraint firstItem="tUN-30-SVL" firstAttribute="top" secondItem="9En-cb-0CU" secondAttribute="bottom" id="9XP-AX-Mdt"/>
+                            <constraint firstItem="EG6-8w-Fmy" firstAttribute="leading" secondItem="CrD-Ew-zJJ" secondAttribute="leadingMargin" id="Byq-5U-cgs"/>
+                            <constraint firstItem="9En-cb-0CU" firstAttribute="top" secondItem="EvI-9n-smc" secondAttribute="bottom" id="KXv-gh-Z0w"/>
+                            <constraint firstItem="g8V-em-k3R" firstAttribute="top" secondItem="LhQ-De-3cQ" secondAttribute="bottom" constant="252" id="Khw-PG-SxM"/>
+                            <constraint firstItem="EG6-8w-Fmy" firstAttribute="top" secondItem="tUN-30-SVL" secondAttribute="bottom" constant="8" symbolic="YES" id="LV0-LT-YFB"/>
+                            <constraint firstItem="tUN-30-SVL" firstAttribute="centerX" secondItem="EG6-8w-Fmy" secondAttribute="centerX" id="ST3-EA-g0O"/>
+                            <constraint firstItem="tUN-30-SVL" firstAttribute="top" secondItem="9En-cb-0CU" secondAttribute="bottom" id="TUO-aP-N1n"/>
+                            <constraint firstItem="LhQ-De-3cQ" firstAttribute="trailing" secondItem="EG6-8w-Fmy" secondAttribute="trailing" id="X2Q-3t-Vl5"/>
+                            <constraint firstItem="tUN-30-SVL" firstAttribute="trailing" secondItem="9En-cb-0CU" secondAttribute="trailing" id="Zqo-1o-0CX"/>
+                            <constraint firstItem="tUN-30-SVL" firstAttribute="leading" secondItem="CrD-Ew-zJJ" secondAttribute="leadingMargin" constant="-20" id="bJJ-he-zf1"/>
+                            <constraint firstItem="tUN-30-SVL" firstAttribute="leading" secondItem="9En-cb-0CU" secondAttribute="leading" id="gl7-ZP-eWL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="EG6-8w-Fmy" secondAttribute="trailing" id="hb0-0D-A8D"/>
+                            <constraint firstItem="9En-cb-0CU" firstAttribute="leading" secondItem="CrD-Ew-zJJ" secondAttribute="leading" id="hhs-9z-6Rd"/>
+                            <constraint firstItem="EG6-8w-Fmy" firstAttribute="top" secondItem="tUN-30-SVL" secondAttribute="bottom" constant="8" id="kXm-p5-n8l"/>
+                            <constraint firstItem="EG6-8w-Fmy" firstAttribute="top" secondItem="tUN-30-SVL" secondAttribute="bottom" constant="8" id="pbe-XT-FYg"/>
+                            <constraint firstItem="LhQ-De-3cQ" firstAttribute="top" secondItem="EG6-8w-Fmy" secondAttribute="bottom" constant="8" symbolic="YES" id="xIK-J8-e3P"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="RDm-Wk-YP4"/>
+                                <exclude reference="3sf-ep-H7l"/>
+                                <exclude reference="9XP-AX-Mdt"/>
+                                <exclude reference="ST3-EA-g0O"/>
+                                <exclude reference="Zqo-1o-0CX"/>
+                                <exclude reference="gl7-ZP-eWL"/>
+                                <exclude reference="LV0-LT-YFB"/>
+                                <exclude reference="kXm-p5-n8l"/>
+                                <exclude reference="Khw-PG-SxM"/>
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="datePicker" destination="tUN-30-SVL" id="8b5-xU-xuf"/>
+                        <outlet property="tripNotesTextView" destination="LhQ-De-3cQ" id="IpE-ab-CTy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="coF-EI-ilM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
