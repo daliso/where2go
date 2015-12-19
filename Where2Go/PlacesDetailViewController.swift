@@ -13,6 +13,9 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     @IBOutlet weak var placeDetailTable: UITableView!
     @IBOutlet weak var venueNameLabel: UILabel!
     @IBOutlet weak var coverPhotoImageView: URLImageView!
+    @IBOutlet weak var spinnerView: UIView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
     var tableData:[[String]]? = nil
     
     var venueID:String = "49ecf7f1f964a520ba671fe3"
@@ -47,6 +50,9 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     }
     
     func refreshUI(locationDetails:W2GLocationDetailed){
+        
+        startSpinning()
+        
         venueNameLabel.text = locationDetails.name
         self.locationDetails = locationDetails
 
@@ -63,6 +69,8 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         tableData!.insert(locationDetails.openingHours!, atIndex: 2)
     
         placeDetailTable.reloadData()
+        
+        stopSpinning()
     }
 
     override func didReceiveMemoryWarning() {
@@ -174,15 +182,15 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
 
     }
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func startSpinning(){
+        spinner.startAnimating()
+        spinnerView.hidden = false
     }
-    */
+    
+    func stopSpinning(){
+        spinnerView.hidden = true
+        spinner.stopAnimating()
+    }
 
 }
