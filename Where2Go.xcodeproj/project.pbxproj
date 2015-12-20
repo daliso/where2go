@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		691ED7711C1AC7F900A53C7D /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691ED7701C1AC7F800A53C7D /* URLImageView.swift */; };
 		692884521BF514D200BFC75A /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692884511BF514D200BFC75A /* CoreDataStackManager.swift */; };
+		6930D4611C26BA52003EAFCE /* Trip+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6930D45F1C26BA52003EAFCE /* Trip+CoreDataProperties.swift */; };
+		6930D4621C26BA52003EAFCE /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6930D4601C26BA52003EAFCE /* Trip.swift */; };
 		695463861BC0490A009D9C02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463851BC0490A009D9C02 /* AppDelegate.swift */; };
 		695463881BC0490A009D9C02 /* ExplorePlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463871BC0490A009D9C02 /* ExplorePlacesViewController.swift */; };
 		6954638B1BC0490A009D9C02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695463891BC0490A009D9C02 /* Main.storyboard */; };
@@ -51,6 +53,8 @@
 /* Begin PBXFileReference section */
 		691ED7701C1AC7F800A53C7D /* URLImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
 		692884511BF514D200BFC75A /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
+		6930D45F1C26BA52003EAFCE /* Trip+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Trip+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		6930D4601C26BA52003EAFCE /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		695463821BC0490A009D9C02 /* Where2Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Where2Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		695463851BC0490A009D9C02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		695463871BC0490A009D9C02 /* ExplorePlacesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePlacesViewController.swift; sourceTree = "<group>"; };
@@ -160,6 +164,8 @@
 			children = (
 				692884511BF514D200BFC75A /* CoreDataStackManager.swift */,
 				6954638C1BC0490A009D9C02 /* Where2GoModel.xcdatamodeld */,
+				6930D45F1C26BA52003EAFCE /* Trip+CoreDataProperties.swift */,
+				6930D4601C26BA52003EAFCE /* Trip.swift */,
 				69CA62EC1C0A011200CBA1A4 /* FoursquareAPIClient.swift */,
 				69CA62EB1C0A011200CBA1A4 /* FoursquareAPIClient+Constants.swift */,
 				69CA62EF1C0A116800CBA1A4 /* FoursquareAPIClient+Convenience.swift */,
@@ -333,6 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6930D4611C26BA52003EAFCE /* Trip+CoreDataProperties.swift in Sources */,
 				69BBB9041C0CDF0400C34D51 /* Photo.swift in Sources */,
 				695463881BC0490A009D9C02 /* ExplorePlacesViewController.swift in Sources */,
 				69CA62EE1C0A011200CBA1A4 /* FoursquareAPIClient.swift in Sources */,
@@ -342,6 +349,7 @@
 				695D711B1BC90BDA00541953 /* MyPlacesViewController.swift in Sources */,
 				696D43551C0D91F5006B5A81 /* Reach.swift in Sources */,
 				691ED7711C1AC7F900A53C7D /* URLImageView.swift in Sources */,
+				6930D4621C26BA52003EAFCE /* Trip.swift in Sources */,
 				69CA62ED1C0A011200CBA1A4 /* FoursquareAPIClient+Constants.swift in Sources */,
 				69CA62F21C0A117500CBA1A4 /* ImageCache.swift in Sources */,
 				69CA62F01C0A116800CBA1A4 /* FoursquareAPIClient+Convenience.swift in Sources */,
