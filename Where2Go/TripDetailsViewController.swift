@@ -18,6 +18,8 @@ class TripDetailsViewController: UIViewController {
     @IBOutlet weak var tripNotesTextView: UITextView!
     
     var tapRecognizer: UITapGestureRecognizer? = nil
+    
+    var theTrip:Trip? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()

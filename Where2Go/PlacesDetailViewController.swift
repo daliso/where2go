@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreData
 
-class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITableViewDelegate {
+class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
 
     @IBOutlet weak var placeDetailTable: UITableView!
     @IBOutlet weak var venueNameLabel: UILabel!
@@ -53,6 +54,21 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         
         startSpinning()
         
+        // Start the fetched results controller
+        var error: NSError?
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error1 as NSError {
+            error = error1
+        }
+        
+        if let error = error {
+            print("Error performing initial fetch: \(error)")
+        }
+        
+        fetchedResultsController.delegate = self
+        
+        
         venueNameLabel.text = locationDetails.name
         self.locationDetails = locationDetails
 
@@ -65,8 +81,10 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
             tableData![1].append(addressLine)
         }
         tableData![1].append(locationDetails.websiteAddress!)
- 
+        
         tableData!.insert(locationDetails.openingHours!, atIndex: 2)
+        
+        // tableData!.insert(, atIndex: 3)
     
         placeDetailTable.reloadData()
         
@@ -87,8 +105,9 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         if indexPath.section < 3 {
             cell.textLabel?.text = tableData?[indexPath.section][indexPath.row] ?? ""
         }
-        else {
-            cell.textLabel?.text = "I am cell: \(indexPath.section) , \(indexPath.row)"
+        else if indexPath.section == 3 {
+            cell.textLabel?.text = "\(fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime)"
+            // cell.textLabel?.text = "I am cell: \(indexPath.section) , \(indexPath.row)"
         }
         
         return cell
@@ -102,7 +121,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
             return 1
         case 1: return tableData?[1].count ?? 0
         case 2: return tableData?[2].count ?? 0
-        case 3: return 0
+        case 3: return fetchedResultsController.sections?[0].numberOfObjects ?? 0
         default: return 0
         }
        
@@ -124,7 +143,6 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
         let height:CGFloat = 40
         return height
     }
@@ -178,10 +196,31 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
                 }
             }
         }
-
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-
     }
+    
+    // MARK: Core Data
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance.managedObjectContext
+    }
+    
+    // MARK: FetchedResults Controller and Delegate Methods
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Trip")
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "venueID == %@", self.venueID);
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: self.sharedContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        return fetchedResultsController
+        
+    }()
+    
 
     func startSpinning(){
         spinner.startAnimating()
