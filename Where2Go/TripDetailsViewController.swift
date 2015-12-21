@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class TripDetailsViewController: UIViewController {
 
@@ -20,6 +21,7 @@ class TripDetailsViewController: UIViewController {
     var tapRecognizer: UITapGestureRecognizer? = nil
     
     var theTrip:Trip? = nil
+    var venueID:String? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +52,32 @@ class TripDetailsViewController: UIViewController {
       // datePicker.hidden = true
         
     }
+    
+    @IBAction func saveButtonPressed(sender: UIBarButtonItem) {
+        //
+        
+        let dictionary: [String : AnyObject] = [
+            Trip.Keys.dateTime : datePicker.date,
+            Trip.Keys.notes : tripNotesTextView.text,
+            Trip.Keys.venueID: venueID!
+        ]
+        
+        let _ = Trip(dictionary: dictionary, context: sharedContext)
+        
+        CoreDataStackManager.sharedInstance.saveContext()
+        
+        (presentingViewController as! PlacesDetailViewController).placeDetailTable.reloadData()
+        
+        presentingViewController?.dismissViewControllerAnimated(true
+            , completion: nil)
+        
+    }
+    
+    // MARK: Core Data
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance.managedObjectContext
+    }
+    
     
     func keyboardWillHide(notification: NSNotification) {
        // if self.view.frame.height < 500.0  {

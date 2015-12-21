@@ -13,28 +13,26 @@ import CoreData
 class Trip: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
-
-    /*
     
     struct Keys {
-    static let Lat = "Latitude"
-    static let Lon = "Longitude"
+        static let dateTime = "dateTime"
+        static let notes = "notes"
+        static let venueID = "venueID"
     }
-    
+
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-    super.init(entity: entity, insertIntoManagedObjectContext: context)
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
-    
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
-    
-    let entity =  NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)!
-    
-    super.init(entity: entity,insertIntoManagedObjectContext: context)
-    
-    latitude = dictionary[Keys.Lat] as? NSNumber
-    longitude = dictionary[Keys.Lon] as? NSNumber
+        
+        let entity =  NSEntityDescription.entityForName("Trip", inManagedObjectContext: context)!
+        
+        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        
+        dateTime = dictionary[Keys.dateTime] as? NSDate
+        notes = dictionary[Keys.notes] as? String
+
     }
-    
-    */
+
 }

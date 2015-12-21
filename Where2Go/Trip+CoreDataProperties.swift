@@ -16,7 +16,7 @@ extension Trip {
 
     @NSManaged var dateTime: NSDate?
     @NSManaged var id: NSNumber?
-    @NSManaged var notes: NSData?
+    @NSManaged var notes: String?
     @NSManaged var venueID: String?
 
 }

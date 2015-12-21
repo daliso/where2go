@@ -240,7 +240,11 @@
                                                 <action selector="cancelButtonPressed:" destination="wyJ-2X-NYz" id="hvw-QA-Nnb"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Save" id="Dbu-IK-8BC"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Save" id="Dbu-IK-8BC">
+                                            <connections>
+                                                <action selector="saveButtonPressed:" destination="wyJ-2X-NYz" id="H2e-4y-ATN"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
