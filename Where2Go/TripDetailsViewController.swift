@@ -22,6 +22,7 @@ class TripDetailsViewController: UIViewController {
     
     var theTrip:Trip? = nil
     var venueID:String? = nil
+    var parent:UIViewController? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,14 +60,14 @@ class TripDetailsViewController: UIViewController {
         let dictionary: [String : AnyObject] = [
             Trip.Keys.dateTime : datePicker.date,
             Trip.Keys.notes : tripNotesTextView.text,
-            Trip.Keys.venueID: venueID!
+            Trip.Keys.venueID: (parent as! PlacesDetailViewController).venueID
         ]
         
         let _ = Trip(dictionary: dictionary, context: sharedContext)
         
         CoreDataStackManager.sharedInstance.saveContext()
         
-        (presentingViewController as! PlacesDetailViewController).placeDetailTable.reloadData()
+        // (parent as! PlacesDetailViewController).placeDetailTable.reloadData()
         
         presentingViewController?.dismissViewControllerAnimated(true
             , completion: nil)

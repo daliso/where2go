@@ -32,6 +32,7 @@ class Trip: NSManagedObject {
         
         dateTime = dictionary[Keys.dateTime] as? NSDate
         notes = dictionary[Keys.notes] as? String
+        venueID = dictionary[Keys.venueID] as? String
 
     }
 

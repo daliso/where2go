@@ -46,8 +46,18 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        placeDetailTable.reloadData()
+    }
+    
+    
     func addTripButtonPressed(sender: AnyObject){
         performSegueWithIdentifier("showTripDetailFromPlacesDetail", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let vc = segue.destinationViewController as! TripDetailsViewController
+        vc.parent = self
     }
     
     func refreshUI(locationDetails:W2GLocationDetailed){
@@ -106,8 +116,9 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
             cell.textLabel?.text = tableData?[indexPath.section][indexPath.row] ?? ""
         }
         else if indexPath.section == 3 {
-            cell.textLabel?.text = "\(fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime)"
+            cell.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime)"
             // cell.textLabel?.text = "I am cell: \(indexPath.section) , \(indexPath.row)"
+            print((fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime)
         }
         
         return cell
