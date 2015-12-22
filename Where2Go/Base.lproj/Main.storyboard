@@ -101,18 +101,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Explore Places To Visit" id="tyh-Vt-LTo">
-                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="6wB-01-fL6">
-                            <connections>
-                                <action selector="refreshVenues:" destination="BYZ-38-t0r" id="eCY-Mi-i8N"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Go" id="jdb-ff-CMe">
-                            <connections>
-                                <segue destination="sdW-bg-3Oa" kind="show" id="fX7-ib-cij"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Explore Places To Visit" id="tyh-Vt-LTo"/>
                     <connections>
                         <outlet property="exploreMapView" destination="xwV-Oa-l9g" id="y2t-hS-o7C"/>
                         <outlet property="noConnectionView" destination="TvH-Xf-3Pc" id="WjY-cX-1GP"/>
@@ -418,7 +407,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yo6-j4-uz7"/>
         <segue reference="L9E-XJ-P0b"/>
     </inferredMetricsTieBreakers>
 </document>

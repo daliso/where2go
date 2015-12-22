@@ -22,6 +22,11 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     var venueID:String = "49ecf7f1f964a520ba671fe3"
     var locationDetails:W2GLocationDetailed? = nil
     
+    var insertedIndexPaths: [NSIndexPath]!
+    var deletedIndexPaths: [NSIndexPath]!
+    var updatedIndexPaths: [NSIndexPath]!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -45,11 +50,6 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         self.navigationItem.rightBarButtonItem = addTripButton
         
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        placeDetailTable.reloadData()
-    }
-    
     
     func addTripButtonPressed(sender: AnyObject){
         performSegueWithIdentifier("showTripDetailFromPlacesDetail", sender: self)
@@ -116,7 +116,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
             cell.textLabel?.text = tableData?[indexPath.section][indexPath.row] ?? ""
         }
         else if indexPath.section == 3 {
-            cell.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime)"
+            cell.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime!)"
             // cell.textLabel?.text = "I am cell: \(indexPath.section) , \(indexPath.row)"
             print((fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime)
         }
@@ -242,5 +242,51 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         spinnerView.hidden = true
         spinner.stopAnimating()
     }
+    
+    
+
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        print("Inside controllerWillChangeContent")
+        self.placeDetailTable.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        print("Inside controllerDidChangeContent")
+        self.placeDetailTable.endUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        print("Inside ControllerDidChangeObject")
+        switch(type) {
+        case NSFetchedResultsChangeType.Insert : self.placeDetailTable.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
+            break
+        case NSFetchedResultsChangeType.Delete : self.placeDetailTable.deleteRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
+            break
+        case NSFetchedResultsChangeType.Update : self.placeDetailTable.reloadRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        default:
+            print("Nothing")
+        }
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        switch(type) {
+        case NSFetchedResultsChangeType.Insert : self.placeDetailTable.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Automatic)
+            break
+        case NSFetchedResultsChangeType.Delete : self.placeDetailTable.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Automatic)
+            break
+        default:
+            print("Nothing")
+        }
+    }
+    
+    /*
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    let entry = self.fetchedResultsController.objectAtIndexPath(indexPath) as Menu
+    coreDataStack.managedObjectContext?.deleteObject(entry)
+    coreDataStack.saveContext()
+    }
+    */
+    
 
 }
