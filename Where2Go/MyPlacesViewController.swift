@@ -88,12 +88,12 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         var cell = tableView.dequeueReusableCellWithIdentifier("TripCell")
         
         if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Value2, reuseIdentifier: "TripCell")
-            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!)"
-            cell!.detailTextLabel?.text = "the detail text"
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "TripCell")
+            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).venueName!)"
+            cell!.detailTextLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!)"
         } else {
-            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!)"
-            cell!.detailTextLabel?.text = "the detail text"
+            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).venueName!)"
+            cell!.detailTextLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!)"
         }
         
         return cell!
@@ -121,18 +121,18 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        print("Inside controllerWillChangeContent")
+        print("Inside controllerWillChangeContent in MyPlaces")
         self.myTripsTable.beginUpdates()
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        print("Inside controllerDidChangeContent")
+        print("Inside controllerDidChangeContent in MyPlaces")
         self.myTripsTable.endUpdates()
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
-        print("Inside ControllerDidChangeObject")
+        print("Inside ControllerDidChangeObject in MyPlaces")
         switch(type) {
         case NSFetchedResultsChangeType.Insert : self.myTripsTable.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
             break

@@ -243,8 +243,6 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         spinner.stopAnimating()
     }
     
-    
-
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         print("Inside controllerWillChangeContent")
         self.placeDetailTable.beginUpdates()

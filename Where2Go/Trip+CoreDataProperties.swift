@@ -18,5 +18,6 @@ extension Trip {
     @NSManaged var id: NSNumber?
     @NSManaged var notes: String?
     @NSManaged var venueID: String?
+    @NSManaged var venueName: String?
 
 }

@@ -60,7 +60,8 @@ class TripDetailsViewController: UIViewController {
         let dictionary: [String : AnyObject] = [
             Trip.Keys.dateTime : datePicker.date,
             Trip.Keys.notes : tripNotesTextView.text,
-            Trip.Keys.venueID: (parent as! PlacesDetailViewController).venueID
+            Trip.Keys.venueID: (parent as! PlacesDetailViewController).venueID,
+            Trip.Keys.venueName: (parent as! PlacesDetailViewController).locationDetails?.name ?? ""
         ]
         
         let _ = Trip(dictionary: dictionary, context: sharedContext)

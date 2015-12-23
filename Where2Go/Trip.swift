@@ -18,6 +18,7 @@ class Trip: NSManagedObject {
         static let dateTime = "dateTime"
         static let notes = "notes"
         static let venueID = "venueID"
+        static let venueName = "venueName"
     }
 
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
@@ -33,6 +34,7 @@ class Trip: NSManagedObject {
         dateTime = dictionary[Keys.dateTime] as? NSDate
         notes = dictionary[Keys.notes] as? String
         venueID = dictionary[Keys.venueID] as? String
+        venueName = dictionary[Keys.venueName] as? String
 
     }
 
