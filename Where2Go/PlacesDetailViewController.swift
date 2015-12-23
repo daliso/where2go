@@ -52,7 +52,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     }
     
     func addTripButtonPressed(sender: AnyObject){
-        performSegueWithIdentifier("showTripDetailFromPlacesDetail", sender: self)
+        performSegueWithIdentifier("addTripDetailFromPlacesDetail", sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

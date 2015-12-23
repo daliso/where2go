@@ -36,6 +36,10 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         fetchedResultsController.delegate = self
         
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -77,9 +81,9 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: TableView Deletage Methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         // Here we will segue to the Trip details view page
-        
+        performSegueWithIdentifier("showTripDetailsFromMyTrips", sender: self)
+
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
@@ -90,14 +94,18 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "TripCell")
             cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).venueName!)"
-            cell!.detailTextLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!)"
+            
+            let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!, dateStyle: .ShortStyle, timeStyle: .ShortStyle)
+
+            cell!.detailTextLabel?.text = "\(timestamp)"
+            
+            //cell!.detailTextLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!)"
         } else {
             cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).venueName!)"
-            cell!.detailTextLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!)"
-        }
-        
+            let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!, dateStyle: .ShortStyle, timeStyle: .ShortStyle)
+            
+            cell!.detailTextLabel?.text = "\(timestamp)"        }
         return cell!
-        
     }
     
     
@@ -109,7 +117,6 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         return fetchedResultsController.sections?.count ?? 0
     }
     
-    
 //    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 //        return "This is section number:\(section)"
 //    }
@@ -118,7 +125,6 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
 //        let height:CGFloat = 40
 //        return height
 //    }
-    
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         print("Inside controllerWillChangeContent in MyPlaces")
@@ -134,15 +140,16 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         print("Inside ControllerDidChangeObject in MyPlaces")
         switch(type) {
-        case NSFetchedResultsChangeType.Insert : self.myTripsTable.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        case NSFetchedResultsChangeType.Insert : self.myTripsTable.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
             break
-        case NSFetchedResultsChangeType.Delete : self.myTripsTable.deleteRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        case NSFetchedResultsChangeType.Delete : self.myTripsTable.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
             break
-        case NSFetchedResultsChangeType.Update : self.myTripsTable.reloadRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        case NSFetchedResultsChangeType.Update : self.myTripsTable.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
         default:
             print("Nothing")
         }
     }
+    
     
     func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
         switch(type) {
@@ -153,6 +160,12 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         default:
             print("Nothing")
         }
+    }
+    
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        let vc = segue.destinationViewController as! TripDetailsViewController
+//        vc.parent = self
     }
 
 }

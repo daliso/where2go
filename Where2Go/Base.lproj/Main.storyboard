@@ -201,12 +201,43 @@
                         <outlet property="spinner" destination="PDp-PL-lxv" id="yDm-ED-YjY"/>
                         <outlet property="spinnerView" destination="Wy4-nz-q1s" id="gQJ-K2-rvS"/>
                         <outlet property="venueNameLabel" destination="hNx-fI-Vn0" id="paA-kW-Crh"/>
-                        <segue destination="wyJ-2X-NYz" kind="presentation" identifier="showTripDetailFromPlacesDetail" id="L9E-XJ-P0b"/>
+                        <segue destination="wyJ-2X-NYz" kind="presentation" identifier="addTripDetailFromPlacesDetail" id="L9E-XJ-P0b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cfl-bD-ZFf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1774" y="263"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ZDD-Fx-0am">
+            <objects>
+                <viewController id="MAK-Y2-MEA" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SSV-h4-zPj"/>
+                        <viewControllerLayoutGuide type="bottom" id="GOx-tu-GQW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="QmV-BP-t2q">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the Trip Detail View" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omE-hM-MYC">
+                                <rect key="frame" x="199" y="289" width="202" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="omE-hM-MYC" firstAttribute="centerX" secondItem="QmV-BP-t2q" secondAttribute="centerX" id="3T0-VE-DuH"/>
+                            <constraint firstItem="omE-hM-MYC" firstAttribute="centerY" secondItem="QmV-BP-t2q" secondAttribute="centerY" id="KEa-V2-f7d"/>
+                            <constraint firstItem="omE-hM-MYC" firstAttribute="top" secondItem="SSV-h4-zPj" secondAttribute="bottom" constant="225" id="clg-Ib-URi"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="36f-VB-R7Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1770" y="974"/>
         </scene>
         <!--Trip Details View Controller-->
         <scene sceneID="CPP-8z-xBd">
@@ -313,7 +344,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="coF-EI-ilM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1774" y="973"/>
+            <point key="canvasLocation" x="2516" y="263"/>
         </scene>
         <!--My Trips-->
         <scene sceneID="VE2-sd-UT8">
@@ -381,6 +412,7 @@
                     <navigationItem key="navigationItem" title="My Trips" id="yO7-9B-fWA"/>
                     <connections>
                         <outlet property="myTripsTable" destination="WKD-c2-FYy" id="Pi6-xT-M1F"/>
+                        <segue destination="MAK-Y2-MEA" kind="show" identifier="showTripDetailsFromMyTrips" id="6Yw-Dh-Zyv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1vM-AC-p46" userLabel="First Responder" sceneMemberID="firstResponder"/>
