@@ -9,11 +9,11 @@
 import UIKit
 import CoreData
 
-class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
 
     
     @IBOutlet weak var displayTripView: UITableView!
-    
+    var tripID:NSNumber?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +25,20 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
         
         displayTripView.delegate = self
         displayTripView.dataSource = self
+        
+        // Start the fetched results controller
+        var error: NSError?
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error1 as NSError {
+            error = error1
+        }
+        
+        if let error = error {
+            print("Error performing initial fetch: \(error)")
+        }
+        
+        fetchedResultsController.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,8 +59,8 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
         
         let fetchRequest = NSFetchRequest(entityName: "Trip")
         
-        //fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateTime", ascending: true)]
-        fetchRequest.predicate = NSPredicate(format: "id == %@", 1);
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateTime", ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "id == %@", self.tripID!);
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
             managedObjectContext: self.sharedContext,
@@ -83,9 +97,12 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
             var cell = tableView.dequeueReusableCellWithIdentifier("TripDateTimeCell")
             if cell == nil {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "TripLocationCell")
-                cell!.textLabel?.text = "This is the date/time"
+                let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
+                cell!.textLabel?.text = "\(timestamp)"
+                
             } else {
-                cell!.textLabel?.text = "This is the date/time"
+                let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
+                cell!.textLabel?.text = "\(timestamp)"
             }
             return cell!
         case 2:

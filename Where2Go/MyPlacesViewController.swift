@@ -12,7 +12,7 @@ import CoreData
 class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate  {
 
     @IBOutlet weak var myTripsTable: UITableView!
-    
+    var selectedTrip:NSNumber?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,6 +82,7 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
     // MARK: TableView Deletage Methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // Here we will segue to the Trip details view page
+        selectedTrip = (fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).id
         performSegueWithIdentifier("showTripDetailsFromMyTrips", sender: self)
 
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -93,7 +94,7 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "TripCell")
-            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).venueName!)"
+            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).id!)"
             
             let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
 
@@ -101,7 +102,7 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
             
             //cell!.detailTextLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!)"
         } else {
-            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).venueName!)"
+            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).id!)"
             let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
             
             cell!.detailTextLabel?.text = "\(timestamp)"
@@ -165,8 +166,8 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
     
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        let vc = segue.destinationViewController as! TripDetailsViewController
-//        vc.parent = self
+        let vc = segue.destinationViewController as! DisplayTripDetailsViewController
+        vc.tripID = selectedTrip
     }
 
 }
