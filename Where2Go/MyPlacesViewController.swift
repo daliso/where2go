@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreData
 
-class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
+class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate  {
 
     @IBOutlet weak var myTripsTable: UITableView!
     
@@ -19,45 +20,26 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         myTripsTable.delegate = self
         myTripsTable.dataSource = self
+        
+        // Start the fetched results controller
+        var error: NSError?
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error1 as NSError {
+            error = error1
+        }
+        
+        if let error = error {
+            print("Error performing initial fetch: \(error)")
+        }
+        
+        fetchedResultsController.delegate = self
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = "I am cell: \(indexPath.section) , \(indexPath.row)"
-        return cell
-    }
-
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-            case 0: return 5
-            case 1: return 5
-            case 2: return 5
-            case 3: return 5
-            case 4: return 5
-        default: return 4
-        }
-    }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 5
-    }
-    
-    
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "This is a section header"
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
-        let height:CGFloat = 60
-        return height
     }
     
     
@@ -70,5 +52,107 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    // MARK: Core Data
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance.managedObjectContext
+    }
+    
+    // MARK: FetchedResults Controller and Delegate Methods
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Trip")
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateTime", ascending: true)]
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: self.sharedContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        return fetchedResultsController
+        
+    }()
+    
+    // MARK: TableView Deletage Methods
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        // Here we will segue to the Trip details view page
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var cell = tableView.dequeueReusableCellWithIdentifier("TripCell")
+        
+        if cell == nil {
+            cell = UITableViewCell(style: UITableViewCellStyle.Value2, reuseIdentifier: "TripCell")
+            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!)"
+            cell!.detailTextLabel?.text = "the detail text"
+        } else {
+            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!)"
+            cell!.detailTextLabel?.text = "the detail text"
+        }
+        
+        return cell!
+        
+    }
+    
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return fetchedResultsController.sections?.count ?? 0
+    }
+    
+    
+//    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return "This is section number:\(section)"
+//    }
+    
+//    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        let height:CGFloat = 40
+//        return height
+//    }
+    
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        print("Inside controllerWillChangeContent")
+        self.myTripsTable.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        print("Inside controllerDidChangeContent")
+        self.myTripsTable.endUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        print("Inside ControllerDidChangeObject")
+        switch(type) {
+        case NSFetchedResultsChangeType.Insert : self.myTripsTable.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
+            break
+        case NSFetchedResultsChangeType.Delete : self.myTripsTable.deleteRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
+            break
+        case NSFetchedResultsChangeType.Update : self.myTripsTable.reloadRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        default:
+            print("Nothing")
+        }
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        switch(type) {
+        case NSFetchedResultsChangeType.Insert : self.myTripsTable.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Automatic)
+            break
+        case NSFetchedResultsChangeType.Delete : self.myTripsTable.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Automatic)
+            break
+        default:
+            print("Nothing")
+        }
+    }
 
 }

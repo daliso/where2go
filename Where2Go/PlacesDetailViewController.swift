@@ -279,14 +279,5 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
             print("Nothing")
         }
     }
-    
-    /*
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    let entry = self.fetchedResultsController.objectAtIndexPath(indexPath) as Menu
-    coreDataStack.managedObjectContext?.deleteObject(entry)
-    coreDataStack.saveContext()
-    }
-    */
-    
 
 }
