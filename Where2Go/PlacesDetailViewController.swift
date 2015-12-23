@@ -116,9 +116,8 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
             cell.textLabel?.text = tableData?[indexPath.section][indexPath.row] ?? ""
         }
         else if indexPath.section == 3 {
-            cell.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime!)"
-            // cell.textLabel?.text = "I am cell: \(indexPath.section) , \(indexPath.row)"
-            print((fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime)
+            let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
+            cell.textLabel?.text = "\(timestamp)"
         }
         
         return cell
@@ -232,7 +231,6 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         
     }()
     
-
     func startSpinning(){
         spinner.startAnimating()
         spinnerView.hidden = false
