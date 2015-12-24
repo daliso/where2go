@@ -18,6 +18,7 @@ class TripDetailsViewController: UIViewController {
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var tripNotesTextView: UITextView!
     @IBOutlet weak var navTitle: UINavigationItem!
+    @IBOutlet weak var deleteTripButton: UIButton!
     
     var tapRecognizer: UITapGestureRecognizer? = nil
     
@@ -50,6 +51,9 @@ class TripDetailsViewController: UIViewController {
             datePicker.date = theTrip!.dateTime!
             tripNotesTextView.text = theTrip!.notes!
             navTitle.title = "Edit Trip Details"
+            deleteTripButton.hidden = false
+        } else {
+            deleteTripButton.hidden = true
         }
     }
     
@@ -74,6 +78,12 @@ class TripDetailsViewController: UIViewController {
         presentingViewController?.dismissViewControllerAnimated(true
             , completion: nil)
         
+    }
+    
+    @IBAction func deleteTripButtonPressed(sender: UIButton) {
+        sharedContext.deleteObject(self.theTrip!)
+        CoreDataStackManager.sharedInstance.saveContext()
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: Core Data

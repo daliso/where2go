@@ -366,6 +366,9 @@
                                 <state key="normal" title="Delete This Trip">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="deleteTripButtonPressed:" destination="wyJ-2X-NYz" eventType="touchUpInside" id="c4X-mL-UeV"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -408,6 +411,7 @@
                     </view>
                     <connections>
                         <outlet property="datePicker" destination="tUN-30-SVL" id="8b5-xU-xuf"/>
+                        <outlet property="deleteTripButton" destination="SaQ-9R-JRL" id="VjA-zW-Uxl"/>
                         <outlet property="navTitle" destination="mgA-kq-UU2" id="IRC-Xw-SdD"/>
                         <outlet property="tripNotesTextView" destination="LhQ-De-3cQ" id="IpE-ab-CTy"/>
                     </connections>
@@ -529,7 +533,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="L9E-XJ-P0b"/>
         <segue reference="v5B-kQ-C1O"/>
-        <segue reference="u3k-g5-Yte"/>
     </inferredMetricsTieBreakers>
 </document>

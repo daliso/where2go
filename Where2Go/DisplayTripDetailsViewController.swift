@@ -27,7 +27,11 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
     }
     
     override func viewWillAppear(animated: Bool) {
-        displayTripView.reloadData()
+        if let _ = theTrip?.venueName{
+            displayTripView.reloadData()
+        } else {
+            self.navigationController?.popViewControllerAnimated(true)
+        }
     }
     
     override func viewDidLayoutSubviews() {
