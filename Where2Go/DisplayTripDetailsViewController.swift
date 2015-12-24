@@ -26,9 +26,13 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
 
     }
     
+    override func viewWillAppear(animated: Bool) {
+        displayTripView.reloadData()
+    }
+    
     override func viewDidLayoutSubviews() {
         displayTripView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 49.0, right: 0.0)
-        print("Content Inset=\(displayTripView.contentInset) , Content Offset=\(displayTripView.contentOffset)")
+      //  print("Content Inset=\(displayTripView.contentInset) , Content Offset=\(displayTripView.contentOffset)")
         
     }
 
@@ -38,6 +42,7 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
     }
     
     func editTripButtonPressed(sender: AnyObject){
+        performSegueWithIdentifier("editTripDetailFromDisplayTrip", sender: self)
     }
     
     // MARK: TableView Deletage Methods
@@ -77,10 +82,16 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
             var cell = tableView.dequeueReusableCellWithIdentifier("TripNotesCell")
             if cell == nil {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "TripLocationCell")
+                cell?.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+                cell?.textLabel?.numberOfLines = 0
                 cell!.textLabel?.text = theTrip?.notes ?? "No Trip Object Set"
             } else {
+                cell?.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+                cell?.textLabel?.numberOfLines = 0
                 cell!.textLabel?.text = theTrip?.notes ?? "No Trip Object Set"
             }
+            
+            // cell?.frame.height =
             return cell!
         default:
             return UITableViewCell()
@@ -110,15 +121,21 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
         return height
     }
     
-   
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
     }
-    */
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+   
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
+        if let vc = segue.destinationViewController as? TripDetailsViewController {
+            vc.theTrip = self.theTrip
+        }
+    }
+
 
 }

@@ -121,12 +121,12 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         print("Inside ControllerDidChangeObject in MyPlaces")
         switch(type) {
         case NSFetchedResultsChangeType.Insert : self.myTripsTable.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
-            break
         case NSFetchedResultsChangeType.Delete : self.myTripsTable.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
-            break
-        case NSFetchedResultsChangeType.Update : self.myTripsTable.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
-        default:
-            print("Nothing")
+        case NSFetchedResultsChangeType.Update :
+            self.myTripsTable.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
+        case NSFetchedResultsChangeType.Move:
+            self.myTripsTable.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
+            self.myTripsTable.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
         }
     }
     

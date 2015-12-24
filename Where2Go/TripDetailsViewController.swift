@@ -17,11 +17,11 @@ class TripDetailsViewController: UIViewController {
     
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var tripNotesTextView: UITextView!
+    @IBOutlet weak var navTitle: UINavigationItem!
     
     var tapRecognizer: UITapGestureRecognizer? = nil
     
     var theTrip:Trip? = nil
-    var venueID:String? = nil
     var parent:UIViewController? = nil
 
     override func viewDidLoad() {
@@ -32,43 +32,44 @@ class TripDetailsViewController: UIViewController {
         
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
+        
+        configureUI()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         self.addKeyboardDismissRecognizer()
-        self.subscribeToKeyboardNotifications()
     }
     
     override func viewWillDisappear(animated: Bool) {
         self.removeKeyboardDismissRecognizer()
-        self.unsubscribeFromKeyboardNotifications()
     }
     
-    // MARK: Keyboard Functions
-    func keyboardWillShow(notification: NSNotification) {
-       // if self.view.frame.height < 500.0 { // For iPhone 4s and below to allow the textfields to show when keyboard is displayed
-       //     self.view.frame.origin.y = -150
-       // }
-        
-      // datePicker.hidden = true
-        
+    func configureUI(){
+        if let _ = theTrip {
+            datePicker.date = theTrip!.dateTime!
+            tripNotesTextView.text = theTrip!.notes!
+            navTitle.title = "Edit Trip Details"
+        }
     }
     
     @IBAction func saveButtonPressed(sender: UIBarButtonItem) {
-        //
         
-        let dictionary: [String : AnyObject] = [
-            Trip.Keys.dateTime : datePicker.date,
-            Trip.Keys.notes : tripNotesTextView.text,
-            Trip.Keys.venueID: (parent as! PlacesDetailViewController).venueID,
-            Trip.Keys.venueName: (parent as! PlacesDetailViewController).locationDetails?.name ?? ""
-        ]
-        
-        let _ = Trip(dictionary: dictionary, context: sharedContext)
+        if theTrip == nil {
+            let dictionary: [String : AnyObject] = [
+                Trip.Keys.dateTime : datePicker.date,
+                Trip.Keys.notes : tripNotesTextView.text,
+                Trip.Keys.venueID: (parent as! PlacesDetailViewController).venueID,
+                Trip.Keys.venueName: (parent as! PlacesDetailViewController).locationDetails?.name ?? ""
+            ]
+            
+            let _ = Trip(dictionary: dictionary, context: sharedContext)
+        } else {
+            theTrip!.dateTime = datePicker.date
+            theTrip!.notes = tripNotesTextView.text
+        }
         
         CoreDataStackManager.sharedInstance.saveContext()
-        
-        // (parent as! PlacesDetailViewController).placeDetailTable.reloadData()
         
         presentingViewController?.dismissViewControllerAnimated(true
             , completion: nil)
@@ -79,29 +80,6 @@ class TripDetailsViewController: UIViewController {
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance.managedObjectContext
     }
-    
-    
-    func keyboardWillHide(notification: NSNotification) {
-       // if self.view.frame.height < 500.0  {
-       //     self.view.frame.origin.y = 0
-       // }
-       // datePicker.hidden = false
-    }
-    
-    func subscribeToKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:"    , name: UIKeyboardWillShowNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:"    , name: UIKeyboardWillHideNotification, object: nil)
-    }
-    
-    func unsubscribeFromKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name:
-            UIKeyboardWillShowNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self, name:
-            UIKeyboardWillHideNotification, object: nil)
-    }
-    
     
     // MARK: GestureRecognizer
     func addKeyboardDismissRecognizer() {

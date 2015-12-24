@@ -259,7 +259,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TripNotesCell" textLabel="555-dx-XEX" rowHeight="148" style="IBUITableViewCellStyleDefault" id="cb8-ch-dYV">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TripNotesCell" textLabel="555-dx-XEX" rowHeight="148" style="IBUITableViewCellStyleDefault" id="cb8-ch-dYV">
                                         <rect key="frame" x="0.0" y="137.5" width="600" height="148"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cb8-ch-dYV" id="Voe-XY-Jwr">
@@ -290,6 +290,7 @@
                     </view>
                     <connections>
                         <outlet property="displayTripView" destination="vuX-ZX-eKc" id="Ea2-nh-5Du"/>
+                        <segue destination="wyJ-2X-NYz" kind="presentation" identifier="editTripDetailFromDisplayTrip" id="u3k-g5-Yte"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="36f-VB-R7Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -396,12 +397,13 @@
                     </view>
                     <connections>
                         <outlet property="datePicker" destination="tUN-30-SVL" id="8b5-xU-xuf"/>
+                        <outlet property="navTitle" destination="mgA-kq-UU2" id="IRC-Xw-SdD"/>
                         <outlet property="tripNotesTextView" destination="LhQ-De-3cQ" id="IpE-ab-CTy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="coF-EI-ilM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2516" y="263"/>
+            <point key="canvasLocation" x="2516" y="287"/>
         </scene>
         <!--My Trips-->
         <scene sceneID="VE2-sd-UT8">
@@ -517,5 +519,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="v5B-kQ-C1O"/>
+        <segue reference="u3k-g5-Yte"/>
     </inferredMetricsTieBreakers>
 </document>
