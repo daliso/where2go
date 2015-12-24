@@ -15,14 +15,15 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     // MARK: Outlets
     @IBOutlet weak var noConnectionView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
-    
-    // var canGetLocation = false
+    @IBOutlet weak var exploreMapView: MKMapView!
+    @IBOutlet weak var zoomToUserButton: UIBarButtonItem!
+
     var connectionStatus:ReachabilityStatus = Reach().connectionStatus() {
         didSet {
             updateConnectionStatusView()
         }
     }
-    var userLocation:CLLocationCoordinate2D!
+    var userLocation:CLLocationCoordinate2D? = nil
     var locationManager: CLLocationManager!
     var placesCategory:String = "Food" {
         didSet{
@@ -44,10 +45,9 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     var zoomedIn:MKCoordinateRegion {
         get {
             let regionRadius: CLLocationDistance = 2000
-            return MKCoordinateRegionMakeWithDistance(userLocation, regionRadius, regionRadius)
+            return MKCoordinateRegionMakeWithDistance(userLocation!, regionRadius, regionRadius)
         }
     }
-    
     
     @IBAction func categoryControl(sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
@@ -58,12 +58,10 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         }
     }
 
-    @IBOutlet weak var exploreMapView: MKMapView!
-    
-    
-    @IBAction func refreshVenues(sender: UIBarButtonItem) {
-        refreshVenues()
-        // print (exploreMapView.userLocation.coordinate)
+    @IBAction func zoomToUserButtonPressed(sender: UIBarButtonItem) {
+        if userLocation != nil {
+            exploreMapView.setRegion(zoomedIn, animated: true)
+        }
     }
 
     override func viewDidLoad() {
@@ -79,23 +77,21 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         
         exploreMapView.delegate = self
         
-
-        refreshVenues()
+        let defaults = NSUserDefaults.standardUserDefaults()
         
+        let latitude = defaults.doubleForKey("centerLatitude")
+        let longitude = defaults.doubleForKey("centerLongitude")
+        let latDelta = defaults.doubleForKey("latDelta")
+        let lonDelta = defaults.doubleForKey("lonDelta")
         
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        print("view did appear called")
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        print("view will appear called")
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        if !(latitude == 0) && !(longitude == 0) && !(latDelta == 0) && !(lonDelta == 0) {
+            let mapCenter = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
+            let mapSpan = MKCoordinateSpan(latitudeDelta: CLLocationDegrees(latDelta), longitudeDelta: CLLocationDegrees(lonDelta))
+            let savedRegion = MKCoordinateRegion(center: mapCenter, span: mapSpan)
+            exploreMapView.setRegion(savedRegion, animated: true)
+        }
+        
+        // refreshVenues()
     }
     
     func updateConnectionStatusView(){
@@ -121,16 +117,12 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
             animations: {self.noConnectionView.frame.origin.y = -47},
             completion:nil)
             
-            
             view.removeConstraint(connectionNoticeContraints2)
             view.addConstraint(connectionNoticeContraints1)
         }
     }
-
     
     func networkStatusChanged(notification: NSNotification) {
-        //let userInfo = notification.userInfo
-        //print(userInfo)
         connectionStatus = Reach().connectionStatus()
     }
     
@@ -138,13 +130,13 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         if (status == .AuthorizedWhenInUse) {
             exploreMapView.showsUserLocation = true
             exploreMapView.showsCompass = true
-            // canGetLocation = true
             print("Authorized to get user location")
+            zoomToUserButton.enabled = true
             manager.startUpdatingLocation()
         }
         else {
+            zoomToUserButton.enabled = false
             exploreMapView.showsUserLocation = false
-            // canGetLocation = false
             print("Not authorized to get user location")
         }
     }
@@ -152,7 +144,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         print("did update location to: \(newLocation)")
         userLocation = newLocation.coordinate
-        exploreMapView.setRegion(zoomedIn, animated: true)
+        // exploreMapView.setRegion(zoomedIn, animated: true)
         manager.stopUpdatingLocation()
     }
     
@@ -165,8 +157,6 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         let width = exploreMapView.region.span.latitudeDelta/2.0*110574.61
         let height = exploreMapView.region.span.longitudeDelta/2.0*111302.62
         let radius = sqrt(pow(width,2.0)+pow(height,2.0))
-        
-        //let radius = max(exploreMapView.region.span.latitudeDelta/2.0*110574.61, exploreMapView.region.span.longitudeDelta/2.0*111302.62)
    
         FoursquareAPIClient.sharedInstance.getNearbyLocations(placesCategory, lat:lat, lon:lon, radius: radius) { (success, userDataDict, errorString) -> Void in
             if success {
@@ -198,7 +188,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
                 })
                 
             } else{
-                print("shucks..")
+                print("No locations returned...")
             }
             
             dispatch_async(dispatch_get_main_queue(), {
@@ -246,14 +236,10 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         switch connectionStatus {
         case .Unknown, .Offline:
             return false
-            
         case .Online(.WWAN), .Online(.WiFi):
             return true
         }
     }
-    
-        
-    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let vc = segue.destinationViewController as! PlacesDetailViewController

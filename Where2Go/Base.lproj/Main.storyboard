@@ -102,12 +102,17 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Explore Places To Visit" id="tyh-Vt-LTo">
-                        <barButtonItem key="rightBarButtonItem" image="Center Direction" style="done" id="VMq-Kf-1DB"/>
+                        <barButtonItem key="rightBarButtonItem" image="Center Direction" style="done" id="VMq-Kf-1DB">
+                            <connections>
+                                <action selector="zoomToUserButtonPressed:" destination="BYZ-38-t0r" id="Vrh-IB-6Iu"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="exploreMapView" destination="xwV-Oa-l9g" id="y2t-hS-o7C"/>
                         <outlet property="noConnectionView" destination="TvH-Xf-3Pc" id="WjY-cX-1GP"/>
                         <outlet property="spinner" destination="MMD-T8-Yrs" id="Z0l-oV-H8a"/>
+                        <outlet property="zoomToUserButton" destination="VMq-Kf-1DB" id="u27-Ix-wsp"/>
                         <segue destination="sdW-bg-3Oa" kind="show" identifier="showPlaceDetailFromExplore" id="yo6-j4-uz7"/>
                     </connections>
                 </viewController>
