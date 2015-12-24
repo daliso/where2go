@@ -202,6 +202,7 @@
                         <outlet property="spinnerView" destination="Wy4-nz-q1s" id="gQJ-K2-rvS"/>
                         <outlet property="venueNameLabel" destination="hNx-fI-Vn0" id="paA-kW-Crh"/>
                         <segue destination="wyJ-2X-NYz" kind="presentation" identifier="addTripDetailFromPlacesDetail" id="L9E-XJ-P0b"/>
+                        <segue destination="MAK-Y2-MEA" kind="show" identifier="showTripDetailsFromPlacesDetail" id="v5B-kQ-C1O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cfl-bD-ZFf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -217,15 +218,15 @@
                         <viewControllerLayoutGuide type="bottom" id="GOx-tu-GQW"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="QmV-BP-t2q">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="vuX-ZX-eKc">
-                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TripLocationCell" textLabel="T6A-LS-1xQ" style="IBUITableViewCellStyleDefault" id="pEt-DO-iMt">
-                                        <rect key="frame" x="0.0" y="113.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="49.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pEt-DO-iMt" id="Is7-TN-nzK">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -241,24 +242,17 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TripDateTimeCell" textLabel="Wb2-AP-rhu" detailTextLabel="DDQ-eB-sqD" style="IBUITableViewCellStyleSubtitle" id="z5I-WT-ilV">
-                                        <rect key="frame" x="0.0" y="157.5" width="600" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TripDateTimeCell" textLabel="Wb2-AP-rhu" style="IBUITableViewCellStyleDefault" id="z5I-WT-ilV">
+                                        <rect key="frame" x="0.0" y="93.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z5I-WT-ilV" id="wNR-oV-uT3">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wb2-AP-rhu">
-                                                    <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DDQ-eB-sqD">
-                                                    <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -266,7 +260,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TripNotesCell" textLabel="555-dx-XEX" rowHeight="148" style="IBUITableViewCellStyleDefault" id="cb8-ch-dYV">
-                                        <rect key="frame" x="0.0" y="201.5" width="600" height="148"/>
+                                        <rect key="frame" x="0.0" y="137.5" width="600" height="148"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cb8-ch-dYV" id="Voe-XY-Jwr">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="147.5"/>
@@ -300,7 +294,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="36f-VB-R7Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1770" y="974"/>
+            <point key="canvasLocation" x="1774" y="973"/>
         </scene>
         <!--Trip Details View Controller-->
         <scene sceneID="CPP-8z-xBd">
@@ -521,4 +515,7 @@
             <point key="canvasLocation" x="122" y="973"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="v5B-kQ-C1O"/>
+    </inferredMetricsTieBreakers>
 </document>

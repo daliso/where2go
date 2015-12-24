@@ -13,32 +13,23 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
 
     
     @IBOutlet weak var displayTripView: UITableView!
-    var tripID:NSNumber?
+    var theTrip:Trip?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
         let editTripButton : UIBarButtonItem = UIBarButtonItem(title: "Edit Trip", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("editTripButtonPressed:"))
         self.navigationItem.rightBarButtonItem = editTripButton
         
-        displayTripView.delegate = self
         displayTripView.dataSource = self
+        displayTripView.delegate = self
+
+    }
+    
+    override func viewDidLayoutSubviews() {
+        displayTripView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 49.0, right: 0.0)
+        print("Content Inset=\(displayTripView.contentInset) , Content Offset=\(displayTripView.contentOffset)")
         
-        // Start the fetched results controller
-        var error: NSError?
-        do {
-            try fetchedResultsController.performFetch()
-        } catch let error1 as NSError {
-            error = error1
-        }
-        
-        if let error = error {
-            print("Error performing initial fetch: \(error)")
-        }
-        
-        fetchedResultsController.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,28 +39,6 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
     
     func editTripButtonPressed(sender: AnyObject){
     }
-    
-    // MARK: Core Data
-    var sharedContext: NSManagedObjectContext {
-        return CoreDataStackManager.sharedInstance.managedObjectContext
-    }
-    
-    // MARK: FetchedResults Controller and Delegate Methods
-    lazy var fetchedResultsController: NSFetchedResultsController = {
-        
-        let fetchRequest = NSFetchRequest(entityName: "Trip")
-        
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateTime", ascending: true)]
-        fetchRequest.predicate = NSPredicate(format: "id == %@", self.tripID!);
-        
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-            managedObjectContext: self.sharedContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil)
-        
-        return fetchedResultsController
-        
-    }()
     
     // MARK: TableView Deletage Methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -81,15 +50,14 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        
         switch indexPath.section {
         case 0:
             var cell = tableView.dequeueReusableCellWithIdentifier("TripLocationCell")
             if cell == nil {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "TripLocationCell")
-                cell!.textLabel?.text = "This is the location name"
+                cell!.textLabel?.text = theTrip?.venueName ?? "No Trip Obbject Set"
             } else {
-                cell!.textLabel?.text = "This is the location name"
+                cell!.textLabel?.text = theTrip?.venueName ?? "No Trip Obbject Set"
             }
             return cell!
             
@@ -97,11 +65,11 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
             var cell = tableView.dequeueReusableCellWithIdentifier("TripDateTimeCell")
             if cell == nil {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "TripLocationCell")
-                let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
+                let timestamp = NSDateFormatter.localizedStringFromDate(theTrip?.dateTime! ?? NSDate(), dateStyle: .FullStyle, timeStyle: .ShortStyle)
                 cell!.textLabel?.text = "\(timestamp)"
                 
             } else {
-                let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
+                let timestamp = NSDateFormatter.localizedStringFromDate(theTrip?.dateTime! ?? NSDate(), dateStyle: .FullStyle, timeStyle: .ShortStyle)
                 cell!.textLabel?.text = "\(timestamp)"
             }
             return cell!
@@ -109,36 +77,15 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
             var cell = tableView.dequeueReusableCellWithIdentifier("TripNotesCell")
             if cell == nil {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "TripLocationCell")
-                cell!.textLabel?.text = "These are the Trip notes"
+                cell!.textLabel?.text = theTrip?.notes ?? "No Trip Object Set"
             } else {
-                cell!.textLabel?.text = "This is the Trip notes"
+                cell!.textLabel?.text = theTrip?.notes ?? "No Trip Object Set"
             }
             return cell!
         default:
             return UITableViewCell()
         }
-        
-        
-        /*
-        var cell = tableView.dequeueReusableCellWithIdentifier("TripCell")
-        
-        if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "TripCell")
-            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).venueName!)"
-            
-            let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
-            
-            cell!.detailTextLabel?.text = "\(timestamp)"
-            
-            //cell!.detailTextLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!)"
-        } else {
-            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).venueName!)"
-            let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
-            
-            cell!.detailTextLabel?.text = "\(timestamp)"
-        }
-        return cell!
-        */
+
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -163,42 +110,7 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
         return height
     }
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        print("Inside controllerWillChangeContent in MyPlaces")
-        self.displayTripView.beginUpdates()
-    }
-    
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        print("Inside controllerDidChangeContent in MyPlaces")
-        self.displayTripView.endUpdates()
-    }
-    
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        print("Inside ControllerDidChangeObject in MyPlaces")
-        switch(type) {
-        case NSFetchedResultsChangeType.Insert : self.displayTripView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
-            break
-        case NSFetchedResultsChangeType.Delete : self.displayTripView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
-            break
-        case NSFetchedResultsChangeType.Update : self.displayTripView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
-        default:
-            print("Nothing")
-        }
-    }
-    
-    
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-        switch(type) {
-        case NSFetchedResultsChangeType.Insert : self.displayTripView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Automatic)
-            break
-        case NSFetchedResultsChangeType.Delete : self.displayTripView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Automatic)
-            break
-        default:
-            print("Nothing")
-        }
-    }
-
-
+   
     /*
     // MARK: - Navigation
 

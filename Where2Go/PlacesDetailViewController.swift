@@ -25,6 +25,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     var insertedIndexPaths: [NSIndexPath]!
     var deletedIndexPaths: [NSIndexPath]!
     var updatedIndexPaths: [NSIndexPath]!
+    var theTrip:Trip?
     
     
     override func viewDidLoad() {
@@ -56,8 +57,12 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let vc = segue.destinationViewController as! TripDetailsViewController
-        vc.parent = self
+        if let vc = segue.destinationViewController as? TripDetailsViewController {
+            vc.parent = self
+        } else if let vc = segue.destinationViewController as? DisplayTripDetailsViewController {
+            vc.theTrip = self.theTrip
+        }
+        
     }
     
     func refreshUI(locationDetails:W2GLocationDetailed){
@@ -205,7 +210,12 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
                     UIApplication.sharedApplication().openURL(theURL)
                 }
             }
+        } else if (indexPath.section == 3) {
+            
+            theTrip = (fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip)
+            performSegueWithIdentifier("showTripDetailsFromPlacesDetail", sender: self)
         }
+        
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     

@@ -12,7 +12,7 @@ import CoreData
 class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate  {
 
     @IBOutlet weak var myTripsTable: UITableView!
-    var selectedTrip:NSNumber?
+    var selectedTrip:Trip?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,18 +46,6 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    
     // MARK: Core Data
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance.managedObjectContext
@@ -82,7 +70,7 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
     // MARK: TableView Deletage Methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // Here we will segue to the Trip details view page
-        selectedTrip = (fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).id
+        selectedTrip = (fetchedResultsController.objectAtIndexPath(indexPath) as! Trip)
         performSegueWithIdentifier("showTripDetailsFromMyTrips", sender: self)
 
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -94,15 +82,14 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "TripCell")
-            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).id!)"
+            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).venueName!)"
             
             let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
 
             cell!.detailTextLabel?.text = "\(timestamp)"
             
-            //cell!.detailTextLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!)"
         } else {
-            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).id!)"
+            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).venueName!)"
             let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
             
             cell!.detailTextLabel?.text = "\(timestamp)"
@@ -118,15 +105,6 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return fetchedResultsController.sections?.count ?? 0
     }
-    
-//    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return "This is section number:\(section)"
-//    }
-    
-//    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        let height:CGFloat = 40
-//        return height
-//    }
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         print("Inside controllerWillChangeContent in MyPlaces")
@@ -163,11 +141,10 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
             print("Nothing")
         }
     }
-    
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let vc = segue.destinationViewController as! DisplayTripDetailsViewController
-        vc.tripID = selectedTrip
+        vc.theTrip = selectedTrip
     }
 
 }
