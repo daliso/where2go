@@ -285,9 +285,5 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
             print("Nothing")
         }
     }
-    
-    @IBAction func backToPlacesDetailFromDeletingATrip(segue: UIStoryboardSegue){
-        print("back to Places Detail from deleting a trip")
-    }
 
 }

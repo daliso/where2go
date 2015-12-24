@@ -101,7 +101,9 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Explore Places To Visit" id="tyh-Vt-LTo"/>
+                    <navigationItem key="navigationItem" title="Explore Places To Visit" id="tyh-Vt-LTo">
+                        <barButtonItem key="rightBarButtonItem" image="Center Direction" style="done" id="VMq-Kf-1DB"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="exploreMapView" destination="xwV-Oa-l9g" id="y2t-hS-o7C"/>
                         <outlet property="noConnectionView" destination="TvH-Xf-3Pc" id="WjY-cX-1GP"/>
@@ -497,7 +499,7 @@
         <scene sceneID="KeD-p3-yoI">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ddh-fh-0nm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Explore Places" id="HSo-So-t3K"/>
+                    <tabBarItem key="tabBarItem" title="Explore Places" image="Map Marker-32" id="HSo-So-t3K"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="XO0-og-aRf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -516,7 +518,7 @@
         <scene sceneID="Q0h-np-hUF">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xZI-oM-1Qm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="My Trips" id="hOL-ci-jER"/>
+                    <tabBarItem key="tabBarItem" title="My Trips" image="Tourist Filled-32" id="hOL-ci-jER"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="aoc-a9-Zt7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -532,6 +534,11 @@
             <point key="canvasLocation" x="122" y="973"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Center Direction" width="32" height="32"/>
+        <image name="Map Marker-32" width="32" height="32"/>
+        <image name="Tourist Filled-32" width="32" height="32"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="L9E-XJ-P0b"/>
         <segue reference="v5B-kQ-C1O"/>

@@ -16,7 +16,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     @IBOutlet weak var noConnectionView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
-    var canGetLocation = false
+    // var canGetLocation = false
     var connectionStatus:ReachabilityStatus = Reach().connectionStatus() {
         didSet {
             updateConnectionStatusView()
@@ -78,8 +78,11 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         locationManager.requestWhenInUseAuthorization()
         
         exploreMapView.delegate = self
+        
 
         refreshVenues()
+        
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -134,13 +137,14 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if (status == .AuthorizedWhenInUse) {
             exploreMapView.showsUserLocation = true
-            canGetLocation = true
+            exploreMapView.showsCompass = true
+            // canGetLocation = true
             print("Authorized to get user location")
             manager.startUpdatingLocation()
         }
         else {
             exploreMapView.showsUserLocation = false
-            canGetLocation = false
+            // canGetLocation = false
             print("Not authorized to get user location")
         }
     }
@@ -205,16 +209,13 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     }
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setDouble(mapView.region.center.latitude, forKey: "centerLatitude")
+        defaults.setDouble(mapView.region.center.longitude, forKey: "centerLongitude")
+        defaults.setDouble(mapView.region.span.latitudeDelta, forKey: "latDelta")
+        defaults.setDouble(mapView.region.span.longitudeDelta, forKey: "lonDelta")
         refreshVenues()
     }
-    
-//    
-//    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-//        selectedLocation = (view.annotation! as! W2GLocation)
-//        performSegueWithIdentifier(Constants.segueToPlacesDetailViewController, sender: nil)
-//    }
-//    
-    
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         

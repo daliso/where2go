@@ -143,8 +143,5 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         let vc = segue.destinationViewController as! DisplayTripDetailsViewController
         vc.theTrip = selectedTrip
     }
-    
-    @IBAction func backToMyTripsFromDeletingATrip(segue: UIStoryboardSegue){
-        print("back to myTrips from deleting a trip")
-    }
+
 }
