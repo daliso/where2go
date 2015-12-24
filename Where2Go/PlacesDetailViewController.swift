@@ -229,7 +229,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         
         let fetchRequest = NSFetchRequest(entityName: "Trip")
         
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateTime", ascending: true)]
         fetchRequest.predicate = NSPredicate(format: "venueID == %@", self.venueID);
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
@@ -266,12 +266,12 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         print("Inside ControllerDidChangeObject")
         switch(type) {
         case NSFetchedResultsChangeType.Insert : self.placeDetailTable.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
-            break
-        case NSFetchedResultsChangeType.Delete : self.placeDetailTable.deleteRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
-            break
-        case NSFetchedResultsChangeType.Update : self.placeDetailTable.reloadRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
-        default:
-            print("Nothing")
+        case NSFetchedResultsChangeType.Delete : self.placeDetailTable.deleteRowsAtIndexPaths([NSIndexPath(forRow: indexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        case NSFetchedResultsChangeType.Update :
+            self.placeDetailTable.reloadRowsAtIndexPaths([NSIndexPath(forRow: indexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        case NSFetchedResultsChangeType.Move:
+            self.placeDetailTable.deleteRowsAtIndexPaths([NSIndexPath(forRow: indexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
+            self.placeDetailTable.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
         }
     }
     

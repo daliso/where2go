@@ -358,6 +358,15 @@
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SaQ-9R-JRL">
+                                <rect key="frame" x="203" y="412" width="194" height="46"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <inset key="contentEdgeInsets" minX="7" minY="7" maxX="7" maxY="7"/>
+                                <state key="normal" title="Delete This Trip">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -370,6 +379,7 @@
                             <constraint firstItem="9En-cb-0CU" firstAttribute="top" secondItem="EvI-9n-smc" secondAttribute="bottom" id="KXv-gh-Z0w"/>
                             <constraint firstItem="g8V-em-k3R" firstAttribute="top" secondItem="LhQ-De-3cQ" secondAttribute="bottom" constant="252" id="Khw-PG-SxM"/>
                             <constraint firstItem="EG6-8w-Fmy" firstAttribute="top" secondItem="tUN-30-SVL" secondAttribute="bottom" constant="8" symbolic="YES" id="LV0-LT-YFB"/>
+                            <constraint firstItem="SaQ-9R-JRL" firstAttribute="top" secondItem="LhQ-De-3cQ" secondAttribute="bottom" constant="20" id="Mcf-Ay-8uM"/>
                             <constraint firstItem="tUN-30-SVL" firstAttribute="centerX" secondItem="EG6-8w-Fmy" secondAttribute="centerX" id="ST3-EA-g0O"/>
                             <constraint firstItem="tUN-30-SVL" firstAttribute="top" secondItem="9En-cb-0CU" secondAttribute="bottom" id="TUO-aP-N1n"/>
                             <constraint firstItem="LhQ-De-3cQ" firstAttribute="trailing" secondItem="EG6-8w-Fmy" secondAttribute="trailing" id="X2Q-3t-Vl5"/>
@@ -380,6 +390,7 @@
                             <constraint firstItem="9En-cb-0CU" firstAttribute="leading" secondItem="CrD-Ew-zJJ" secondAttribute="leading" id="hhs-9z-6Rd"/>
                             <constraint firstItem="EG6-8w-Fmy" firstAttribute="top" secondItem="tUN-30-SVL" secondAttribute="bottom" constant="8" id="kXm-p5-n8l"/>
                             <constraint firstItem="EG6-8w-Fmy" firstAttribute="top" secondItem="tUN-30-SVL" secondAttribute="bottom" constant="8" id="pbe-XT-FYg"/>
+                            <constraint firstItem="SaQ-9R-JRL" firstAttribute="centerX" secondItem="LhQ-De-3cQ" secondAttribute="centerX" id="vAk-FM-3KP"/>
                             <constraint firstItem="LhQ-De-3cQ" firstAttribute="top" secondItem="EG6-8w-Fmy" secondAttribute="bottom" constant="8" symbolic="YES" id="xIK-J8-e3P"/>
                         </constraints>
                         <variation key="default">

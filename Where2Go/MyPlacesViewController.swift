@@ -34,7 +34,6 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         fetchedResultsController.delegate = self
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -97,7 +96,6 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         return cell!
     }
     
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
@@ -130,7 +128,6 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    
     func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
         switch(type) {
         case NSFetchedResultsChangeType.Insert : self.myTripsTable.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -146,5 +143,4 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         let vc = segue.destinationViewController as! DisplayTripDetailsViewController
         vc.theTrip = selectedTrip
     }
-
 }
