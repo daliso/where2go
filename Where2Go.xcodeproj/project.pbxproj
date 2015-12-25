@@ -25,13 +25,11 @@
 		696D43551C0D91F5006B5A81 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696D43541C0D91F5006B5A81 /* Reach.swift */; };
 		69B3BC6D1C2AD69D0032C799 /* DisplayTripDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B3BC6C1C2AD69D0032C799 /* DisplayTripDetailsViewController.swift */; };
 		69BBB9021C0CD8AF00C34D51 /* W2GLocationDetailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BBB9011C0CD8AF00C34D51 /* W2GLocationDetailed.swift */; };
-		69BBB9041C0CDF0400C34D51 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BBB9031C0CDF0400C34D51 /* Photo.swift */; };
 		69CA62E91C09FC3800CBA1A4 /* W2GLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CA62E71C09FC3800CBA1A4 /* W2GLocation.swift */; };
 		69CA62EA1C09FC3800CBA1A4 /* MKW2GLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CA62E81C09FC3800CBA1A4 /* MKW2GLocation.swift */; };
 		69CA62ED1C0A011200CBA1A4 /* FoursquareAPIClient+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CA62EB1C0A011200CBA1A4 /* FoursquareAPIClient+Constants.swift */; };
 		69CA62EE1C0A011200CBA1A4 /* FoursquareAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CA62EC1C0A011200CBA1A4 /* FoursquareAPIClient.swift */; };
 		69CA62F01C0A116800CBA1A4 /* FoursquareAPIClient+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CA62EF1C0A116800CBA1A4 /* FoursquareAPIClient+Convenience.swift */; };
-		69CA62F21C0A117500CBA1A4 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CA62F11C0A117500CBA1A4 /* ImageCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,13 +74,11 @@
 		696D43541C0D91F5006B5A81 /* Reach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
 		69B3BC6C1C2AD69D0032C799 /* DisplayTripDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayTripDetailsViewController.swift; sourceTree = "<group>"; };
 		69BBB9011C0CD8AF00C34D51 /* W2GLocationDetailed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W2GLocationDetailed.swift; sourceTree = "<group>"; };
-		69BBB9031C0CDF0400C34D51 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		69CA62E71C09FC3800CBA1A4 /* W2GLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W2GLocation.swift; sourceTree = "<group>"; };
 		69CA62E81C09FC3800CBA1A4 /* MKW2GLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKW2GLocation.swift; sourceTree = "<group>"; };
 		69CA62EB1C0A011200CBA1A4 /* FoursquareAPIClient+Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FoursquareAPIClient+Constants.swift"; sourceTree = "<group>"; };
 		69CA62EC1C0A011200CBA1A4 /* FoursquareAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoursquareAPIClient.swift; sourceTree = "<group>"; };
 		69CA62EF1C0A116800CBA1A4 /* FoursquareAPIClient+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FoursquareAPIClient+Convenience.swift"; sourceTree = "<group>"; };
-		69CA62F11C0A117500CBA1A4 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,8 +170,6 @@
 				69CA62E71C09FC3800CBA1A4 /* W2GLocation.swift */,
 				69BBB9011C0CD8AF00C34D51 /* W2GLocationDetailed.swift */,
 				69CA62E81C09FC3800CBA1A4 /* MKW2GLocation.swift */,
-				69BBB9031C0CDF0400C34D51 /* Photo.swift */,
-				69CA62F11C0A117500CBA1A4 /* ImageCache.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -343,7 +337,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6930D4611C26BA52003EAFCE /* Trip+CoreDataProperties.swift in Sources */,
-				69BBB9041C0CDF0400C34D51 /* Photo.swift in Sources */,
 				695463881BC0490A009D9C02 /* ExplorePlacesViewController.swift in Sources */,
 				69B3BC6D1C2AD69D0032C799 /* DisplayTripDetailsViewController.swift in Sources */,
 				69CA62EE1C0A011200CBA1A4 /* FoursquareAPIClient.swift in Sources */,
@@ -355,7 +348,6 @@
 				691ED7711C1AC7F900A53C7D /* URLImageView.swift in Sources */,
 				6930D4621C26BA52003EAFCE /* Trip.swift in Sources */,
 				69CA62ED1C0A011200CBA1A4 /* FoursquareAPIClient+Constants.swift in Sources */,
-				69CA62F21C0A117500CBA1A4 /* ImageCache.swift in Sources */,
 				69CA62F01C0A116800CBA1A4 /* FoursquareAPIClient+Convenience.swift in Sources */,
 				695463861BC0490A009D9C02 /* AppDelegate.swift in Sources */,
 				69CA62EA1C09FC3800CBA1A4 /* MKW2GLocation.swift in Sources */,
