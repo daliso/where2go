@@ -142,11 +142,6 @@ class FoursquareAPIClient : NSObject {
         return theError
         
     }
-    
-    // MARK: - Shared Image Cache
-    struct Caches {
-        static let imageCache = ImageCache()
-    }
 
     
 }
