@@ -11,9 +11,16 @@ import CoreData
 
 class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate  {
 
-    @IBOutlet weak var myTripsTable: UITableView!
+    // MARK: Vars
     var selectedTrip:Trip?
     
+    // MARK: IBOutlets
+    @IBOutlet weak var myTripsTable: UITableView!
+    
+    // MARK: IBActions
+    
+    
+    // MARK: ViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -21,28 +28,14 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         myTripsTable.delegate = self
         myTripsTable.dataSource = self
         
-        // Start the fetched results controller
+        // Perform Fetch on the Fetched Results Controller
         var error: NSError?
-        do {
-            try fetchedResultsController.performFetch()
-        } catch let error1 as NSError {
-            error = error1
-        }
+        do { try fetchedResultsController.performFetch() }
+        catch let error1 as NSError { error = error1 }
         
-        if let error = error {
-            print("Error performing initial fetch: \(error)")
-        }
+        if let error = error { print("Error performing initial fetch: \(error)") }
         
         fetchedResultsController.delegate = self
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: Core Data
@@ -50,7 +43,7 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         return CoreDataStackManager.sharedInstance.managedObjectContext
     }
     
-    // MARK: FetchedResults Controller and Delegate Methods
+    // MARK: FetchedResults Controller
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "Trip")
@@ -68,15 +61,12 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: TableView Deletage Methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        // Here we will segue to the Trip details view page
         selectedTrip = (fetchedResultsController.objectAtIndexPath(indexPath) as! Trip)
         performSegueWithIdentifier("showTripDetailsFromMyTrips", sender: self)
-
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         var cell = tableView.dequeueReusableCellWithIdentifier("TripCell")
         
         if cell == nil {
@@ -104,6 +94,8 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         return fetchedResultsController.sections?.count ?? 0
     }
     
+    
+    // MARK: FetchedResultsController Delegate Methods
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         print("Inside controllerWillChangeContent in MyPlaces")
         self.myTripsTable.beginUpdates()
@@ -139,6 +131,7 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
 
+    // MARK: Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let vc = segue.destinationViewController as! DisplayTripDetailsViewController
         vc.theTrip = selectedTrip
