@@ -1,6 +1,6 @@
 //
-//  UdacityAPIClient.swift
-//  On The Map Udacity
+//  FoursquareAPIClient.swift
+//  Where2Go
 //
 //  Created by Daliso Zuze on 17/08/2015.
 //  Copyright (c) 2015 Daliso Zuze. All rights reserved.

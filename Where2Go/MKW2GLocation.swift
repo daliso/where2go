@@ -12,7 +12,6 @@ import MapKit
 class MKW2GLocation: NSObject, MKAnnotation
 {
     // MARK: - MKAnnotation
-    
     var w2gLocation: W2GLocation
     
     var coordinate: CLLocationCoordinate2D {

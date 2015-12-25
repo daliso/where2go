@@ -63,9 +63,6 @@ extension FoursquareAPIClient {
 
                             }
                             
-
-                            
-                            
                             var venueCoverPhoto = ""
                             
                             if let bestPhoto = venueDict[FoursquareAPIClient.JSONResponseKeys.bestPhoto] as? [String:AnyObject] {
@@ -83,7 +80,6 @@ extension FoursquareAPIClient {
                                // FoursquareAPIClient.JSONResponseKeys.venueUserPhotos : venueUserPhotos,
                                 FoursquareAPIClient.JSONResponseKeys.venueRating : venueRating
                             ]
-                            
                             
                             let w2gLocationDetailed = W2GLocationDetailed(dictionary: locationDetails)
                             

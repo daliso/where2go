@@ -63,29 +63,5 @@ extension FoursquareAPIClient {
         static let VenuePhotos:String = "venuePhotos"
         static let Radius:String = "radius"
     }
-    
-    /*
-    
-    // MARK: - Methods
-
-    
-    // MARK: - JSON Body Keys
-    struct JSONBodyKeys {
-        
-        static let Username = "username"
-        static let Password = "password"
-        
-        static let UniqueKey = "uniqueKey"
-        static let FirstName  = "firstName"
-        static let LastName  = "lastName"
-        static let MapString  = "mapString"
-        static let MediaURL  = "mediaURL"
-        static let Latitude  = "latitude"
-        static let Longitude = "longitude"
-        
-        static let fbToken = "access_token"
-    }
-
-    */
 
 }
