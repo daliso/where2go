@@ -16,9 +16,7 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: IBOutlets
     @IBOutlet weak var myTripsTable: UITableView!
-    
-    // MARK: IBActions
-    
+        
     
     // MARK: ViewController Lifecycle
     override func viewDidLoad() {

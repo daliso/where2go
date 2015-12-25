@@ -11,23 +11,23 @@ import CoreData
 
 class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
 
+    // MARK: IBOutlets
     @IBOutlet weak var placeDetailTable: UITableView!
     @IBOutlet weak var venueNameLabel: UILabel!
     @IBOutlet weak var coverPhotoImageView: URLImageView!
     @IBOutlet weak var spinnerView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
+    // MARK: Vars
     var tableData:[[String]]? = nil
-    
     var venueID:String = "49ecf7f1f964a520ba671fe3"
     var locationDetails:W2GLocationDetailed? = nil
-    
     var insertedIndexPaths: [NSIndexPath]!
     var deletedIndexPaths: [NSIndexPath]!
     var updatedIndexPaths: [NSIndexPath]!
     var theTrip:Trip?
     
-    
+    // MARK: ViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -36,53 +36,45 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         
         FoursquareAPIClient.sharedInstance.getVenueDetails(venueID) { (success, locationDetails, errorString) -> Void in
             if success {
-                // refreshUI using the locationdetails
                 dispatch_async(dispatch_get_main_queue(), {
                     self.refreshUI(locationDetails!)
                 })
             }
             else {
-                // display an error
                 print("An error occured: \(errorString!)")
             }
         }
         
         let addTripButton : UIBarButtonItem = UIBarButtonItem(title: "Add Trip", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("addTripButtonPressed:"))
         self.navigationItem.rightBarButtonItem = addTripButton
-        
     }
     
+    // MARK: UI Event Handlers
     func addTripButtonPressed(sender: AnyObject){
         performSegueWithIdentifier("addTripDetailFromPlacesDetail", sender: self)
     }
     
+    // MARK: Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let vc = segue.destinationViewController as? TripDetailsViewController {
             vc.parent = self
         } else if let vc = segue.destinationViewController as? DisplayTripDetailsViewController {
             vc.theTrip = self.theTrip
         }
-        
     }
     
+    // MARK: Refresh State
     func refreshUI(locationDetails:W2GLocationDetailed){
         
         startSpinning()
         
-        // Start the fetched results controller
         var error: NSError?
-        do {
-            try fetchedResultsController.performFetch()
-        } catch let error1 as NSError {
-            error = error1
-        }
+        do { try fetchedResultsController.performFetch()}
+        catch let error1 as NSError { error = error1 }
         
-        if let error = error {
-            print("Error performing initial fetch: \(error)")
-        }
+        if let error = error { print("Error performing initial fetch: \(error)") }
         
         fetchedResultsController.delegate = self
-        
         
         venueNameLabel.text = locationDetails.name
         self.locationDetails = locationDetails
@@ -96,27 +88,16 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
             tableData![1].append(addressLine)
         }
         tableData![1].append(locationDetails.websiteAddress!)
-        
         tableData!.insert(locationDetails.openingHours!, atIndex: 2)
         
-        // tableData!.insert(, atIndex: 3)
-    
         placeDetailTable.reloadData()
         
         stopSpinning()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    
+    // MARK: TableView Delegate Methods
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell = UITableViewCell()
-        
         if indexPath.section < 3 {
             cell.textLabel?.text = tableData?[indexPath.section][indexPath.row] ?? ""
         }
@@ -124,7 +105,6 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
             let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
             cell.textLabel?.text = "\(timestamp)"
         }
-        
         return cell
     }
     
@@ -146,7 +126,6 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         return 4
     }
     
-    
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0: return "Rating"
@@ -162,29 +141,6 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         return height
     }
     
-    func isValidURL(theURL: String) -> Bool {
-        return containsMatch("^(https?:\\/\\/)([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w\\.-]*)*\\/?$", inString: theURL)
-    }
-    
-    func isValidPhoneNumber(theURL: String) -> Bool {
-        return containsMatch("^\\+?[0-9]{10,}$", inString: theURL)
-    }
-    
-    func containsMatch(pattern: String, inString string: String) -> Bool {
-        
-        var regex = NSRegularExpression()
-        
-        do {
-            regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
-        }
-        catch {}
-        
-        let range = NSMakeRange(0, string.characters.count)
-        return regex.firstMatchInString(string, options: NSMatchingOptions(rawValue: UInt(0)), range: range) != nil
-    }
-    
-    
-    // MARK: TableView Deletage Methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if (indexPath.section == 1 && indexPath.row == 0){
@@ -219,12 +175,35 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
+    // MARK: Helper Methods
+    func isValidURL(theURL: String) -> Bool {
+        return containsMatch("^(https?:\\/\\/)([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w\\.-]*)*\\/?$", inString: theURL)
+    }
+    
+    func isValidPhoneNumber(theURL: String) -> Bool {
+        return containsMatch("^\\+?[0-9]{10,}$", inString: theURL)
+    }
+    
+    func containsMatch(pattern: String, inString string: String) -> Bool {
+        
+        var regex = NSRegularExpression()
+        
+        do {
+            regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
+        }
+        catch {}
+        
+        let range = NSMakeRange(0, string.characters.count)
+        return regex.firstMatchInString(string, options: NSMatchingOptions(rawValue: UInt(0)), range: range) != nil
+    }
+    
+    
     // MARK: Core Data
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance.managedObjectContext
     }
     
-    // MARK: FetchedResults Controller and Delegate Methods
+    // MARK: FetchedResults Controller
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "Trip")
@@ -241,6 +220,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         
     }()
     
+    // MARK: Spinner ON/OFF
     func startSpinning(){
         spinner.startAnimating()
         spinnerView.hidden = false
@@ -251,6 +231,8 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         spinner.stopAnimating()
     }
     
+    
+    // MARK: FetchedResultsController delegate methods
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         print("Inside controllerWillChangeContent")
         self.placeDetailTable.beginUpdates()
