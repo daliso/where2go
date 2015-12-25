@@ -10,21 +10,19 @@ import UIKit
 import CoreData
 
 class TripDetailsViewController: UIViewController {
-
-    @IBAction func cancelButtonPressed(sender: AnyObject) {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-    }
     
+    // MARK: IBOutlets
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var tripNotesTextView: UITextView!
     @IBOutlet weak var navTitle: UINavigationItem!
     @IBOutlet weak var deleteTripButton: UIButton!
     
+    // MARK: Vars
     var tapRecognizer: UITapGestureRecognizer? = nil
-    
     var theTrip:Trip? = nil
     var parent:UIViewController? = nil
 
+    // MARK: ViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,7 +33,6 @@ class TripDetailsViewController: UIViewController {
         tapRecognizer?.numberOfTapsRequired = 1
         
         configureUI()
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -46,6 +43,7 @@ class TripDetailsViewController: UIViewController {
         self.removeKeyboardDismissRecognizer()
     }
     
+    // MARK UI Configuration
     func configureUI(){
         if let _ = theTrip {
             datePicker.date = theTrip!.dateTime!
@@ -57,6 +55,10 @@ class TripDetailsViewController: UIViewController {
         }
     }
     
+    // MARK: IBActions
+    @IBAction func cancelButtonPressed(sender: AnyObject) {
+        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
     @IBAction func saveButtonPressed(sender: UIBarButtonItem) {
         
         if theTrip == nil {
