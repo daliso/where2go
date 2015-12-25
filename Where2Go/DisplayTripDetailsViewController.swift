@@ -11,10 +11,13 @@ import CoreData
 
 class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
 
-    
+    // MARK: IBOutlets
     @IBOutlet weak var displayTripView: UITableView!
+    
+    // MARK: Vars
     var theTrip:Trip?
     
+    // MARK: ViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,7 +26,6 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
         
         displayTripView.dataSource = self
         displayTripView.delegate = self
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -36,24 +38,15 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
     
     override func viewDidLayoutSubviews() {
         displayTripView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 49.0, right: 0.0)
-      //  print("Content Inset=\(displayTripView.contentInset) , Content Offset=\(displayTripView.contentOffset)")
-        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+    // UI Event Handlers
     func editTripButtonPressed(sender: AnyObject){
         performSegueWithIdentifier("editTripDetailFromDisplayTrip", sender: self)
     }
     
     // MARK: TableView Deletage Methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        // Here we will segue to the Trip details view page
-        // performSegueWithIdentifier("showTripDetailsFromMyTrips", sender: self)
-        
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
@@ -95,7 +88,6 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
                 cell!.textLabel?.text = theTrip?.notes ?? "No Trip Object Set"
             }
             
-            // cell?.frame.height =
             return cell!
         default:
             return UITableViewCell()
@@ -133,13 +125,10 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
         return UITableViewAutomaticDimension
     }
    
-    
+    // MARK: Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
         if let vc = segue.destinationViewController as? TripDetailsViewController {
             vc.theTrip = self.theTrip
         }
     }
-
-
 }
