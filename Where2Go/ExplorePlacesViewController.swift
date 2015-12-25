@@ -18,19 +18,27 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     @IBOutlet weak var exploreMapView: MKMapView!
     @IBOutlet weak var zoomToUserButton: UIBarButtonItem!
 
+    // MARK: Vars
+    var userLocation:CLLocationCoordinate2D? = nil
+    var locationManager: CLLocationManager!
+    var selectedLocation:W2GLocation? = nil
+
     var connectionStatus:ReachabilityStatus = Reach().connectionStatus() {
         didSet {
             updateConnectionStatusView()
         }
     }
-    var userLocation:CLLocationCoordinate2D? = nil
-    var locationManager: CLLocationManager!
     var placesCategory:String = "Food" {
         didSet{
             refreshVenues()
         }
     }
-    var selectedLocation:W2GLocation? = nil
+    var zoomedIn:MKCoordinateRegion {
+        get {
+            let regionRadius: CLLocationDistance = 2000
+            return MKCoordinateRegionMakeWithDistance(userLocation!, regionRadius, regionRadius)
+        }
+    }
 
     lazy var connectionNoticeContraints1:NSLayoutConstraint = NSLayoutConstraint(item: self.exploreMapView, attribute:
         NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.noConnectionView,
@@ -41,13 +49,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.noConnectionView,
         attribute: NSLayoutAttribute.Bottom, multiplier: 1.0,
         constant: -47)
-    
-    var zoomedIn:MKCoordinateRegion {
-        get {
-            let regionRadius: CLLocationDistance = 2000
-            return MKCoordinateRegionMakeWithDistance(userLocation!, regionRadius, regionRadius)
-        }
-    }
+
     
     @IBAction func categoryControl(sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
@@ -57,13 +59,15 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
             placesCategory = "Arts & Entertainment"
         }
     }
-
+    
+    // MARK: IBActions
     @IBAction func zoomToUserButtonPressed(sender: UIBarButtonItem) {
         if userLocation != nil {
             exploreMapView.setRegion(zoomedIn, animated: true)
         }
     }
 
+    // MARK: ViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -90,10 +94,9 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
             let savedRegion = MKCoordinateRegion(center: mapCenter, span: mapSpan)
             exploreMapView.setRegion(savedRegion, animated: true)
         }
-        
-        // refreshVenues()
     }
     
+    // MARK: Connection Status Methods
     func updateConnectionStatusView(){
         switch connectionStatus {
         case .Unknown, .Offline:
@@ -126,6 +129,8 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         connectionStatus = Reach().connectionStatus()
     }
     
+    
+    // MARK: Location Tracking Methods
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if (status == .AuthorizedWhenInUse) {
             exploreMapView.showsUserLocation = true
@@ -148,6 +153,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         manager.stopUpdatingLocation()
     }
     
+    // MARK: API call for more venues
     func refreshVenues(){
         spinner.startAnimating()
         exploreMapView.alpha = CGFloat(0.5)
@@ -198,6 +204,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         }
     }
     
+    // MARK: MapView delegate methods
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setDouble(mapView.region.center.latitude, forKey: "centerLatitude")
@@ -232,6 +239,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         performSegueWithIdentifier(Constants.segueToPlacesDetailViewController, sender: nil)
     }
     
+    // MARK: Mavigation
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         switch connectionStatus {
         case .Unknown, .Offline:
@@ -246,6 +254,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         vc.venueID = selectedLocation!.venueID
     }
     
+    // MARK: Constants
     private struct Constants {
         static let segueToPlacesDetailViewController = "showPlaceDetailFromExplore"
         static let AnnotationViewReuseIdentifier = "locationPin"
