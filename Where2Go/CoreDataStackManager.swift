@@ -13,8 +13,6 @@ private let SQLITE_FILE_NAME = "Where2Go.sqlite"
 
 class CoreDataStackManager {
     
-    
-    // MARK: - Shared Instance
     static let sharedInstance = CoreDataStackManager()
     
     lazy var applicationDocumentsDirectory: NSURL = {
@@ -30,23 +28,9 @@ class CoreDataStackManager {
         let modelURL = NSBundle.mainBundle().URLForResource("Where2GoModel", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)!
     }()
-    
-    /**
-     * The Persistent Store Coordinator is an object that the Context uses to interact with the underlying file system. Usually
-     * the persistent store coordinator object uses an SQLite database file to save the managed objects. But it is possible to 
-     * configure it to use XML or other formats. 
-     *
-     * Typically you will construct your persistent store manager exactly like this. It needs two pieces of information in order
-     * to be set up:
-     *
-     * - The path to the sqlite file that will be used. Usually in the documents directory
-     * - A configured Managed Object Model. See the next property for details.
-     */
+
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
-        // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
-        // Create the coordinator and store
-        
         print("Instantiating the persistentStoreCoordinator property")
         
         let coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
@@ -76,14 +60,11 @@ class CoreDataStackManager {
     
     
     lazy var managedObjectContext: NSManagedObjectContext = {
-        // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
         }()
-    
-    // MARK: - Core Data Saving support
     
     func saveContext () {
         if managedObjectContext.hasChanges {
