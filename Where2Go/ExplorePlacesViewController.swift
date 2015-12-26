@@ -28,7 +28,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
             updateConnectionStatusView()
         }
     }
-    var placesCategory:String = "Food" {
+    var placesCategory:String = Constants.FoodCategory {
         didSet{
             refreshVenues()
         }
@@ -53,10 +53,10 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     
     @IBAction func categoryControl(sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
-            placesCategory = "Food"
+            placesCategory = Constants.FoodCategory
         }
         else if sender.selectedSegmentIndex == 1 {
-            placesCategory = "Arts & Entertainment"
+            placesCategory = Constants.EntertainmentCategory
         }
     }
     
@@ -83,10 +83,10 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         
         let defaults = NSUserDefaults.standardUserDefaults()
         
-        let latitude = defaults.doubleForKey("centerLatitude")
-        let longitude = defaults.doubleForKey("centerLongitude")
-        let latDelta = defaults.doubleForKey("latDelta")
-        let lonDelta = defaults.doubleForKey("lonDelta")
+        let latitude = defaults.doubleForKey(Constants.CenterLatitudeKey)
+        let longitude = defaults.doubleForKey(Constants.CenterLongitudeKey)
+        let latDelta = defaults.doubleForKey(Constants.LatitudeDeltaKey)
+        let lonDelta = defaults.doubleForKey(Constants.LongitudeDeltaKey)
         
         if !(latitude == 0) && !(longitude == 0) && !(latDelta == 0) && !(lonDelta == 0) {
             let mapCenter = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
@@ -207,10 +207,10 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     // MARK: MapView delegate methods
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setDouble(mapView.region.center.latitude, forKey: "centerLatitude")
-        defaults.setDouble(mapView.region.center.longitude, forKey: "centerLongitude")
-        defaults.setDouble(mapView.region.span.latitudeDelta, forKey: "latDelta")
-        defaults.setDouble(mapView.region.span.longitudeDelta, forKey: "lonDelta")
+        defaults.setDouble(mapView.region.center.latitude, forKey: Constants.CenterLatitudeKey)
+        defaults.setDouble(mapView.region.center.longitude, forKey: Constants.CenterLongitudeKey)
+        defaults.setDouble(mapView.region.span.latitudeDelta, forKey: Constants.LatitudeDeltaKey)
+        defaults.setDouble(mapView.region.span.longitudeDelta, forKey: Constants.LongitudeDeltaKey)
         refreshVenues()
     }
     
@@ -258,6 +258,12 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     private struct Constants {
         static let segueToPlacesDetailViewController = "showPlaceDetailFromExplore"
         static let AnnotationViewReuseIdentifier = "locationPin"
+        static let FoodCategory = "Food"
+        static let EntertainmentCategory = "Arts & Entertainment"
+        static let CenterLatitudeKey = "centerLatitude"
+        static let CenterLongitudeKey = "centerLongitude"
+        static let LatitudeDeltaKey = "latDelta"
+        static let LongitudeDeltaKey = "lonDelta"
     }
 }
 
