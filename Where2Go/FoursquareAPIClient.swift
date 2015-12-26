@@ -103,7 +103,6 @@ class FoursquareAPIClient : NSObject {
         return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
     
-    
     /* Helper: Given raw JSON, return a usable Foundation object */
     class func parseJSONWithCompletionHandler(data: NSData, completionHandler: (result: AnyObject!, error: NSError?) -> Void) {
         
@@ -138,10 +137,7 @@ class FoursquareAPIClient : NSObject {
         } catch {
             print("An error occured in errorForData: \(error)")
         }
-        
         return theError
-        
     }
-
     
 }

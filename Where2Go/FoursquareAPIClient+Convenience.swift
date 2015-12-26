@@ -13,7 +13,6 @@ import Foundation
 extension FoursquareAPIClient {
     
     func getVenueDetails(venueID: String, completionHandler: (success: Bool, locationDetails:W2GLocationDetailed?, errorString: String?) -> Void){
-        // Fill in the code for extracting details for one particular venue
         
         switch Reach().connectionStatus() {
         case .Offline , .Unknown:
@@ -41,7 +40,7 @@ extension FoursquareAPIClient {
                             let venuePhoneNumber = (venueDict[FoursquareAPIClient.JSONResponseKeys.contact] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.formattedPhone] as? String ?? "No Phone Number"
                             let venueAddress = (venueDict[FoursquareAPIClient.JSONResponseKeys.location] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.formattedAddress] as? [String] ?? ["No address information"]
                             
-                            let venueWebsiteAddress = venueDict[FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress] as? String ?? ""
+                            let venueWebsiteAddress = venueDict[FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress] as? String ?? "No Website Address Available"
                             let venueRating = venueDict[FoursquareAPIClient.JSONResponseKeys.venueRating] as? Double ?? 0.0
                             
                             
@@ -61,6 +60,8 @@ extension FoursquareAPIClient {
                                     }
                                 }
 
+                            } else {
+                                openHoursData.append("No Opening Hours Data Available")
                             }
                             
                             var venueCoverPhoto = ""
@@ -77,7 +78,6 @@ extension FoursquareAPIClient {
                                 FoursquareAPIClient.JSONResponseKeys.hours : openHoursData,
                                 FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress : venueWebsiteAddress,
                                 FoursquareAPIClient.JSONResponseKeys.bestPhoto : venueCoverPhoto,
-                               // FoursquareAPIClient.JSONResponseKeys.venueUserPhotos : venueUserPhotos,
                                 FoursquareAPIClient.JSONResponseKeys.venueRating : venueRating
                             ]
                             
@@ -97,7 +97,6 @@ extension FoursquareAPIClient {
                         }
                     }
                     else {
-                        // need to check here if the JSON result contains some known property with an error message
                         print(JSONResult)
                         completionHandler(success: false, locationDetails: nil, errorString: "There was an error getting venue details from Foursquare, the JSON response did not contain a response key")
                     }
@@ -135,6 +134,63 @@ extension FoursquareAPIClient {
                         
                         let code = JSONResult.valueForKey("meta")!.valueForKey("code") as! Int
                         if code == 200 {
+                            
+                            /*
+                            let venueName = venueDict[FoursquareAPIClient.JSONResponseKeys.venueName] as! String
+                            let venuePhoneNumber = (venueDict[FoursquareAPIClient.JSONResponseKeys.contact] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.formattedPhone] as? String ?? "No Phone Number"
+                            let venueAddress = (venueDict[FoursquareAPIClient.JSONResponseKeys.location] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.formattedAddress] as? [String] ?? ["No address information"]
+                            
+                            let venueWebsiteAddress = venueDict[FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress] as? String ?? "No Website Address Available"
+                            let venueRating = venueDict[FoursquareAPIClient.JSONResponseKeys.venueRating] as? Double ?? 0.0
+                            
+                            
+                            var openHoursData = [String]()
+                            
+                            if let hours = venueDict[FoursquareAPIClient.JSONResponseKeys.hours] as? [String:AnyObject] {
+                            
+                            let venueOpeningHours = hours[FoursquareAPIClient.JSONResponseKeys.timeframes] as! [[String:AnyObject]]
+                            
+                            for timeframe in venueOpeningHours {
+                            let days = timeframe["days"] as! String
+                            openHoursData.append("\(days):")
+                            
+                            let openTimesPerDay = timeframe["open"] as! [[String:AnyObject]]
+                            for openTime in openTimesPerDay {
+                            openHoursData.append(openTime["renderedTime"] as! String)
+                            }
+                            }
+                            
+                            } else {
+                            openHoursData.append("No Opening Hours Data Available")
+                            }
+                            
+                            var venueCoverPhoto = ""
+                            
+                            if let bestPhoto = venueDict[FoursquareAPIClient.JSONResponseKeys.bestPhoto] as? [String:AnyObject] {
+                            venueCoverPhoto = "\(bestPhoto[FoursquareAPIClient.JSONResponseKeys.bestPhotoPrefix]!)original\(bestPhoto[FoursquareAPIClient.JSONResponseKeys.bestPhotoSuffix]!)"
+                            }
+                            
+                            
+                            let locationDetails:[String:AnyObject] = [
+                            FoursquareAPIClient.JSONResponseKeys.venueName:venueName,
+                            FoursquareAPIClient.JSONResponseKeys.formattedPhone : venuePhoneNumber,
+                            FoursquareAPIClient.JSONResponseKeys.formattedAddress : venueAddress,
+                            FoursquareAPIClient.JSONResponseKeys.hours : openHoursData,
+                            FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress : venueWebsiteAddress,
+                            FoursquareAPIClient.JSONResponseKeys.bestPhoto : venueCoverPhoto,
+                            FoursquareAPIClient.JSONResponseKeys.venueRating : venueRating
+                            ]
+                            
+                            let w2gLocationDetailed = W2GLocationDetailed(dictionary: locationDetails)
+                            
+                            completionHandler(success: true, locationDetails: w2gLocationDetailed, errorString:nil)
+                            
+                            =================================
+                            */
+                            
+                            
+                            
+                            
                             completionHandler(success: true, userDataDictionary: userDataDict.first, errorString:nil)
                         }
                         else  if (code - 400) >= 0 && (code - 400) <= 100 {

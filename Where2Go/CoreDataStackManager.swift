@@ -28,7 +28,6 @@ class CoreDataStackManager {
         let modelURL = NSBundle.mainBundle().URLForResource("Where2GoModel", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)!
     }()
-
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         print("Instantiating the persistentStoreCoordinator property")
@@ -57,7 +56,6 @@ class CoreDataStackManager {
         
         return coordinator
     }()
-    
     
     lazy var managedObjectContext: NSManagedObjectContext = {
         let coordinator = self.persistentStoreCoordinator

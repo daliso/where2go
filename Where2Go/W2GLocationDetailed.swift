@@ -17,7 +17,6 @@ struct W2GLocationDetailed {
     var openingHours:[String]?
     var websiteAddress:String?
     var coverPhoto:String?
-    var userTips:[String]?
     var rating:Double?
     
     init(dictionary: [String : AnyObject]){
