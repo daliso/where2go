@@ -21,7 +21,7 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let editTripButton : UIBarButtonItem = UIBarButtonItem(title: "Edit Trip", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("editTripButtonPressed:"))
+        let editTripButton : UIBarButtonItem = UIBarButtonItem(title: Constants.editTripButtonTitle, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("editTripButtonPressed:"))
         self.navigationItem.rightBarButtonItem = editTripButton
         
         displayTripView.dataSource = self
@@ -42,7 +42,7 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
 
     // UI Event Handlers
     func editTripButtonPressed(sender: AnyObject){
-        performSegueWithIdentifier("editTripDetailFromDisplayTrip", sender: self)
+        performSegueWithIdentifier(Constants.segueToEditTripDetailFromDisplayTrip, sender: self)
     }
     
     // MARK: TableView Deletage Methods
@@ -54,9 +54,9 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
         
         switch indexPath.section {
         case 0:
-            var cell = tableView.dequeueReusableCellWithIdentifier("TripLocationCell")
+            var cell = tableView.dequeueReusableCellWithIdentifier(Constants.TripLocationCellIdentifier)
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "TripLocationCell")
+                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: Constants.TripLocationCellIdentifier)
                 cell!.textLabel?.text = theTrip?.venueName ?? "No Trip Obbject Set"
             } else {
                 cell!.textLabel?.text = theTrip?.venueName ?? "No Trip Obbject Set"
@@ -64,9 +64,9 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
             return cell!
             
         case 1:
-            var cell = tableView.dequeueReusableCellWithIdentifier("TripDateTimeCell")
+            var cell = tableView.dequeueReusableCellWithIdentifier(Constants.TripDateTimeCellIdentifier)
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "TripLocationCell")
+                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: Constants.TripDateTimeCellIdentifier)
                 let timestamp = NSDateFormatter.localizedStringFromDate(theTrip?.dateTime! ?? NSDate(), dateStyle: .FullStyle, timeStyle: .ShortStyle)
                 cell!.textLabel?.text = "\(timestamp)"
                 
@@ -76,9 +76,9 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
             }
             return cell!
         case 2:
-            var cell = tableView.dequeueReusableCellWithIdentifier("TripNotesCell")
+            var cell = tableView.dequeueReusableCellWithIdentifier(Constants.TripNotesCellIdentifier)
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "TripLocationCell")
+                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: Constants.TripNotesCellIdentifier)
                 cell?.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
                 cell?.textLabel?.numberOfLines = 0
                 cell!.textLabel?.text = theTrip?.notes ?? "No Trip Object Set"
@@ -130,5 +130,14 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
         if let vc = segue.destinationViewController as? TripDetailsViewController {
             vc.theTrip = self.theTrip
         }
+    }
+    
+    // MARK: Constants
+    private struct Constants {
+        static let editTripButtonTitle = "Edit Trip"
+        static let segueToEditTripDetailFromDisplayTrip = "editTripDetailFromDisplayTrip"
+        static let TripLocationCellIdentifier = "TripLocationCell"
+        static let TripDateTimeCellIdentifier = "TripDateTimeCell"
+        static let TripNotesCellIdentifier = "TripNotesCell"
     }
 }
