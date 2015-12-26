@@ -30,7 +30,6 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         var error: NSError?
         do { try fetchedResultsController.performFetch() }
         catch let error1 as NSError { error = error1 }
-        
         if let error = error { print("Error performing initial fetch: \(error)") }
         
         fetchedResultsController.delegate = self
@@ -60,15 +59,15 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
     // MARK: TableView Deletage Methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         selectedTrip = (fetchedResultsController.objectAtIndexPath(indexPath) as! Trip)
-        performSegueWithIdentifier("showTripDetailsFromMyTrips", sender: self)
+        performSegueWithIdentifier(Constants.segueToTripDetailsFromMyTrips, sender: self)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("TripCell")
+        var cell = tableView.dequeueReusableCellWithIdentifier(Constants.tripCellIdentifier)
         
         if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "TripCell")
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: Constants.tripCellIdentifier)
             cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).venueName!)"
             
             let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
@@ -133,6 +132,12 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let vc = segue.destinationViewController as! DisplayTripDetailsViewController
         vc.theTrip = selectedTrip
+    }
+    
+    // MARK: Constants
+    private struct Constants {
+        static let segueToTripDetailsFromMyTrips = "showTripDetailsFromMyTrips"
+        static let tripCellIdentifier = "TripCell"
     }
 
 }
