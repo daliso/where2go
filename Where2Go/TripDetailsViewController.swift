@@ -48,7 +48,7 @@ class TripDetailsViewController: UIViewController {
         if let _ = theTrip {
             datePicker.date = theTrip!.dateTime!
             tripNotesTextView.text = theTrip!.notes!
-            navTitle.title = "Edit Trip Details"
+            navTitle.title = Constants.editTripNavTitle
             deleteTripButton.hidden = false
         } else {
             deleteTripButton.hidden = true
@@ -106,5 +106,8 @@ class TripDetailsViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    
+    // MARK: Constants
+    private struct Constants {
+        static let editTripNavTitle = "Edit Trip Details"
+    }
 }
