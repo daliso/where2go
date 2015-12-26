@@ -106,11 +106,11 @@ extension FoursquareAPIClient {
     }
     
     
-    func getNearbyLocations(section:String, lat:Double, lon:Double, radius:Double, completionHandler: (success: Bool, userDataDictionary: [String:AnyObject]?, errorString: String?) -> Void) -> Void {
+    func getNearbyLocations(section:String, lat:Double, lon:Double, radius:Double, completionHandler: (success: Bool, locations: [W2GLocation]?, errorString: String?) -> Void) -> Void {
         
         switch Reach().connectionStatus() {
         case .Offline , .Unknown:
-            completionHandler(success: false, userDataDictionary: nil, errorString: "Error: No network connection")
+            completionHandler(success: false, locations: nil, errorString: "Error: No network connection")
         case .Online(.WWAN), .Online(.WiFi):
             let methodArguments = [
                 ParameterKeys.FoursquareClientID: Constants.FoursquareClientID,
@@ -127,86 +127,52 @@ extension FoursquareAPIClient {
             _ = taskForGETMethod(Methods.Explore, parameters: methodArguments, baseUrl: Constants.BaseURLSecure, dataOffSet: 0, headers: nil) { JSONResult, error in
                 
                 if let _ = error {
-                    completionHandler(success: false, userDataDictionary: nil, errorString: "There was an error getting nearby locations from Foursquare: \(error?.userInfo)")
+                    completionHandler(success: false, locations: nil, errorString: "There was an error getting nearby locations from Foursquare: \(error?.userInfo)")
                 }
                 else {
                     if let userDataDict = JSONResult.valueForKey("response")?.valueForKey("groups") as? [[String:AnyObject]] {
                         
                         let code = JSONResult.valueForKey("meta")!.valueForKey("code") as! Int
                         if code == 200 {
+
+                            let items = userDataDict.first!["items"] as! [[String:AnyObject]]
                             
-                            /*
-                            let venueName = venueDict[FoursquareAPIClient.JSONResponseKeys.venueName] as! String
-                            let venuePhoneNumber = (venueDict[FoursquareAPIClient.JSONResponseKeys.contact] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.formattedPhone] as? String ?? "No Phone Number"
-                            let venueAddress = (venueDict[FoursquareAPIClient.JSONResponseKeys.location] as! [String:AnyObject])[FoursquareAPIClient.JSONResponseKeys.formattedAddress] as? [String] ?? ["No address information"]
+                            let w2glocations = items.map { (let item) -> W2GLocation in
                             
-                            let venueWebsiteAddress = venueDict[FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress] as? String ?? "No Website Address Available"
-                            let venueRating = venueDict[FoursquareAPIClient.JSONResponseKeys.venueRating] as? Double ?? 0.0
-                            
-                            
-                            var openHoursData = [String]()
-                            
-                            if let hours = venueDict[FoursquareAPIClient.JSONResponseKeys.hours] as? [String:AnyObject] {
-                            
-                            let venueOpeningHours = hours[FoursquareAPIClient.JSONResponseKeys.timeframes] as! [[String:AnyObject]]
-                            
-                            for timeframe in venueOpeningHours {
-                            let days = timeframe["days"] as! String
-                            openHoursData.append("\(days):")
-                            
-                            let openTimesPerDay = timeframe["open"] as! [[String:AnyObject]]
-                            for openTime in openTimesPerDay {
-                            openHoursData.append(openTime["renderedTime"] as! String)
-                            }
+                                let venue = item["venue"] as! [String:AnyObject]
+                                let venueID = venue["id"] as! String
+                                let venueName = venue["name"] as! String
+                                let venueLocation = venue["location"] as! [String:AnyObject]
+                                let venueLat = venueLocation["lat"] as! Double
+                                let venueLon = venueLocation["lng"] as! Double
+                                
+                                let locationDict:[String:AnyObject] = [
+                                FoursquareAPIClient.JSONResponseKeys.venueID : venueID,
+                                FoursquareAPIClient.JSONResponseKeys.venueName : venueName,
+                                FoursquareAPIClient.JSONResponseKeys.Latitude : venueLat,
+                                FoursquareAPIClient.JSONResponseKeys.Longitude : venueLon
+                                ]
+                                return W2GLocation(dictionary: locationDict)
                             }
                             
-                            } else {
-                            openHoursData.append("No Opening Hours Data Available")
-                            }
+
                             
-                            var venueCoverPhoto = ""
-                            
-                            if let bestPhoto = venueDict[FoursquareAPIClient.JSONResponseKeys.bestPhoto] as? [String:AnyObject] {
-                            venueCoverPhoto = "\(bestPhoto[FoursquareAPIClient.JSONResponseKeys.bestPhotoPrefix]!)original\(bestPhoto[FoursquareAPIClient.JSONResponseKeys.bestPhotoSuffix]!)"
-                            }
-                            
-                            
-                            let locationDetails:[String:AnyObject] = [
-                            FoursquareAPIClient.JSONResponseKeys.venueName:venueName,
-                            FoursquareAPIClient.JSONResponseKeys.formattedPhone : venuePhoneNumber,
-                            FoursquareAPIClient.JSONResponseKeys.formattedAddress : venueAddress,
-                            FoursquareAPIClient.JSONResponseKeys.hours : openHoursData,
-                            FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress : venueWebsiteAddress,
-                            FoursquareAPIClient.JSONResponseKeys.bestPhoto : venueCoverPhoto,
-                            FoursquareAPIClient.JSONResponseKeys.venueRating : venueRating
-                            ]
-                            
-                            let w2gLocationDetailed = W2GLocationDetailed(dictionary: locationDetails)
-                            
-                            completionHandler(success: true, locationDetails: w2gLocationDetailed, errorString:nil)
-                            
-                            =================================
-                            */
-                            
-                            
-                            
-                            
-                            completionHandler(success: true, userDataDictionary: userDataDict.first, errorString:nil)
+                            completionHandler(success: true, locations: w2glocations, errorString:nil)
                         }
                         else  if (code - 400) >= 0 && (code - 400) <= 100 {
                             let errorType = JSONResult.valueForKey("meta")!.valueForKey("errorType") as! String
                             let errorDetail = JSONResult.valueForKey("meta")!.valueForKey("errorDetail") as! String
                             let errorMessage = "\(errorType) : \(errorDetail)"
                             
-                            completionHandler(success: false, userDataDictionary: nil, errorString: errorMessage)
+                            completionHandler(success: false, locations: nil, errorString: errorMessage)
                         }
                         else {
-                            completionHandler(success: false, userDataDictionary: nil, errorString: "There was a problem with the response from Foursquare")
+                            completionHandler(success: false, locations: nil, errorString: "There was a problem with the response from Foursquare")
                         }
                     }
                     else {
                         // need to check here if the JSON result contains some known property with an error message
-                        completionHandler(success: false, userDataDictionary: nil, errorString: "There was an error getting nearby locations from Foursquare, the JSON response did not contain a response key")
+                        completionHandler(success: false, locations: nil, errorString: "There was an error getting nearby locations from Foursquare, the JSON response did not contain a response key")
                     }
                 }
             }

@@ -164,33 +164,11 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         let height = exploreMapView.region.span.longitudeDelta/2.0*111302.62
         let radius = sqrt(pow(width,2.0)+pow(height,2.0))
    
-        FoursquareAPIClient.sharedInstance.getNearbyLocations(placesCategory, lat:lat, lon:lon, radius: radius) { (success, userDataDict, errorString) -> Void in
+        FoursquareAPIClient.sharedInstance.getNearbyLocations(placesCategory, lat:lat, lon:lon, radius: radius) { (success, locations, errorString) -> Void in
             if success {
-                
                 dispatch_async(dispatch_get_main_queue(), {
-                    let items = userDataDict!["items"] as! [[String:AnyObject]]
-                    
-                    let w2glocations = items.map {
-                        (let item) -> W2GLocation in
-                        
-                        let venue = item["venue"] as! [String:AnyObject]
-                        let venueID = venue["id"] as! String
-                        let venueName = venue["name"] as! String
-                        let venueLocation = venue["location"] as! [String:AnyObject]
-                        let venueLat = venueLocation["lat"] as! Double
-                        let venueLon = venueLocation["lng"] as! Double
-                        
-                        let locationDict:[String:AnyObject] = [
-                            FoursquareAPIClient.JSONResponseKeys.venueID : venueID,
-                            FoursquareAPIClient.JSONResponseKeys.venueName : venueName,
-                            FoursquareAPIClient.JSONResponseKeys.Latitude : venueLat,
-                            FoursquareAPIClient.JSONResponseKeys.Longitude : venueLon
-                        ]
-                        return W2GLocation(dictionary: locationDict)
-                    }
-                    
                     self.exploreMapView.removeAnnotations(self.exploreMapView.annotations)
-                    self.exploreMapView.addAnnotations(MKW2GLocation.MKW2GLocationsFromW2GLocations(w2glocations))
+                    self.exploreMapView.addAnnotations(MKW2GLocation.MKW2GLocationsFromW2GLocations(locations!))
                 })
                 
             } else{
