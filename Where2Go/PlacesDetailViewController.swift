@@ -20,7 +20,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     
     // MARK: Vars
     var tableData:[[String]]? = nil
-    var venueID:String = "49ecf7f1f964a520ba671fe3"
+    var venueID:String = ""
     var locationDetails:W2GLocationDetailed? = nil
     var insertedIndexPaths: [NSIndexPath]!
     var deletedIndexPaths: [NSIndexPath]!
@@ -72,7 +72,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         do { try fetchedResultsController.performFetch()}
         catch let error1 as NSError { error = error1 }
         
-        if let error = error { print("Error performing initial fetch: \(error)") }
+        if let error = error { print("Error performing fetch: \(error)") }
         
         fetchedResultsController.delegate = self
         
@@ -169,7 +169,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         } else if (indexPath.section == 3) {
             
             theTrip = (fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip)
-            performSegueWithIdentifier("showTripDetailsFromPlacesDetail", sender: self)
+            performSegueWithIdentifier(Constants.segueToTripDetailsFromPlacesDetail, sender: self)
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -266,6 +266,11 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         default:
             print("Nothing")
         }
+    }
+    
+    // MARK: Constants
+    private struct Constants {
+        static let segueToTripDetailsFromPlacesDetail = "showTripDetailsFromPlacesDetail"
     }
 
 }
