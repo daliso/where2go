@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		691ED7711C1AC7F900A53C7D /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691ED7701C1AC7F800A53C7D /* URLImageView.swift */; };
+		691F25F51C2EF20C00959A69 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 691F25F41C2EF20C00959A69 /* README.md */; };
 		692884521BF514D200BFC75A /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692884511BF514D200BFC75A /* CoreDataStackManager.swift */; };
 		6930D4611C26BA52003EAFCE /* Trip+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6930D45F1C26BA52003EAFCE /* Trip+CoreDataProperties.swift */; };
 		6930D4621C26BA52003EAFCE /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6930D4601C26BA52003EAFCE /* Trip.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		691ED7701C1AC7F800A53C7D /* URLImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
+		691F25F41C2EF20C00959A69 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = "<none>"; };
 		692884511BF514D200BFC75A /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		6930D45F1C26BA52003EAFCE /* Trip+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Trip+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6930D4601C26BA52003EAFCE /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 		695463841BC0490A009D9C02 /* Where2Go */ = {
 			isa = PBXGroup;
 			children = (
+				691F25F41C2EF20C00959A69 /* README.md */,
 				695463851BC0490A009D9C02 /* AppDelegate.swift */,
 				695463891BC0490A009D9C02 /* Main.storyboard */,
 				695D711E1BC911D000541953 /* Model */,
@@ -311,6 +314,7 @@
 			files = (
 				695463931BC0490A009D9C02 /* LaunchScreen.storyboard in Resources */,
 				695463901BC0490A009D9C02 /* Assets.xcassets in Resources */,
+				691F25F51C2EF20C00959A69 /* README.md in Resources */,
 				6954638B1BC0490A009D9C02 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
