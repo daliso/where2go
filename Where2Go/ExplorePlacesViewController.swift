@@ -41,17 +41,17 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     }
 
     lazy var connectionNoticeContraints1:NSLayoutConstraint = NSLayoutConstraint(item: self.exploreMapView, attribute:
-        NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.noConnectionView,
-        attribute: NSLayoutAttribute.Bottom, multiplier: 1.0,
+        NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.noConnectionView,
+        attribute: NSLayoutAttribute.bottom, multiplier: 1.0,
         constant: 0)
     
     lazy var connectionNoticeContraints2:NSLayoutConstraint = NSLayoutConstraint(item: self.exploreMapView, attribute:
-        NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.noConnectionView,
-        attribute: NSLayoutAttribute.Bottom, multiplier: 1.0,
+        NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.noConnectionView,
+        attribute: NSLayoutAttribute.bottom, multiplier: 1.0,
         constant: -47)
 
     
-    @IBAction func categoryControl(sender: UISegmentedControl) {
+    @IBAction func categoryControl(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             placesCategory = Constants.FoodCategory
         }
@@ -61,7 +61,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     }
     
     // MARK: IBActions
-    @IBAction func zoomToUserButtonPressed(sender: UIBarButtonItem) {
+    @IBAction func zoomToUserButtonPressed(_ sender: UIBarButtonItem) {
         if userLocation != nil {
             exploreMapView.setRegion(zoomedIn, animated: true)
         }
@@ -72,7 +72,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("networkStatusChanged:"), name: ReachabilityStatusChangedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ExplorePlacesViewController.networkStatusChanged(_:)), name: NSNotification.Name(rawValue: ReachabilityStatusChangedNotification), object: nil)
         Reach().monitorReachabilityChanges()
         
         locationManager = CLLocationManager()
@@ -81,12 +81,12 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         
         exploreMapView.delegate = self
         
-        let defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = UserDefaults.standard
         
-        let latitude = defaults.doubleForKey(Constants.CenterLatitudeKey)
-        let longitude = defaults.doubleForKey(Constants.CenterLongitudeKey)
-        let latDelta = defaults.doubleForKey(Constants.LatitudeDeltaKey)
-        let lonDelta = defaults.doubleForKey(Constants.LongitudeDeltaKey)
+        let latitude = defaults.double(forKey: Constants.CenterLatitudeKey)
+        let longitude = defaults.double(forKey: Constants.CenterLongitudeKey)
+        let latDelta = defaults.double(forKey: Constants.LatitudeDeltaKey)
+        let lonDelta = defaults.double(forKey: Constants.LongitudeDeltaKey)
         
         if !(latitude == 0) && !(longitude == 0) && !(latDelta == 0) && !(lonDelta == 0) {
             let mapCenter = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
@@ -99,24 +99,24 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     // MARK: Connection Status Methods
     func updateConnectionStatusView(){
         switch connectionStatus {
-        case .Unknown, .Offline:
+        case .unknown, .offline:
             print("Connection Status: Not connected")
-            UIView.animateWithDuration(0.2,
+            UIView.animate(withDuration: 0.2,
             delay: 0.0,
-            options: UIViewAnimationOptions.CurveEaseInOut,
+            options: UIViewAnimationOptions(),
             animations: {self.noConnectionView.frame.origin.y = 0},
             completion:nil)
             
             view.removeConstraint(connectionNoticeContraints1)
             view.addConstraint(connectionNoticeContraints2)
             
-        case .Online(.WWAN), .Online(.WiFi):
+        case .online(.wwan), .online(.wiFi):
             print("Connection Status: Connected via WWAN")
-            UIView.animateWithDuration(0.3,
+            UIView.animate(withDuration: 0.3,
             delay: 0.0,
             usingSpringWithDamping: CGFloat(2.0),
             initialSpringVelocity: CGFloat(2.0),
-            options: UIViewAnimationOptions.CurveEaseInOut,
+            options: UIViewAnimationOptions(),
             animations: {self.noConnectionView.frame.origin.y = -47},
             completion:nil)
             
@@ -125,28 +125,28 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         }
     }
     
-    func networkStatusChanged(notification: NSNotification) {
+    func networkStatusChanged(_ notification: Notification) {
         connectionStatus = Reach().connectionStatus()
     }
     
     
     // MARK: Location Tracking Methods
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if (status == .AuthorizedWhenInUse) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if (status == .authorizedWhenInUse) {
             exploreMapView.showsUserLocation = true
             exploreMapView.showsCompass = true
             print("Authorized to get user location")
-            zoomToUserButton.enabled = true
+            zoomToUserButton.isEnabled = true
             manager.startUpdatingLocation()
         }
         else {
-            zoomToUserButton.enabled = false
+            zoomToUserButton.isEnabled = false
             exploreMapView.showsUserLocation = false
             print("Not authorized to get user location")
         }
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+    func locationManager(_ manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         print("did update location to: \(newLocation)")
         userLocation = newLocation.coordinate
         // exploreMapView.setRegion(zoomedIn, animated: true)
@@ -166,7 +166,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
    
         FoursquareAPIClient.sharedInstance.getNearbyLocations(placesCategory, lat:lat, lon:lon, radius: radius) { (success, locations, errorString) -> Void in
             if success {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.exploreMapView.removeAnnotations(self.exploreMapView.annotations)
                     self.exploreMapView.addAnnotations(MKW2GLocation.MKW2GLocationsFromW2GLocations(locations!))
                 })
@@ -175,7 +175,7 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
                 print("No locations returned...")
             }
             
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.spinner.stopAnimating()
                 self.exploreMapView.alpha = CGFloat(1.0)
             })
@@ -183,22 +183,22 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
     }
     
     // MARK: MapView delegate methods
-    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setDouble(mapView.region.center.latitude, forKey: Constants.CenterLatitudeKey)
-        defaults.setDouble(mapView.region.center.longitude, forKey: Constants.CenterLongitudeKey)
-        defaults.setDouble(mapView.region.span.latitudeDelta, forKey: Constants.LatitudeDeltaKey)
-        defaults.setDouble(mapView.region.span.longitudeDelta, forKey: Constants.LongitudeDeltaKey)
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let defaults = UserDefaults.standard
+        defaults.set(mapView.region.center.latitude, forKey: Constants.CenterLatitudeKey)
+        defaults.set(mapView.region.center.longitude, forKey: Constants.CenterLongitudeKey)
+        defaults.set(mapView.region.span.latitudeDelta, forKey: Constants.LatitudeDeltaKey)
+        defaults.set(mapView.region.span.longitudeDelta, forKey: Constants.LongitudeDeltaKey)
         refreshVenues()
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         if (annotation.isEqual(mapView.userLocation)){
             return nil
         }
         
-        var view = mapView.dequeueReusableAnnotationViewWithIdentifier(Constants.AnnotationViewReuseIdentifier)
+        var view = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.AnnotationViewReuseIdentifier)
         
         if view == nil {
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.AnnotationViewReuseIdentifier)
@@ -208,32 +208,32 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         }
         
         view!.leftCalloutAccessoryView = nil
-        view!.rightCalloutAccessoryView = UIButton(type: UIButtonType.DetailDisclosure)
+        view!.rightCalloutAccessoryView = UIButton(type: UIButtonType.detailDisclosure)
         return view
     }
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         selectedLocation = (view.annotation! as! MKW2GLocation).w2gLocation
-        performSegueWithIdentifier(Constants.segueToPlacesDetailViewController, sender: nil)
+        performSegue(withIdentifier: Constants.segueToPlacesDetailViewController, sender: nil)
     }
     
     // MARK: Mavigation
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         switch connectionStatus {
-        case .Unknown, .Offline:
+        case .unknown, .offline:
             return false
-        case .Online(.WWAN), .Online(.WiFi):
+        case .online(.wwan), .online(.wiFi):
             return true
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let vc = segue.destinationViewController as! PlacesDetailViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! PlacesDetailViewController
         vc.venueID = selectedLocation!.venueID
     }
     
     // MARK: Constants
-    private struct Constants {
+    fileprivate struct Constants {
         static let segueToPlacesDetailViewController = "showPlaceDetailFromExplore"
         static let AnnotationViewReuseIdentifier = "locationPin"
         static let FoodCategory = "Food"

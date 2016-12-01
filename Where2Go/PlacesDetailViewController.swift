@@ -22,9 +22,9 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     var tableData:[[String]]? = nil
     var venueID:String = ""
     var locationDetails:W2GLocationDetailed? = nil
-    var insertedIndexPaths: [NSIndexPath]!
-    var deletedIndexPaths: [NSIndexPath]!
-    var updatedIndexPaths: [NSIndexPath]!
+    var insertedIndexPaths: [IndexPath]!
+    var deletedIndexPaths: [IndexPath]!
+    var updatedIndexPaths: [IndexPath]!
     var theTrip:Trip?
     
     // MARK: ViewController Lifecycle
@@ -36,7 +36,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         
         FoursquareAPIClient.sharedInstance.getVenueDetails(venueID) { (success, locationDetails, errorString) -> Void in
             if success {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.refreshUI(locationDetails!)
                 })
             }
@@ -45,26 +45,26 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
             }
         }
         
-        let addTripButton : UIBarButtonItem = UIBarButtonItem(title: "Add Trip", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("addTripButtonPressed:"))
+        let addTripButton : UIBarButtonItem = UIBarButtonItem(title: "Add Trip", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PlacesDetailViewController.addTripButtonPressed(_:)))
         self.navigationItem.rightBarButtonItem = addTripButton
     }
     
     // MARK: UI Event Handlers
-    func addTripButtonPressed(sender: AnyObject){
-        performSegueWithIdentifier("addTripDetailFromPlacesDetail", sender: self)
+    func addTripButtonPressed(_ sender: AnyObject){
+        performSegue(withIdentifier: "addTripDetailFromPlacesDetail", sender: self)
     }
     
     // MARK: Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let vc = segue.destinationViewController as? TripDetailsViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? TripDetailsViewController {
             vc.parent = self
-        } else if let vc = segue.destinationViewController as? DisplayTripDetailsViewController {
+        } else if let vc = segue.destination as? DisplayTripDetailsViewController {
             vc.theTrip = self.theTrip
         }
     }
     
     // MARK: Refresh State
-    func refreshUI(locationDetails:W2GLocationDetailed){
+    func refreshUI(_ locationDetails:W2GLocationDetailed){
         
         startSpinning()
         
@@ -82,13 +82,13 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         coverPhotoImageView.imageURL = locationDetails.coverPhoto!
         
         tableData = [[String]]()
-        tableData!.insert(["\(locationDetails.rating!) / 10"], atIndex: 0)
-        tableData!.insert(["Tel: \(locationDetails.phoneNumber!)"], atIndex: 1)
+        tableData!.insert(["\(locationDetails.rating!) / 10"], at: 0)
+        tableData!.insert(["Tel: \(locationDetails.phoneNumber!)"], at: 1)
         for addressLine in locationDetails.address! {
             tableData![1].append(addressLine)
         }
         tableData![1].append(locationDetails.websiteAddress!)
-        tableData!.insert(locationDetails.openingHours!, atIndex: 2)
+        tableData!.insert(locationDetails.openingHours!, at: 2)
         
         placeDetailTable.reloadData()
         
@@ -96,20 +96,20 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     }
 
     // MARK: TableView Delegate Methods
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        if indexPath.section < 3 {
-            cell.textLabel?.text = tableData?[indexPath.section][indexPath.row] ?? ""
+        if (indexPath as NSIndexPath).section < 3 {
+            cell.textLabel?.text = tableData?[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row] ?? ""
         }
-        else if indexPath.section == 3 {
-            let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
+        else if (indexPath as NSIndexPath).section == 3 {
+            let timestamp = DateFormatter.localizedString(from: (fetchedResultsController.object(at: IndexPath(row: (indexPath as NSIndexPath).row, section: 0)) as! Trip).dateTime!, dateStyle: .full, timeStyle: .short)
             cell.textLabel?.text = "\(timestamp)"
         }
         return cell
     }
     
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch section {
         case 0:
@@ -122,11 +122,11 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
        
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0: return "Rating"
         case 1: return "Contact Details"
@@ -136,65 +136,65 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
         }
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let height:CGFloat = 40
         return height
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if (indexPath.section == 1 && indexPath.row == 0){
+        if ((indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 0){
             print("The cell with the phone number has been tapped")
             
-            let textInCell = tableData?[indexPath.section][indexPath.row] ?? ""
-            let textInCellNospaces = textInCell.stringByReplacingOccurrencesOfString(" ", withString: "")
-            let textInCellNospacesTrimmed = textInCellNospaces.substringFromIndex(textInCellNospaces.startIndex.advancedBy(min(textInCellNospaces.characters.count,4)))
+            let textInCell = tableData?[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row] ?? ""
+            let textInCellNospaces = textInCell.replacingOccurrences(of: " ", with: "")
+            let textInCellNospacesTrimmed = textInCellNospaces.substring(from: textInCellNospaces.characters.index(textInCellNospaces.startIndex, offsetBy: min(textInCellNospaces.characters.count,4)))
             
             if isValidPhoneNumber(textInCellNospacesTrimmed) {
-                if let theURL = NSURL(string: "tel://\(textInCellNospacesTrimmed)") {
-                    UIApplication.sharedApplication().openURL(theURL)
+                if let theURL = URL(string: "tel://\(textInCellNospacesTrimmed)") {
+                    UIApplication.shared.openURL(theURL)
                 }
             }
             
-        } else if (indexPath.section == 1 && indexPath.row == tableData![1].count-1) {
+        } else if ((indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == tableData![1].count-1) {
             
-            let textInCell = tableData?[indexPath.section][indexPath.row] ?? ""
-            let textInCellNospaces = textInCell.stringByReplacingOccurrencesOfString(" ", withString: "")
+            let textInCell = tableData?[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row] ?? ""
+            let textInCellNospaces = textInCell.replacingOccurrences(of: " ", with: "")
             
             if isValidURL(textInCellNospaces) {
-                if let theURL = NSURL(string:textInCellNospaces) {
-                    UIApplication.sharedApplication().openURL(theURL)
+                if let theURL = URL(string:textInCellNospaces) {
+                    UIApplication.shared.openURL(theURL)
                 }
             }
-        } else if (indexPath.section == 3) {
+        } else if ((indexPath as NSIndexPath).section == 3) {
             
-            theTrip = (fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as! Trip)
-            performSegueWithIdentifier(Constants.segueToTripDetailsFromPlacesDetail, sender: self)
+            theTrip = (fetchedResultsController.object(at: IndexPath(row: (indexPath as NSIndexPath).row, section: 0)) as! Trip)
+            performSegue(withIdentifier: Constants.segueToTripDetailsFromPlacesDetail, sender: self)
         }
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     // MARK: Helper Methods
-    func isValidURL(theURL: String) -> Bool {
+    func isValidURL(_ theURL: String) -> Bool {
         return containsMatch("^(https?:\\/\\/)([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w\\.-]*)*\\/?$", inString: theURL)
     }
     
-    func isValidPhoneNumber(theURL: String) -> Bool {
+    func isValidPhoneNumber(_ theURL: String) -> Bool {
         return containsMatch("^\\+?[0-9]{10,}$", inString: theURL)
     }
     
-    func containsMatch(pattern: String, inString string: String) -> Bool {
+    func containsMatch(_ pattern: String, inString string: String) -> Bool {
         
         var regex = NSRegularExpression()
         
         do {
-            regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
+            regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.caseInsensitive)
         }
         catch {}
         
         let range = NSMakeRange(0, string.characters.count)
-        return regex.firstMatchInString(string, options: NSMatchingOptions(rawValue: UInt(0)), range: range) != nil
+        return regex.firstMatch(in: string, options: NSRegularExpression.MatchingOptions(rawValue: UInt(0)), range: range) != nil
     }
     
     
@@ -204,7 +204,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     }
     
     // MARK: FetchedResults Controller
-    lazy var fetchedResultsController: NSFetchedResultsController = {
+    lazy var fetchedResultsController: NSFetchedResultsController = { () -> <<error type>> in 
         
         let fetchRequest = NSFetchRequest(entityName: "Trip")
         
@@ -223,45 +223,45 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     // MARK: Spinner ON/OFF
     func startSpinning(){
         spinner.startAnimating()
-        spinnerView.hidden = false
+        spinnerView.isHidden = false
     }
     
     func stopSpinning(){
-        spinnerView.hidden = true
+        spinnerView.isHidden = true
         spinner.stopAnimating()
     }
     
     
     // MARK: FetchedResultsController delegate methods
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         print("Inside controllerWillChangeContent")
         self.placeDetailTable.beginUpdates()
     }
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         print("Inside controllerDidChangeContent")
         self.placeDetailTable.endUpdates()
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
         print("Inside ControllerDidChangeObject")
         switch(type) {
-        case NSFetchedResultsChangeType.Insert : self.placeDetailTable.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
-        case NSFetchedResultsChangeType.Delete : self.placeDetailTable.deleteRowsAtIndexPaths([NSIndexPath(forRow: indexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
-        case NSFetchedResultsChangeType.Update :
-            self.placeDetailTable.reloadRowsAtIndexPaths([NSIndexPath(forRow: indexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
-        case NSFetchedResultsChangeType.Move:
-            self.placeDetailTable.deleteRowsAtIndexPaths([NSIndexPath(forRow: indexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
-            self.placeDetailTable.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndexPath!.row, inSection: 3)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        case NSFetchedResultsChangeType.insert : self.placeDetailTable.insertRows(at: [IndexPath(row: (newIndexPath! as NSIndexPath).row, section: 3)], with: UITableViewRowAnimation.automatic)
+        case NSFetchedResultsChangeType.delete : self.placeDetailTable.deleteRows(at: [IndexPath(row: (indexPath! as NSIndexPath).row, section: 3)], with: UITableViewRowAnimation.automatic)
+        case NSFetchedResultsChangeType.update :
+            self.placeDetailTable.reloadRows(at: [IndexPath(row: (indexPath! as NSIndexPath).row, section: 3)], with: UITableViewRowAnimation.automatic)
+        case NSFetchedResultsChangeType.move:
+            self.placeDetailTable.deleteRows(at: [IndexPath(row: (indexPath! as NSIndexPath).row, section: 3)], with: UITableViewRowAnimation.automatic)
+            self.placeDetailTable.insertRows(at: [IndexPath(row: (newIndexPath! as NSIndexPath).row, section: 3)], with: UITableViewRowAnimation.automatic)
         }
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch(type) {
-        case NSFetchedResultsChangeType.Insert : self.placeDetailTable.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Automatic)
+        case NSFetchedResultsChangeType.insert : self.placeDetailTable.insertSections(IndexSet(integer: sectionIndex), with: UITableViewRowAnimation.automatic)
             break
-        case NSFetchedResultsChangeType.Delete : self.placeDetailTable.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Automatic)
+        case NSFetchedResultsChangeType.delete : self.placeDetailTable.deleteSections(IndexSet(integer: sectionIndex), with: UITableViewRowAnimation.automatic)
             break
         default:
             print("Nothing")
@@ -269,7 +269,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     }
     
     // MARK: Constants
-    private struct Constants {
+    fileprivate struct Constants {
         static let segueToTripDetailsFromPlacesDetail = "showTripDetailsFromPlacesDetail"
     }
 

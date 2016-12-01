@@ -12,12 +12,12 @@ import Foundation
 
 extension FoursquareAPIClient {
     
-    func getVenueDetails(venueID: String, completionHandler: (success: Bool, locationDetails:W2GLocationDetailed?, errorString: String?) -> Void){
+    func getVenueDetails(_ venueID: String, completionHandler: @escaping (_ success: Bool, _ locationDetails:W2GLocationDetailed?, _ errorString: String?) -> Void){
         
         switch Reach().connectionStatus() {
-        case .Offline , .Unknown:
-            completionHandler(success: false, locationDetails: nil, errorString: "Error: No network connection")
-        case .Online(.WWAN), .Online(.WiFi):
+        case .offline , .unknown:
+            completionHandler(false, nil, "Error: No network connection")
+        case .online(.wwan), .online(.wiFi):
             print("getting details for a particular venue")
             let methodArguments = [
                 ParameterKeys.FoursquareClientID: Constants.FoursquareClientID,
@@ -31,9 +31,9 @@ extension FoursquareAPIClient {
                     completionHandler(success: false, locationDetails: nil, errorString: "There was an error getting the location details from Foursquare: \(error?.userInfo)")
                 }
                 else {
-                    if let venueDict = JSONResult.valueForKey("response")?.valueForKey("venue") as? [String:AnyObject] {
+                    if let venueDict = JSONResult.value(forKey: "response")?.value(forKey: "venue") as? [String:AnyObject] {
                         
-                        let code = JSONResult.valueForKey("meta")!.valueForKey("code") as! Int
+                        let code = JSONResult.value(forKey: "meta")!.value(forKey: "code") as! Int
                         if code == 200 {
                             
                             let venueName = venueDict[FoursquareAPIClient.JSONResponseKeys.venueName] as! String
@@ -86,8 +86,8 @@ extension FoursquareAPIClient {
                             completionHandler(success: true, locationDetails: w2gLocationDetailed, errorString:nil)
                         }
                         else  if (code - 400) >= 0 && (code - 400) <= 100 {
-                            let errorType = JSONResult.valueForKey("meta")!.valueForKey("errorType") as! String
-                            let errorDetail = JSONResult.valueForKey("meta")!.valueForKey("errorDetail") as! String
+                            let errorType = JSONResult.value(forKey: "meta")!.value(forKey: "errorType") as! String
+                            let errorDetail = JSONResult.value(forKey: "meta")!.value(forKey: "errorDetail") as! String
                             let errorMessage = "\(errorType) : \(errorDetail)"
                             
                             completionHandler(success: false, locationDetails: nil, errorString: errorMessage)
@@ -106,12 +106,12 @@ extension FoursquareAPIClient {
     }
     
     
-    func getNearbyLocations(section:String, lat:Double, lon:Double, radius:Double, completionHandler: (success: Bool, locations: [W2GLocation]?, errorString: String?) -> Void) -> Void {
+    func getNearbyLocations(_ section:String, lat:Double, lon:Double, radius:Double, completionHandler: @escaping (_ success: Bool, _ locations: [W2GLocation]?, _ errorString: String?) -> Void) -> Void {
         
         switch Reach().connectionStatus() {
-        case .Offline , .Unknown:
-            completionHandler(success: false, locations: nil, errorString: "Error: No network connection")
-        case .Online(.WWAN), .Online(.WiFi):
+        case .offline , .unknown:
+            completionHandler(false, nil, "Error: No network connection")
+        case .online(.wwan), .online(.wiFi):
             let methodArguments = [
                 ParameterKeys.FoursquareClientID: Constants.FoursquareClientID,
                 ParameterKeys.FoursquareClientSecret: Constants.FoursquareSecret,
@@ -122,7 +122,7 @@ extension FoursquareAPIClient {
                 ParameterKeys.VenuePhotos: Constants.VenuePhotos,
                 ParameterKeys.Time: Constants.Time,
                 ParameterKeys.Day: Constants.Day
-            ]
+            ] as [String : Any]
             
             _ = taskForGETMethod(Methods.Explore, parameters: methodArguments, baseUrl: Constants.BaseURLSecure, dataOffSet: 0, headers: nil) { JSONResult, error in
                 
@@ -130,14 +130,14 @@ extension FoursquareAPIClient {
                     completionHandler(success: false, locations: nil, errorString: "There was an error getting nearby locations from Foursquare: \(error?.userInfo)")
                 }
                 else {
-                    if let userDataDict = JSONResult.valueForKey("response")?.valueForKey("groups") as? [[String:AnyObject]] {
+                    if let userDataDict = JSONResult.value(forKey: "response")?.value(forKey: "groups") as? [[String:AnyObject]] {
                         
-                        let code = JSONResult.valueForKey("meta")!.valueForKey("code") as! Int
+                        let code = JSONResult.value(forKey: "meta")!.value(forKey: "code") as! Int
                         if code == 200 {
 
                             let items = userDataDict.first!["items"] as! [[String:AnyObject]]
                             
-                            let w2glocations = items.map { (let item) -> W2GLocation in
+                            let w2glocations = items.map { (item) -> W2GLocation in
                             
                                 let venue = item["venue"] as! [String:AnyObject]
                                 let venueID = venue["id"] as! String
@@ -160,8 +160,8 @@ extension FoursquareAPIClient {
                             completionHandler(success: true, locations: w2glocations, errorString:nil)
                         }
                         else  if (code - 400) >= 0 && (code - 400) <= 100 {
-                            let errorType = JSONResult.valueForKey("meta")!.valueForKey("errorType") as! String
-                            let errorDetail = JSONResult.valueForKey("meta")!.valueForKey("errorDetail") as! String
+                            let errorType = JSONResult.value(forKey: "meta")!.value(forKey: "errorType") as! String
+                            let errorDetail = JSONResult.value(forKey: "meta")!.value(forKey: "errorDetail") as! String
                             let errorMessage = "\(errorType) : \(errorDetail)"
                             
                             completionHandler(success: false, locations: nil, errorString: errorMessage)

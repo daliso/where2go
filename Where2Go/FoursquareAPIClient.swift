@@ -11,16 +11,16 @@ import Foundation
 class FoursquareAPIClient : NSObject {
     
     /* Shared session */
-    var session: NSURLSession
+    var session: URLSession
     
     override init() {
-        session = NSURLSession.sharedSession()
+        session = URLSession.shared
         super.init()
     }
     
     static let sharedInstance = FoursquareAPIClient()
     
-    func taskForGETMethod(method: String, parameters: NSDictionary?, baseUrl: String?, dataOffSet: Int?, headers: NSDictionary?, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask? {
+    func taskForGETMethod(_ method: String, parameters: NSDictionary?, baseUrl: String?, dataOffSet: Int?, headers: NSDictionary?, completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask? {
         
         // Set defaults for request configuration
         var parameterString = ""
@@ -34,8 +34,8 @@ class FoursquareAPIClient : NSObject {
         
         // Setup the request
         let urlString = base + "/\(method)" + parameterString        
-        let url = NSURL(string: urlString)!
-        let request = NSMutableURLRequest(URL: url)
+        let url = URL(string: urlString)!
+        let request = NSMutableURLRequest(url: url)
         
         if let headers = headers {
             for (key, value) in headers {
@@ -44,9 +44,9 @@ class FoursquareAPIClient : NSObject {
         }
         
         // Setup the data task
-        let task = session.dataTaskWithRequest(request) {data, response, downloadError in
+        let task = session.dataTask(with: request, completionHandler: {data, response, downloadError in
             
-            let newData = data!.subdataWithRange(NSMakeRange(offSet, data!.length - offSet)) /* subset response data! */
+            let newData = data!.subdata(with: NSMakeRange(offSet, data!.count - offSet)) /* subset response data! */
             
             if let error = downloadError {
                 let newError = FoursquareAPIClient.errorForData(newData, response: response, error: error)
@@ -54,7 +54,7 @@ class FoursquareAPIClient : NSObject {
             } else {
                 FoursquareAPIClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
             }
-        }
+        }) 
         
         // start the task
         task.resume()
@@ -62,20 +62,20 @@ class FoursquareAPIClient : NSObject {
         return task
     }
     
-    func taskForImage(filePath: String, completionHandler: (imageData: NSData?, error: String?) ->  Void) -> NSURLSessionTask {
+    func taskForImage(_ filePath: String, completionHandler: @escaping (_ imageData: Data?, _ error: String?) ->  Void) -> URLSessionTask {
         
-        let url = NSURL(string: filePath)!
+        let url = URL(string: filePath)!
         
-        let request = NSURLRequest(URL: url)
+        let request = URLRequest(url: url)
         
-        let task = session.dataTaskWithRequest(request) {data, response, downloadError in
+        let task = session.dataTask(with: request, completionHandler: {data, response, downloadError in
             
             if let error = downloadError {
-                completionHandler(imageData: nil, error: error.description)
+                completionHandler(nil, error.description)
             } else {
-                completionHandler(imageData: data, error: nil)
+                completionHandler(data, nil)
             }
-        }
+        }) 
         
         task.resume()
         
@@ -83,7 +83,7 @@ class FoursquareAPIClient : NSObject {
     }
     
     /* Helper function: Given a dictionary of parameters, convert to a string for a url */
-    class func escapedParameters(parameters: NSDictionary) -> String {
+    class func escapedParameters(_ parameters: NSDictionary) -> String {
         
         var urlVars = [String]()
         
@@ -93,37 +93,37 @@ class FoursquareAPIClient : NSObject {
             let stringValue = "\(value)"
             
             /* Escape it */
-            let escapedValue = stringValue.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+            let escapedValue = stringValue.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
             
             /* Append it */
             urlVars += ["\(key)" + "=" + "\(escapedValue!)"]
             
         }
         
-        return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
+        return (!urlVars.isEmpty ? "?" : "") + urlVars.joined(separator: "&")
     }
     
     /* Helper: Given raw JSON, return a usable Foundation object */
-    class func parseJSONWithCompletionHandler(data: NSData, completionHandler: (result: AnyObject!, error: NSError?) -> Void) {
+    class func parseJSONWithCompletionHandler(_ data: Data, completionHandler: (_ result: AnyObject?, _ error: NSError?) -> Void) {
         
         do {
-            let parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
-            completionHandler(result: parsedResult, error: nil)
+            let parsedResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+            completionHandler(parsedResult as AnyObject?, nil)
         }
         catch  {
             let info = ["Description" : "Something went wrong while parsing the JSON"]
-            completionHandler(result: nil, error: NSError(domain: "ParsingError", code: 0, userInfo: info))
+            completionHandler(nil, NSError(domain: "ParsingError", code: 0, userInfo: info))
         }
         
     }
     
     /* Helper: Given a response with error, see if a status_message is returned, otherwise return the previous error */
-    class func errorForData(data: NSData?, response: NSURLResponse?, error: NSError) -> NSError {
+    class func errorForData(_ data: Data?, response: URLResponse?, error: NSError) -> NSError {
         
         var theError = error
         
         do {
-            let parsedResult = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as? [String : AnyObject]
+            let parsedResult = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as? [String : AnyObject]
             
             if let meta = parsedResult![FoursquareAPIClient.JSONResponseKeys.StatusMessage] as? [String:AnyObject] {
                 if let errorType = meta["errorType"] {

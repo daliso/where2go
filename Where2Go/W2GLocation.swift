@@ -24,7 +24,7 @@ struct W2GLocation {
         }
     }
     
-    static func W2GLocationsFromResults(results: [[String : AnyObject]]) -> [W2GLocation] {
+    static func W2GLocationsFromResults(_ results: [[String : AnyObject]]) -> [W2GLocation] {
         var w2gLocations = [W2GLocation]()
         for result in results {
             w2gLocations.append(W2GLocation(dictionary: result))

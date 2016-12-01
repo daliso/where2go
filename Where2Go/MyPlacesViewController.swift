@@ -41,7 +41,7 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     // MARK: FetchedResults Controller
-    lazy var fetchedResultsController: NSFetchedResultsController = {
+    lazy var fetchedResultsController: NSFetchedResultsController = { () -> <<error type>> in 
         
         let fetchRequest = NSFetchRequest(entityName: "Trip")
         
@@ -57,71 +57,71 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
     }()
     
     // MARK: TableView Deletage Methods
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        selectedTrip = (fetchedResultsController.objectAtIndexPath(indexPath) as! Trip)
-        performSegueWithIdentifier(Constants.segueToTripDetailsFromMyTrips, sender: self)
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedTrip = (fetchedResultsController.object(at: indexPath) as! Trip)
+        performSegue(withIdentifier: Constants.segueToTripDetailsFromMyTrips, sender: self)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(Constants.tripCellIdentifier)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: Constants.tripCellIdentifier)
         
         if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: Constants.tripCellIdentifier)
-            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).venueName!)"
+            cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: Constants.tripCellIdentifier)
+            cell!.textLabel?.text = "\((fetchedResultsController.object(at: indexPath) as! Trip).venueName!)"
             
-            let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
+            let timestamp = DateFormatter.localizedString(from: (fetchedResultsController.object(at: indexPath) as! Trip).dateTime!, dateStyle: .full, timeStyle: .short)
 
             cell!.detailTextLabel?.text = "\(timestamp)"
             
         } else {
-            cell!.textLabel?.text = "\((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).venueName!)"
-            let timestamp = NSDateFormatter.localizedStringFromDate((fetchedResultsController.objectAtIndexPath(indexPath) as! Trip).dateTime!, dateStyle: .FullStyle, timeStyle: .ShortStyle)
+            cell!.textLabel?.text = "\((fetchedResultsController.object(at: indexPath) as! Trip).venueName!)"
+            let timestamp = DateFormatter.localizedString(from: (fetchedResultsController.object(at: indexPath) as! Trip).dateTime!, dateStyle: .full, timeStyle: .short)
             
             cell!.detailTextLabel?.text = "\(timestamp)"
         }
         return cell!
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultsController.sections?.count ?? 0
     }
     
     
     // MARK: FetchedResultsController Delegate Methods
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         print("Inside controllerWillChangeContent in MyPlaces")
         self.myTripsTable.beginUpdates()
     }
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         print("Inside controllerDidChangeContent in MyPlaces")
         self.myTripsTable.endUpdates()
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
         print("Inside ControllerDidChangeObject in MyPlaces")
         switch(type) {
-        case NSFetchedResultsChangeType.Insert : self.myTripsTable.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
-        case NSFetchedResultsChangeType.Delete : self.myTripsTable.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
-        case NSFetchedResultsChangeType.Update :
-            self.myTripsTable.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
-        case NSFetchedResultsChangeType.Move:
-            self.myTripsTable.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
-            self.myTripsTable.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Automatic)
+        case NSFetchedResultsChangeType.insert : self.myTripsTable.insertRows(at: [newIndexPath!], with: UITableViewRowAnimation.automatic)
+        case NSFetchedResultsChangeType.delete : self.myTripsTable.deleteRows(at: [indexPath!], with: UITableViewRowAnimation.automatic)
+        case NSFetchedResultsChangeType.update :
+            self.myTripsTable.reloadRows(at: [indexPath!], with: UITableViewRowAnimation.automatic)
+        case NSFetchedResultsChangeType.move:
+            self.myTripsTable.deleteRows(at: [indexPath!], with: UITableViewRowAnimation.automatic)
+            self.myTripsTable.insertRows(at: [newIndexPath!], with: UITableViewRowAnimation.automatic)
         }
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch(type) {
-        case NSFetchedResultsChangeType.Insert : self.myTripsTable.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Automatic)
+        case NSFetchedResultsChangeType.insert : self.myTripsTable.insertSections(IndexSet(integer: sectionIndex), with: UITableViewRowAnimation.automatic)
             break
-        case NSFetchedResultsChangeType.Delete : self.myTripsTable.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Automatic)
+        case NSFetchedResultsChangeType.delete : self.myTripsTable.deleteSections(IndexSet(integer: sectionIndex), with: UITableViewRowAnimation.automatic)
             break
         default:
             print("Nothing")
@@ -129,13 +129,13 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     // MARK: Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let vc = segue.destinationViewController as! DisplayTripDetailsViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! DisplayTripDetailsViewController
         vc.theTrip = selectedTrip
     }
     
     // MARK: Constants
-    private struct Constants {
+    fileprivate struct Constants {
         static let segueToTripDetailsFromMyTrips = "showTripDetailsFromMyTrips"
         static let tripCellIdentifier = "TripCell"
     }

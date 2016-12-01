@@ -21,18 +21,18 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let editTripButton : UIBarButtonItem = UIBarButtonItem(title: Constants.editTripButtonTitle, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("editTripButtonPressed:"))
+        let editTripButton : UIBarButtonItem = UIBarButtonItem(title: Constants.editTripButtonTitle, style: UIBarButtonItemStyle.plain, target: self, action: #selector(DisplayTripDetailsViewController.editTripButtonPressed(_:)))
         self.navigationItem.rightBarButtonItem = editTripButton
         
         displayTripView.dataSource = self
         displayTripView.delegate = self
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         if let _ = theTrip?.venueName{
             displayTripView.reloadData()
         } else {
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -41,22 +41,22 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
     }
 
     // UI Event Handlers
-    func editTripButtonPressed(sender: AnyObject){
-        performSegueWithIdentifier(Constants.segueToEditTripDetailFromDisplayTrip, sender: self)
+    func editTripButtonPressed(_ sender: AnyObject){
+        performSegue(withIdentifier: Constants.segueToEditTripDetailFromDisplayTrip, sender: self)
     }
     
     // MARK: TableView Deletage Methods
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        switch indexPath.section {
+        switch (indexPath as NSIndexPath).section {
         case 0:
-            var cell = tableView.dequeueReusableCellWithIdentifier(Constants.TripLocationCellIdentifier)
+            var cell = tableView.dequeueReusableCell(withIdentifier: Constants.TripLocationCellIdentifier)
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: Constants.TripLocationCellIdentifier)
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: Constants.TripLocationCellIdentifier)
                 cell!.textLabel?.text = theTrip?.venueName ?? "No Trip Obbject Set"
             } else {
                 cell!.textLabel?.text = theTrip?.venueName ?? "No Trip Obbject Set"
@@ -64,26 +64,26 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
             return cell!
             
         case 1:
-            var cell = tableView.dequeueReusableCellWithIdentifier(Constants.TripDateTimeCellIdentifier)
+            var cell = tableView.dequeueReusableCell(withIdentifier: Constants.TripDateTimeCellIdentifier)
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: Constants.TripDateTimeCellIdentifier)
-                let timestamp = NSDateFormatter.localizedStringFromDate(theTrip?.dateTime! ?? NSDate(), dateStyle: .FullStyle, timeStyle: .ShortStyle)
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: Constants.TripDateTimeCellIdentifier)
+                let timestamp = DateFormatter.localizedString(from: theTrip?.dateTime! as Date? ?? Date(), dateStyle: .full, timeStyle: .short)
                 cell!.textLabel?.text = "\(timestamp)"
                 
             } else {
-                let timestamp = NSDateFormatter.localizedStringFromDate(theTrip?.dateTime! ?? NSDate(), dateStyle: .FullStyle, timeStyle: .ShortStyle)
+                let timestamp = DateFormatter.localizedString(from: theTrip?.dateTime! as Date? ?? Date(), dateStyle: .full, timeStyle: .short)
                 cell!.textLabel?.text = "\(timestamp)"
             }
             return cell!
         case 2:
-            var cell = tableView.dequeueReusableCellWithIdentifier(Constants.TripNotesCellIdentifier)
+            var cell = tableView.dequeueReusableCell(withIdentifier: Constants.TripNotesCellIdentifier)
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: Constants.TripNotesCellIdentifier)
-                cell?.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: Constants.TripNotesCellIdentifier)
+                cell?.textLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
                 cell?.textLabel?.numberOfLines = 0
                 cell!.textLabel?.text = theTrip?.notes ?? "No Trip Object Set"
             } else {
-                cell?.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+                cell?.textLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
                 cell?.textLabel?.numberOfLines = 0
                 cell!.textLabel?.text = theTrip?.notes ?? "No Trip Object Set"
             }
@@ -95,15 +95,15 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
 
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0: return "Location Name"
         case 1: return "Time and Date"
@@ -112,28 +112,28 @@ class DisplayTripDetailsViewController: UIViewController, UITableViewDataSource,
         }
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let height:CGFloat = 50
         return height
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
    
     // MARK: Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let vc = segue.destinationViewController as? TripDetailsViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? TripDetailsViewController {
             vc.theTrip = self.theTrip
         }
     }
     
     // MARK: Constants
-    private struct Constants {
+    fileprivate struct Constants {
         static let editTripButtonTitle = "Edit Trip"
         static let segueToEditTripDetailFromDisplayTrip = "editTripDetailFromDisplayTrip"
         static let TripLocationCellIdentifier = "TripLocationCell"

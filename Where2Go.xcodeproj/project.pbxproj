@@ -276,13 +276,16 @@
 					695463811BC0490A009D9C02 = {
 						CreatedOnToolsVersion = 7.0.1;
 						DevelopmentTeam = 2YP2FSPS9R;
+						LastSwiftMigration = 0800;
 					};
 					695463981BC0490A009D9C02 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 695463811BC0490A009D9C02;
 					};
 					695463A31BC0490A009D9C02 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 695463811BC0490A009D9C02;
 					};
 				};
@@ -504,6 +507,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.daliso.Where2Go;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -518,6 +522,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.daliso.Where2Go;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -529,6 +534,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.daliso.Where2GoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Where2Go.app/Where2Go";
 			};
 			name = Debug;
@@ -541,6 +547,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.daliso.Where2GoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Where2Go.app/Where2Go";
 			};
 			name = Release;
@@ -552,6 +559,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.daliso.Where2GoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Where2Go;
 				USES_XCTRUNNER = YES;
 			};
@@ -564,6 +572,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.daliso.Where2GoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Where2Go;
 				USES_XCTRUNNER = YES;
 			};

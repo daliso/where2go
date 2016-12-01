@@ -29,7 +29,7 @@ struct W2GLocationDetailed {
         rating = dictionary[FoursquareAPIClient.JSONResponseKeys.venueRating] as? Double
     }
     
-    static func W2GLocationsDetailedFromResults(results: [[String : AnyObject]]) -> [W2GLocationDetailed] {
+    static func W2GLocationsDetailedFromResults(_ results: [[String : AnyObject]]) -> [W2GLocationDetailed] {
         var w2gLocationsDetailed = [W2GLocationDetailed]()
         for result in results {
             w2gLocationsDetailed.append(W2GLocationDetailed(dictionary: result))

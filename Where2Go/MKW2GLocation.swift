@@ -26,7 +26,7 @@ class MKW2GLocation: NSObject, MKAnnotation
         self.w2gLocation = w2gLocation
     }
     
-    class func MKW2GLocationsFromW2GLocations(w2gLocations: [W2GLocation]) -> [MKW2GLocation] {
+    class func MKW2GLocationsFromW2GLocations(_ w2gLocations: [W2GLocation]) -> [MKW2GLocation] {
         var mkw2gLocations = [MKW2GLocation]()
         for w2gLocation in w2gLocations {
             mkw2gLocations.append(MKW2GLocation(w2gLocation: w2gLocation))

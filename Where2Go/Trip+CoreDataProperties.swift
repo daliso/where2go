@@ -14,7 +14,7 @@ import CoreData
 
 extension Trip {
 
-    @NSManaged var dateTime: NSDate?
+    @NSManaged var dateTime: Date?
     @NSManaged var id: NSNumber?
     @NSManaged var notes: String?
     @NSManaged var venueID: String?

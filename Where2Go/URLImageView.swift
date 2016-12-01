@@ -30,7 +30,7 @@ class URLImageView: UIImageView {
                     // Create the image
                     let image = UIImage(data: data)
                     print("got the image and updating the view now")
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.image = image
                     })
                 }

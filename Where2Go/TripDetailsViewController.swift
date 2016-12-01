@@ -27,46 +27,46 @@ class TripDetailsViewController: UIViewController {
         super.viewDidLoad()
         
         tripNotesTextView.layer.borderWidth = 1
-        tripNotesTextView.layer.borderColor = UIColor.blackColor().CGColor
+        tripNotesTextView.layer.borderColor = UIColor.black.cgColor
         
-        tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(TripDetailsViewController.handleSingleTap(_:)))
         tapRecognizer?.numberOfTapsRequired = 1
         
         configureUI()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.addKeyboardDismissRecognizer()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.removeKeyboardDismissRecognizer()
     }
     
     // MARK UI Configuration
     func configureUI(){
         if let _ = theTrip {
-            datePicker.date = theTrip!.dateTime!
+            datePicker.date = theTrip!.dateTime! as Date
             tripNotesTextView.text = theTrip!.notes!
             navTitle.title = Constants.editTripNavTitle
-            deleteTripButton.hidden = false
+            deleteTripButton.isHidden = false
         } else {
-            deleteTripButton.hidden = true
+            deleteTripButton.isHidden = true
         }
     }
     
     // MARK: IBActions
-    @IBAction func cancelButtonPressed(sender: AnyObject) {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancelButtonPressed(_ sender: AnyObject) {
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
-    @IBAction func saveButtonPressed(sender: UIBarButtonItem) {
+    @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         
         if theTrip == nil {
             let dictionary: [String : AnyObject] = [
-                Trip.Keys.dateTime : datePicker.date,
-                Trip.Keys.notes : tripNotesTextView.text,
-                Trip.Keys.venueID: (parent as! PlacesDetailViewController).venueID,
-                Trip.Keys.venueName: (parent as! PlacesDetailViewController).locationDetails?.name ?? ""
+                Trip.Keys.dateTime : datePicker.date as AnyObject,
+                Trip.Keys.notes : tripNotesTextView.text as AnyObject,
+                Trip.Keys.venueID: (parent as! PlacesDetailViewController).venueID as AnyObject,
+                Trip.Keys.venueName: (parent as! PlacesDetailViewController).locationDetails?.name as AnyObject? ?? "" as AnyObject
             ]
             
             let _ = Trip(dictionary: dictionary, context: sharedContext)
@@ -77,15 +77,15 @@ class TripDetailsViewController: UIViewController {
         
         CoreDataStackManager.sharedInstance.saveContext()
         
-        presentingViewController?.dismissViewControllerAnimated(true
+        presentingViewController?.dismiss(animated: true
             , completion: nil)
         
     }
     
-    @IBAction func deleteTripButtonPressed(sender: UIButton) {
-        sharedContext.deleteObject(self.theTrip!)
+    @IBAction func deleteTripButtonPressed(_ sender: UIButton) {
+        sharedContext.delete(self.theTrip!)
         CoreDataStackManager.sharedInstance.saveContext()
-        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     // MARK: Core Data
@@ -102,12 +102,12 @@ class TripDetailsViewController: UIViewController {
         self.view.removeGestureRecognizer(tapRecognizer!)
     }
     
-    func handleSingleTap(recognizer: UITapGestureRecognizer) {
+    func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
     
     // MARK: Constants
-    private struct Constants {
+    fileprivate struct Constants {
         static let editTripNavTitle = "Edit Trip Details"
     }
 }

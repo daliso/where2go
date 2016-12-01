@@ -21,17 +21,17 @@ class Trip: NSManagedObject {
         static let venueName = "venueName"
     }
 
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
-        let entity =  NSEntityDescription.entityForName("Trip", inManagedObjectContext: context)!
+        let entity =  NSEntityDescription.entity(forEntityName: "Trip", in: context)!
         
-        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        super.init(entity: entity,insertInto: context)
         
-        dateTime = dictionary[Keys.dateTime] as? NSDate
+        dateTime = dictionary[Keys.dateTime] as? Date
         notes = dictionary[Keys.notes] as? String
         venueID = dictionary[Keys.venueID] as? String
         venueName = dictionary[Keys.venueName] as? String
