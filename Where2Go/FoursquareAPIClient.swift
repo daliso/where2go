@@ -43,14 +43,17 @@ class FoursquareAPIClient : NSObject {
             }
         }
         
+//        let task = URLSession.shared().dataTask(with: request as URLRequest) {
+
+        
         // Setup the data task
-        let task = session.dataTask(with: request, completionHandler: {data, response, downloadError in
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, downloadError in
             
-            let newData = data!.subdata(with: NSMakeRange(offSet, data!.count - offSet)) /* subset response data! */
+            let newData = data!.subdata(in: offSet..<data!.count - offSet) /* subset response data! */
             
             if let error = downloadError {
-                let newError = FoursquareAPIClient.errorForData(newData, response: response, error: error)
-                completionHandler(result: nil, error: newError)
+                let newError = FoursquareAPIClient.errorForData(newData, response: response, error: error as NSError)
+                completionHandler(nil, newError)
             } else {
                 FoursquareAPIClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
             }
@@ -71,7 +74,7 @@ class FoursquareAPIClient : NSObject {
         let task = session.dataTask(with: request, completionHandler: {data, response, downloadError in
             
             if let error = downloadError {
-                completionHandler(nil, error.description)
+                completionHandler(nil, error.localizedDescription)
             } else {
                 completionHandler(data, nil)
             }

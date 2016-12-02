@@ -20,7 +20,7 @@ class TripDetailsViewController: UIViewController {
     // MARK: Vars
     var tapRecognizer: UITapGestureRecognizer? = nil
     var theTrip:Trip? = nil
-    var parent:UIViewController? = nil
+    var parent2:UIViewController? = nil
 
     // MARK: ViewController Lifecycle
     override func viewDidLoad() {
@@ -65,8 +65,8 @@ class TripDetailsViewController: UIViewController {
             let dictionary: [String : AnyObject] = [
                 Trip.Keys.dateTime : datePicker.date as AnyObject,
                 Trip.Keys.notes : tripNotesTextView.text as AnyObject,
-                Trip.Keys.venueID: (parent as! PlacesDetailViewController).venueID as AnyObject,
-                Trip.Keys.venueName: (parent as! PlacesDetailViewController).locationDetails?.name as AnyObject? ?? "" as AnyObject
+                Trip.Keys.venueID: (parent2 as! PlacesDetailViewController).venueID as AnyObject,
+                Trip.Keys.venueName: (parent2 as! PlacesDetailViewController).locationDetails?.name as AnyObject? ?? "" as AnyObject
             ]
             
             let _ = Trip(dictionary: dictionary, context: sharedContext)

@@ -57,7 +57,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     // MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? TripDetailsViewController {
-            vc.parent = self
+            vc.parent2 = self
         } else if let vc = segue.destination as? DisplayTripDetailsViewController {
             vc.theTrip = self.theTrip
         }
@@ -102,7 +102,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
             cell.textLabel?.text = tableData?[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row] ?? ""
         }
         else if (indexPath as NSIndexPath).section == 3 {
-            let timestamp = DateFormatter.localizedString(from: (fetchedResultsController.object(at: IndexPath(row: (indexPath as NSIndexPath).row, section: 0)) as! Trip).dateTime!, dateStyle: .full, timeStyle: .short)
+            let timestamp = DateFormatter.localizedString(from: (fetchedResultsController.object(at: IndexPath(row: (indexPath as NSIndexPath).row, section: 0)) ).dateTime!, dateStyle: .full, timeStyle: .short)
             cell.textLabel?.text = "\(timestamp)"
         }
         return cell
@@ -168,7 +168,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
             }
         } else if ((indexPath as NSIndexPath).section == 3) {
             
-            theTrip = (fetchedResultsController.object(at: IndexPath(row: (indexPath as NSIndexPath).row, section: 0)) as! Trip)
+            theTrip = (fetchedResultsController.object(at: IndexPath(row: (indexPath as NSIndexPath).row, section: 0)) )
             performSegue(withIdentifier: Constants.segueToTripDetailsFromPlacesDetail, sender: self)
         }
         
@@ -204,9 +204,8 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
     }
     
     // MARK: FetchedResults Controller
-    lazy var fetchedResultsController: NSFetchedResultsController = { () -> <<error type>> in 
-        
-        let fetchRequest = NSFetchRequest(entityName: "Trip")
+    lazy var fetchedResultsController: NSFetchedResultsController<Trip> = {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Trip")
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateTime", ascending: true)]
         fetchRequest.predicate = NSPredicate(format: "venueID == %@", self.venueID);
@@ -216,7 +215,7 @@ class PlacesDetailViewController: UIViewController,  UITableViewDataSource, UITa
             sectionNameKeyPath: nil,
             cacheName: nil)
         
-        return fetchedResultsController
+        return fetchedResultsController as! NSFetchedResultsController<Trip>
         
     }()
     

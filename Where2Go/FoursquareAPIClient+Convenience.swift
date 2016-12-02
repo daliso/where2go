@@ -25,15 +25,15 @@ extension FoursquareAPIClient {
                 ParameterKeys.FoursquareAPIVersion: Constants.FoursquareAPIVersion,
             ]
             
-            _ = taskForGETMethod(venueID, parameters: methodArguments, baseUrl: Constants.BaseURLSecure, dataOffSet: 0, headers: nil) { JSONResult, error in
+            _ = taskForGETMethod(venueID, parameters: methodArguments as NSDictionary?, baseUrl: Constants.BaseURLSecure, dataOffSet: 0, headers: nil) { JSONResult, error in
                 
                 if let _ = error {
-                    completionHandler(success: false, locationDetails: nil, errorString: "There was an error getting the location details from Foursquare: \(error?.userInfo)")
+                    completionHandler(false, nil, "There was an error getting the location details from Foursquare: \(error?.userInfo)")
                 }
                 else {
-                    if let venueDict = JSONResult.value(forKey: "response")?.value(forKey: "venue") as? [String:AnyObject] {
+                    if let venueDict = (JSONResult?.value(forKey: "response") as AnyObject).value(forKey: "venue") as? [String:AnyObject] {
                         
-                        let code = JSONResult.value(forKey: "meta")!.value(forKey: "code") as! Int
+                        let code = (JSONResult?.value(forKey: "meta")! as AnyObject).value(forKey: "code") as! Int
                         if code == 200 {
                             
                             let venueName = venueDict[FoursquareAPIClient.JSONResponseKeys.venueName] as! String
@@ -72,33 +72,33 @@ extension FoursquareAPIClient {
                            
                             
                             let locationDetails:[String:AnyObject] = [
-                                FoursquareAPIClient.JSONResponseKeys.venueName:venueName,
-                                FoursquareAPIClient.JSONResponseKeys.formattedPhone : venuePhoneNumber,
-                                FoursquareAPIClient.JSONResponseKeys.formattedAddress : venueAddress,
-                                FoursquareAPIClient.JSONResponseKeys.hours : openHoursData,
-                                FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress : venueWebsiteAddress,
-                                FoursquareAPIClient.JSONResponseKeys.bestPhoto : venueCoverPhoto,
-                                FoursquareAPIClient.JSONResponseKeys.venueRating : venueRating
+                                FoursquareAPIClient.JSONResponseKeys.venueName:venueName as AnyObject,
+                                FoursquareAPIClient.JSONResponseKeys.formattedPhone : venuePhoneNumber as AnyObject,
+                                FoursquareAPIClient.JSONResponseKeys.formattedAddress : venueAddress as AnyObject,
+                                FoursquareAPIClient.JSONResponseKeys.hours : openHoursData as AnyObject,
+                                FoursquareAPIClient.JSONResponseKeys.venueWebsiteAddress : venueWebsiteAddress as AnyObject,
+                                FoursquareAPIClient.JSONResponseKeys.bestPhoto : venueCoverPhoto as AnyObject,
+                                FoursquareAPIClient.JSONResponseKeys.venueRating : venueRating as AnyObject
                             ]
                             
                             let w2gLocationDetailed = W2GLocationDetailed(dictionary: locationDetails)
                             
-                            completionHandler(success: true, locationDetails: w2gLocationDetailed, errorString:nil)
+                            completionHandler(true, w2gLocationDetailed, nil)
                         }
                         else  if (code - 400) >= 0 && (code - 400) <= 100 {
-                            let errorType = JSONResult.value(forKey: "meta")!.value(forKey: "errorType") as! String
-                            let errorDetail = JSONResult.value(forKey: "meta")!.value(forKey: "errorDetail") as! String
+                            let errorType = (JSONResult?.value(forKey: "meta")! as AnyObject).value(forKey: "errorType") as! String
+                            let errorDetail = (JSONResult?.value(forKey: "meta")! as AnyObject).value(forKey: "errorDetail") as! String
                             let errorMessage = "\(errorType) : \(errorDetail)"
                             
-                            completionHandler(success: false, locationDetails: nil, errorString: errorMessage)
+                            completionHandler(false, nil, errorMessage)
                         }
                         else {
-                            completionHandler(success: false, locationDetails: nil, errorString: "There was a problem with the response from Foursquare")
+                            completionHandler(false, nil, "There was a problem with the response from Foursquare")
                         }
                     }
                     else {
                         print(JSONResult)
-                        completionHandler(success: false, locationDetails: nil, errorString: "There was an error getting venue details from Foursquare, the JSON response did not contain a response key")
+                        completionHandler(false, nil, "There was an error getting venue details from Foursquare, the JSON response did not contain a response key")
                     }
                 }
             }
@@ -124,15 +124,15 @@ extension FoursquareAPIClient {
                 ParameterKeys.Day: Constants.Day
             ] as [String : Any]
             
-            _ = taskForGETMethod(Methods.Explore, parameters: methodArguments, baseUrl: Constants.BaseURLSecure, dataOffSet: 0, headers: nil) { JSONResult, error in
+            _ = taskForGETMethod(Methods.Explore, parameters: methodArguments as NSDictionary?, baseUrl: Constants.BaseURLSecure, dataOffSet: 0, headers: nil) { JSONResult, error in
                 
                 if let _ = error {
-                    completionHandler(success: false, locations: nil, errorString: "There was an error getting nearby locations from Foursquare: \(error?.userInfo)")
+                    completionHandler(false, nil, "There was an error getting nearby locations from Foursquare: \(error?.userInfo)")
                 }
                 else {
-                    if let userDataDict = JSONResult.value(forKey: "response")?.value(forKey: "groups") as? [[String:AnyObject]] {
+                    if let userDataDict = (JSONResult?.value(forKey: "response") as AnyObject).value(forKey: "groups") as? [[String:AnyObject]] {
                         
-                        let code = JSONResult.value(forKey: "meta")!.value(forKey: "code") as! Int
+                        let code = (JSONResult?.value(forKey: "meta")! as AnyObject).value(forKey: "code") as! Int
                         if code == 200 {
 
                             let items = userDataDict.first!["items"] as! [[String:AnyObject]]
@@ -147,32 +147,32 @@ extension FoursquareAPIClient {
                                 let venueLon = venueLocation["lng"] as! Double
                                 
                                 let locationDict:[String:AnyObject] = [
-                                FoursquareAPIClient.JSONResponseKeys.venueID : venueID,
-                                FoursquareAPIClient.JSONResponseKeys.venueName : venueName,
-                                FoursquareAPIClient.JSONResponseKeys.Latitude : venueLat,
-                                FoursquareAPIClient.JSONResponseKeys.Longitude : venueLon
+                                FoursquareAPIClient.JSONResponseKeys.venueID : venueID as AnyObject,
+                                FoursquareAPIClient.JSONResponseKeys.venueName : venueName as AnyObject,
+                                FoursquareAPIClient.JSONResponseKeys.Latitude : venueLat as AnyObject,
+                                FoursquareAPIClient.JSONResponseKeys.Longitude : venueLon as AnyObject
                                 ]
                                 return W2GLocation(dictionary: locationDict)
                             }
                             
 
                             
-                            completionHandler(success: true, locations: w2glocations, errorString:nil)
+                            completionHandler(true, w2glocations, nil)
                         }
                         else  if (code - 400) >= 0 && (code - 400) <= 100 {
-                            let errorType = JSONResult.value(forKey: "meta")!.value(forKey: "errorType") as! String
-                            let errorDetail = JSONResult.value(forKey: "meta")!.value(forKey: "errorDetail") as! String
+                            let errorType = (JSONResult?.value(forKey: "meta")! as AnyObject).value(forKey: "errorType") as! String
+                            let errorDetail = (JSONResult?.value(forKey: "meta")! as AnyObject).value(forKey: "errorDetail") as! String
                             let errorMessage = "\(errorType) : \(errorDetail)"
                             
-                            completionHandler(success: false, locations: nil, errorString: errorMessage)
+                            completionHandler(false, nil, errorMessage)
                         }
                         else {
-                            completionHandler(success: false, locations: nil, errorString: "There was a problem with the response from Foursquare")
+                            completionHandler(false, nil, "There was a problem with the response from Foursquare")
                         }
                     }
                     else {
                         // need to check here if the JSON result contains some known property with an error message
-                        completionHandler(success: false, locations: nil, errorString: "There was an error getting nearby locations from Foursquare, the JSON response did not contain a response key")
+                        completionHandler(false, nil, "There was an error getting nearby locations from Foursquare, the JSON response did not contain a response key")
                     }
                 }
             }

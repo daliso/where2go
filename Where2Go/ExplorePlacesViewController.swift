@@ -146,10 +146,18 @@ class ExplorePlacesViewController: UIViewController, MKMapViewDelegate, CLLocati
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+//    func locationManager(_ manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+//        print("did update location to: \(newLocation)")
+//        userLocation = newLocation.coordinate
+//        // exploreMapView.setRegion(zoomedIn, animated: true)
+//        manager.stopUpdatingLocation()
+//    }
+    
+    func locationManager(_ manager: CLLocationManager,
+                         didUpdateLocations locations: [CLLocation]) {
+        let newLocation = locations[locations.count - 1]
         print("did update location to: \(newLocation)")
         userLocation = newLocation.coordinate
-        // exploreMapView.setRegion(zoomedIn, animated: true)
         manager.stopUpdatingLocation()
     }
     

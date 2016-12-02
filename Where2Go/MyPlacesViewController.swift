@@ -41,9 +41,9 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     // MARK: FetchedResults Controller
-    lazy var fetchedResultsController: NSFetchedResultsController = { () -> <<error type>> in 
+    lazy var fetchedResultsController: NSFetchedResultsController<Trip> = {
         
-        let fetchRequest = NSFetchRequest(entityName: "Trip")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Trip")
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateTime", ascending: true)]
         
@@ -52,13 +52,13 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
             sectionNameKeyPath: nil,
             cacheName: nil)
         
-        return fetchedResultsController
+        return fetchedResultsController as! NSFetchedResultsController<Trip>
         
     }()
     
     // MARK: TableView Deletage Methods
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedTrip = (fetchedResultsController.object(at: indexPath) as! Trip)
+        selectedTrip = (fetchedResultsController.object(at: indexPath) )
         performSegue(withIdentifier: Constants.segueToTripDetailsFromMyTrips, sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -68,15 +68,15 @@ class MyPlacesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: Constants.tripCellIdentifier)
-            cell!.textLabel?.text = "\((fetchedResultsController.object(at: indexPath) as! Trip).venueName!)"
+            cell!.textLabel?.text = "\((fetchedResultsController.object(at: indexPath) ).venueName!)"
             
-            let timestamp = DateFormatter.localizedString(from: (fetchedResultsController.object(at: indexPath) as! Trip).dateTime!, dateStyle: .full, timeStyle: .short)
+            let timestamp = DateFormatter.localizedString(from: (fetchedResultsController.object(at: indexPath) ).dateTime!, dateStyle: .full, timeStyle: .short)
 
             cell!.detailTextLabel?.text = "\(timestamp)"
             
         } else {
-            cell!.textLabel?.text = "\((fetchedResultsController.object(at: indexPath) as! Trip).venueName!)"
-            let timestamp = DateFormatter.localizedString(from: (fetchedResultsController.object(at: indexPath) as! Trip).dateTime!, dateStyle: .full, timeStyle: .short)
+            cell!.textLabel?.text = "\((fetchedResultsController.object(at: indexPath) ).venueName!)"
+            let timestamp = DateFormatter.localizedString(from: (fetchedResultsController.object(at: indexPath) ).dateTime!, dateStyle: .full, timeStyle: .short)
             
             cell!.detailTextLabel?.text = "\(timestamp)"
         }
