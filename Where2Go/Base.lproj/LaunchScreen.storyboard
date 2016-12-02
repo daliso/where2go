@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="csL-82-7ii">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="csL-82-7ii">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -13,36 +15,26 @@
                         <viewControllerLayoutGuide type="bottom" id="mqi-CN-Pkh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Qvx-wd-9xJ">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImagePortrait" translatesAutoresizingMaskIntoConstraints="NO" id="838-Zz-PLr">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where2Go by Daliso Zuze" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tNS-HJ-bJS">
-                                <rect key="frame" x="201" y="527" width="199" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.97143002899999997" green="0.97857252179999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="w2g_splash" translatesAutoresizingMaskIntoConstraints="NO" id="DSr-CD-k6n"/>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="838-Zz-PLr" secondAttribute="trailing" id="BmW-Jn-NJG"/>
-                            <constraint firstItem="838-Zz-PLr" firstAttribute="leading" secondItem="Qvx-wd-9xJ" secondAttribute="leading" id="ETY-km-ksB"/>
-                            <constraint firstItem="mqi-CN-Pkh" firstAttribute="top" secondItem="tNS-HJ-bJS" secondAttribute="bottom" constant="52" id="K1g-Q5-cSg"/>
-                            <constraint firstItem="838-Zz-PLr" firstAttribute="bottom" secondItem="mqi-CN-Pkh" secondAttribute="top" id="NeC-kC-856"/>
-                            <constraint firstItem="tNS-HJ-bJS" firstAttribute="centerX" secondItem="838-Zz-PLr" secondAttribute="centerX" id="NiH-DA-cys"/>
-                            <constraint firstItem="838-Zz-PLr" firstAttribute="top" secondItem="Qvx-wd-9xJ" secondAttribute="top" id="fgu-PM-40X"/>
+                            <constraint firstAttribute="trailing" secondItem="DSr-CD-k6n" secondAttribute="trailing" id="6Lg-o1-Fjb"/>
+                            <constraint firstItem="DSr-CD-k6n" firstAttribute="top" secondItem="Qvx-wd-9xJ" secondAttribute="top" id="aEP-A8-u8d"/>
+                            <constraint firstItem="DSr-CD-k6n" firstAttribute="bottom" secondItem="mqi-CN-Pkh" secondAttribute="top" id="atD-0t-aoA"/>
+                            <constraint firstItem="DSr-CD-k6n" firstAttribute="leading" secondItem="Qvx-wd-9xJ" secondAttribute="leading" id="iNh-yX-sAS"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DDt-c4-OPS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="378" y="390"/>
+            <point key="canvasLocation" x="376.80000000000001" y="389.95502248875567"/>
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchImagePortrait" width="768" height="1024"/>
+        <image name="w2g_splash" width="734" height="1304"/>
     </resources>
 </document>

@@ -16,13 +16,13 @@
 		695463881BC0490A009D9C02 /* ExplorePlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463871BC0490A009D9C02 /* ExplorePlacesViewController.swift */; };
 		6954638B1BC0490A009D9C02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695463891BC0490A009D9C02 /* Main.storyboard */; };
 		6954638E1BC0490A009D9C02 /* Where2GoModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6954638C1BC0490A009D9C02 /* Where2GoModel.xcdatamodeld */; };
-		695463901BC0490A009D9C02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6954638F1BC0490A009D9C02 /* Assets.xcassets */; };
 		695463931BC0490A009D9C02 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695463911BC0490A009D9C02 /* LaunchScreen.storyboard */; };
 		6954639E1BC0490A009D9C02 /* Where2GoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6954639D1BC0490A009D9C02 /* Where2GoTests.swift */; };
 		695463A91BC0490A009D9C02 /* Where2GoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695463A81BC0490A009D9C02 /* Where2GoUITests.swift */; };
 		695D711B1BC90BDA00541953 /* MyPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695D711A1BC90BDA00541953 /* MyPlacesViewController.swift */; };
 		695D711D1BC90CD100541953 /* PlacesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695D711C1BC90CD100541953 /* PlacesDetailViewController.swift */; };
 		695F54A81C0E22F400E6B6BA /* TripDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695F54A71C0E22F400E6B6BA /* TripDetailsViewController.swift */; };
+		698D268F1DF1CB290003D51C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 698D268E1DF1CB290003D51C /* Assets.xcassets */; };
 		69A155BD1DF0EED200D572C3 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A155BC1DF0EED200D572C3 /* Reach.swift */; };
 		69B3BC6D1C2AD69D0032C799 /* DisplayTripDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B3BC6C1C2AD69D0032C799 /* DisplayTripDetailsViewController.swift */; };
 		69BBB9021C0CD8AF00C34D51 /* W2GLocationDetailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BBB9011C0CD8AF00C34D51 /* W2GLocationDetailed.swift */; };
@@ -61,7 +61,6 @@
 		695463871BC0490A009D9C02 /* ExplorePlacesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePlacesViewController.swift; sourceTree = "<group>"; };
 		6954638A1BC0490A009D9C02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6954638D1BC0490A009D9C02 /* Where2GoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Where2GoModel.xcdatamodel; sourceTree = "<group>"; };
-		6954638F1BC0490A009D9C02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		695463921BC0490A009D9C02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		695463941BC0490A009D9C02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		695463991BC0490A009D9C02 /* Where2GoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Where2GoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +72,7 @@
 		695D711A1BC90BDA00541953 /* MyPlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesViewController.swift; sourceTree = "<group>"; };
 		695D711C1BC90CD100541953 /* PlacesDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesDetailViewController.swift; sourceTree = "<group>"; };
 		695F54A71C0E22F400E6B6BA /* TripDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripDetailsViewController.swift; sourceTree = "<group>"; };
+		698D268E1DF1CB290003D51C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		69A155BC1DF0EED200D572C3 /* Reach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
 		69B3BC6C1C2AD69D0032C799 /* DisplayTripDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayTripDetailsViewController.swift; sourceTree = "<group>"; };
 		69BBB9011C0CD8AF00C34D51 /* W2GLocationDetailed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W2GLocationDetailed.swift; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 		695D71211BC911FF00541953 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				6954638F1BC0490A009D9C02 /* Assets.xcassets */,
+				698D268E1DF1CB290003D51C /* Assets.xcassets */,
 				695463941BC0490A009D9C02 /* Info.plist */,
 				695463911BC0490A009D9C02 /* LaunchScreen.storyboard */,
 				69A155BC1DF0EED200D572C3 /* Reach.swift */,
@@ -316,8 +316,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				695463931BC0490A009D9C02 /* LaunchScreen.storyboard in Resources */,
-				695463901BC0490A009D9C02 /* Assets.xcassets in Resources */,
 				691F25F51C2EF20C00959A69 /* README.md in Resources */,
+				698D268F1DF1CB290003D51C /* Assets.xcassets in Resources */,
 				6954638B1BC0490A009D9C02 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -508,6 +508,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Where2Go/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.daliso.Where2Go;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -523,6 +524,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Where2Go/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.daliso.Where2Go;
 				PRODUCT_NAME = "$(TARGET_NAME)";
