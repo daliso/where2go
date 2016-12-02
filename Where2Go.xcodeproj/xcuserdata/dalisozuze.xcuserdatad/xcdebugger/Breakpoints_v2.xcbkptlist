@@ -9,29 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Where2Go/PlacesDetailViewController.swift"
-            timestampString = "502321962.687575"
+            filePath = "Where2Go/FoursquareAPIClient+Convenience.swift"
+            timestampString = "502372580.794697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
-            landmarkName = "containsMatch(_:inString:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Where2Go/ExplorePlacesViewController.swift"
-            timestampString = "502322195.712546"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
-            landmarkName = "locationManager(_:didChangeAuthorization:)"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "getNearbyLocations(_:lat:lon:radius:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

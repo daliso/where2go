@@ -31,9 +31,9 @@ extension FoursquareAPIClient {
                     completionHandler(false, nil, "There was an error getting the location details from Foursquare: \(error?.userInfo)")
                 }
                 else {
-                    if let venueDict = (JSONResult?.value(forKey: "response") as AnyObject).value(forKey: "venue") as? [String:AnyObject] {
+                    if let venueDict = (JSONResult?.value(forKey: "response") as! NSDictionary).value(forKey: "venue") as? [String:AnyObject] {
                         
-                        let code = (JSONResult?.value(forKey: "meta")! as AnyObject).value(forKey: "code") as! Int
+                        let code = (JSONResult?.value(forKey: "meta")! as! NSDictionary).value(forKey: "code") as! Int
                         if code == 200 {
                             
                             let venueName = venueDict[FoursquareAPIClient.JSONResponseKeys.venueName] as! String
@@ -130,9 +130,11 @@ extension FoursquareAPIClient {
                     completionHandler(false, nil, "There was an error getting nearby locations from Foursquare: \(error?.userInfo)")
                 }
                 else {
-                    if let userDataDict = (JSONResult?.value(forKey: "response") as AnyObject).value(forKey: "groups") as? [[String:AnyObject]] {
-                        
-                        let code = (JSONResult?.value(forKey: "meta")! as AnyObject).value(forKey: "code") as! Int
+                    
+                if let userDataDict = (JSONResult?.value(forKey: "response") as! NSDictionary).value(forKey: "groups") as? [[String:AnyObject]] {
+                    
+                        let code = (JSONResult?.value(forKey: "meta") as! NSDictionary).value(forKey: "code") as! Int
+                    
                         if code == 200 {
 
                             let items = userDataDict.first!["items"] as! [[String:AnyObject]]
