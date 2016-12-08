@@ -104,7 +104,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Explore Places To Visit" id="tyh-Vt-LTo">
-                        <barButtonItem key="rightBarButtonItem" image="Center Direction" style="done" id="VMq-Kf-1DB">
+                        <barButtonItem key="rightBarButtonItem" image="center-map" style="done" id="VMq-Kf-1DB">
                             <connections>
                                 <action selector="zoomToUserButtonPressed:" destination="BYZ-38-t0r" id="Vrh-IB-6Iu"/>
                             </connections>
@@ -235,14 +235,14 @@
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TripLocationCell" textLabel="T6A-LS-1xQ" style="IBUITableViewCellStyleDefault" id="pEt-DO-iMt">
-                                        <rect key="frame" x="0.0" y="56" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="55.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pEt-DO-iMt" id="Is7-TN-nzK">
-                                            <frame key="frameInset" width="600" height="43"/>
+                                            <frame key="frameInset" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="T6A-LS-1xQ">
-                                                    <frame key="frameInset" minX="15" width="570" height="43"/>
+                                                    <frame key="frameInset" minX="15" width="570" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -252,14 +252,14 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TripDateTimeCell" textLabel="Wb2-AP-rhu" style="IBUITableViewCellStyleDefault" id="z5I-WT-ilV">
-                                        <rect key="frame" x="0.0" y="100" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="99.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z5I-WT-ilV" id="wNR-oV-uT3">
-                                            <frame key="frameInset" width="600" height="43"/>
+                                            <frame key="frameInset" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wb2-AP-rhu">
-                                                    <frame key="frameInset" minX="15" width="570" height="43"/>
+                                                    <frame key="frameInset" minX="15" width="570" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -269,14 +269,14 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TripNotesCell" textLabel="555-dx-XEX" rowHeight="148" style="IBUITableViewCellStyleDefault" id="cb8-ch-dYV">
-                                        <rect key="frame" x="0.0" y="144" width="600" height="148"/>
+                                        <rect key="frame" x="0.0" y="143.5" width="600" height="148"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cb8-ch-dYV" id="Voe-XY-Jwr">
-                                            <frame key="frameInset" width="600" height="147"/>
+                                            <frame key="frameInset" width="600" height="147.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="555-dx-XEX">
-                                                    <frame key="frameInset" minX="15" width="570" height="147"/>
+                                                    <frame key="frameInset" minX="15" width="570" height="147.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -449,18 +449,18 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HwG-0c-yNi" id="43Q-aW-CDE">
-                                            <frame key="frameInset" width="567" height="43"/>
+                                            <frame key="frameInset" width="567" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sJP-kR-DeV">
-                                                    <frame key="frameInset" minX="15" minY="5" width="32" height="20"/>
+                                                    <frame key="frameInset" minX="15" minY="6" width="31.5" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9ne-zl-ZTN">
-                                                    <frame key="frameInset" minX="15" minY="25" width="41" height="14"/>
+                                                    <frame key="frameInset" minX="15" minY="25.5" width="40.5" height="13.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -542,9 +542,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Center Direction" width="32" height="32"/>
         <image name="Maps-Map-Marker-icon" width="32" height="32"/>
         <image name="Tourist Filled-32" width="32" height="32"/>
+        <image name="center-map" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="L9E-XJ-P0b"/>
